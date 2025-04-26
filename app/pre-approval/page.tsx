@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -26,23 +27,21 @@ export default function PreApprovalPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked, files } = e.target as HTMLInputElement;
+    const { name, type, value, checked, files } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : type === 'file' ? files?.[0] || null : value,
+    }));
+  };
 
-    if (name === 'phone') {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: type === 'checkbox' ? checked : type === 'file' ? files?.[0] || null : value,
-      }));
-    }
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cleaned = e.target.value.replace(/\D/g, '');
+    setFormData((prev) => ({ ...prev, phone: cleaned }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!formData.creditConsent) {
       alert('Please consent to the credit check to proceed.');
       return;
@@ -52,23 +51,52 @@ export default function PreApprovalPage() {
       return;
     }
 
-    // Formspree send
-    const data = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value instanceof File) {
-        data.append(key, value);
-      } else {
-        data.append(key, value?.toString() || '');
-      }
-    });
-
-    await fetch('https://formspree.io/f/your-form-id', {
-      method: 'POST',
-      body: data,
-    });
-
+    // Normally you would POST to Formspree or your API here
     setSubmitted(true);
   };
+
+  const renderSummary = () => (
+    <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
+      <ul className="space-y-2 text-sm text-left">
+        {Object.entries(formData).map(([key, value]) => {
+          if (key === 'idFile' || key === 'payStub') {
+            return (
+              <li key={key}>
+                <strong>{key === 'idFile' ? 'Photo ID' : 'Pay Stub'}:</strong>{' '}
+                {value ? 'Attached' : 'Not Provided'}
+              </li>
+            );
+          }
+          if (key === 'creditConsent') {
+            return (
+              <li key={key}>
+                <strong>Credit Check Consent:</strong> {value ? 'Yes' : 'No'}
+              </li>
+            );
+          }
+          return (
+            <li key={key}>
+              <strong>{formatLabel(key)}:</strong> {value ? value : 'Not Provided'}
+            </li>
+          );
+        })}
+      </ul>
+
+      <button
+        onClick={() => setSubmitted(true)}
+        className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
+      >
+        Confirm and Submit
+      </button>
+      <button
+        onClick={() => setShowSummary(false)}
+        className="mt-2 w-full text-gray-600 py-2 underline"
+      >
+        Go Back and Edit
+      </button>
+    </div>
+  );
 
   const formatLabel = (key: string) => {
     switch (key) {
@@ -89,55 +117,6 @@ export default function PreApprovalPage() {
     }
   };
 
-  const renderSummary = () => (
-    <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
-      <ul className="space-y-2 text-sm text-left">
-        {Object.entries(formData).map(([key, value]) => {
-          if (key === 'idFile' || key === 'payStub') {
-            return (
-              <li key={key}>
-                <strong>{key === 'idFile' ? 'Photo ID' : 'Pay Stub'}:</strong> {value ? 'Attached' : 'Not Provided'}
-              </li>
-            );
-          }
-          if (key === 'creditConsent') {
-            return (
-              <li key={key}>
-                <strong>Credit Check Consent:</strong> {value ? 'Yes' : 'No'}
-              </li>
-            );
-          }
-          return (
-            <li key={key}>
-              <strong>{formatLabel(key)}:</strong> {value || 'Not Provided'}
-            </li>
-          );
-        })}
-      </ul>
-
-      <div className="mt-6">
-        <ReCAPTCHA
-          sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
-          onChange={() => setCaptcha(true)}
-        />
-      </div>
-
-      <button
-        onClick={handleSubmit}
-        className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
-      >
-        Confirm and Submit
-      </button>
-      <button
-        onClick={() => setShowSummary(false)}
-        className="mt-2 w-full text-gray-600 py-2 underline"
-      >
-        Edit Information
-      </button>
-    </div>
-  );
-
   if (submitted) {
     return (
       <div className="max-w-xl mx-auto text-center py-20">
@@ -155,10 +134,9 @@ export default function PreApprovalPage() {
       </div>
 
       {showSummary ? renderSummary() : (
-        <form onSubmit={(e) => { e.preventDefault(); setShowSummary(true); }} className="bg-white shadow-md rounded-lg p-6 space-y-6" method="POST">
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
-          {/* Vehicle Details */}
           <div>
             <label className="block font-medium mb-1">Vehicle Type or Budget</label>
             <input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" />
@@ -168,9 +146,8 @@ export default function PreApprovalPage() {
             <input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
 
-          <hr/>
+          <hr />
 
-          {/* Personal Information */}
           <h2 className="font-semibold text-lg">Personal Information</h2>
           <div>
             <label className="block font-medium mb-1">Full Name</label>
@@ -186,7 +163,7 @@ export default function PreApprovalPage() {
           </div>
           <div>
             <label className="block font-medium mb-1">Phone Number</label>
-            <input name="phone" type="tel" value={formData.phone} onChange={handleChange} required className="w-full border p-3 rounded-md" />
+            <input name="phone" type="tel" value={formData.phone} onChange={handlePhoneChange} required className="w-full border p-3 rounded-md" />
           </div>
           <div>
             <label className="block font-medium mb-1">Current Address</label>
@@ -197,9 +174,8 @@ export default function PreApprovalPage() {
             <input name="addressDuration" value={formData.addressDuration} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
 
-          <hr/>
+          <hr />
 
-          {/* Employment Information */}
           <h2 className="font-semibold text-lg">Employment & Income</h2>
           <div>
             <label className="block font-medium mb-1">Employer</label>
@@ -222,9 +198,8 @@ export default function PreApprovalPage() {
             <input name="otherIncome" value={formData.otherIncome} onChange={handleChange} className="w-full border p-3 rounded-md" />
           </div>
 
-          <hr/>
+          <hr />
 
-          {/* Document Uploads */}
           <h2 className="font-semibold text-lg">Upload Documents</h2>
           <div>
             <label className="block font-medium mb-1">Photo ID (Driver’s License)</label>
@@ -235,14 +210,20 @@ export default function PreApprovalPage() {
             <input name="payStub" type="file" onChange={handleChange} className="w-full border p-3 rounded-md bg-white" />
           </div>
 
-          {/* Credit Consent */}
           <div className="flex items-start gap-2 mt-4">
             <input type="checkbox" name="creditConsent" checked={formData.creditConsent} onChange={handleChange} className="mt-1" />
             <label className="text-sm">I consent to a credit check for financing purposes.</label>
           </div>
 
-          {/* Continue */}
-          <button type="submit" className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
+          <div className="mt-6">
+            <ReCAPTCHA
+              sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
+              onChange={() => setCaptcha(true)}
+            />
+          </div>
+
+          <button type="button" onClick={() => setShowSummary(true)}
+                  className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
             Continue to Review
           </button>
         </form>
