@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -6,6 +7,7 @@ export default function PreApprovalPage() {
   const [submitted, setSubmitted] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [captcha, setCaptcha] = useState(false);
+
   const [formData, setFormData] = useState({
     vehicle: '',
     downPayment: '',
@@ -21,8 +23,8 @@ export default function PreApprovalPage() {
     income: '',
     otherIncome: '',
     creditConsent: false,
-    idFile: null,
-    payStub: null,
+    idFile: null as File | null,
+    payStub: null as File | null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,17 +35,78 @@ export default function PreApprovalPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!formData.creditConsent) {
       alert('Please consent to the credit check to proceed.');
       return;
     }
+
     if (!captcha) {
       alert('Please complete the reCAPTCHA.');
       return;
     }
-    setSubmitted(true);
+
+    try {
+      const formspreeEndpoint = 'https://formspree.io/f/YOUR_FORM_ID'; // <-- Replace with your Formspree endpoint
+
+      const formDataToSend = new FormData();
+      formDataToSend.append('Vehicle', formData.vehicle);
+      formDataToSend.append('Down Payment', formData.downPayment);
+      formDataToSend.append('Full Name', formData.name);
+      formDataToSend.append('Date of Birth', formData.dob);
+      formDataToSend.append('Email', formData.email);
+      formDataToSend.append('Phone', formData.phone);
+      formDataToSend.append('Address', formData.address);
+      formDataToSend.append('Time at Address', formData.addressDuration);
+      formDataToSend.append('Employer', formData.employer);
+      formDataToSend.append('Job Title', formData.jobTitle);
+      formDataToSend.append('Time at Job', formData.jobDuration);
+      formDataToSend.append('Income', formData.income);
+      formDataToSend.append('Other Income', formData.otherIncome);
+      formDataToSend.append('Credit Check Consent', formData.creditConsent ? 'Yes' : 'No');
+
+      if (formData.idFile) {
+        formDataToSend.append('Photo ID', formData.idFile);
+      }
+      if (formData.payStub) {
+        formDataToSend.append('Pay Stub', formData.payStub);
+      }
+
+      const response = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        alert('Submission failed. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred. Please try again.');
+    }
+  };
+
+  const formatLabel = (key: string) => {
+    switch (key) {
+      case 'vehicle': return 'Vehicle Type or Budget';
+      case 'downPayment': return 'Down Payment';
+      case 'name': return 'Full Name';
+      case 'dob': return 'Date of Birth';
+      case 'email': return 'Email';
+      case 'phone': return 'Phone Number';
+      case 'address': return 'Current Address';
+      case 'addressDuration': return 'Time at Address';
+      case 'employer': return 'Employer';
+      case 'jobTitle': return 'Job Title';
+      case 'jobDuration': return 'Time at Job';
+      case 'income': return 'Annual Income';
+      case 'otherIncome': return 'Other Income';
+      default: return key;
+    }
   };
 
   const renderSummary = () => (
@@ -74,8 +137,15 @@ export default function PreApprovalPage() {
         })}
       </ul>
 
+      <div className="mt-6">
+        <ReCAPTCHA
+          sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
+          onChange={() => setCaptcha(true)}
+        />
+      </div>
+
       <button
-        onClick={() => setSubmitted(true)}
+        onClick={handleSubmit}
         className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
       >
         Confirm and Submit
@@ -88,25 +158,6 @@ export default function PreApprovalPage() {
       </button>
     </div>
   );
-
-  const formatLabel = (key: string) => {
-    switch (key) {
-      case 'vehicle': return 'Vehicle Type or Budget';
-      case 'downPayment': return 'Down Payment';
-      case 'name': return 'Full Name';
-      case 'dob': return 'Date of Birth';
-      case 'email': return 'Email';
-      case 'phone': return 'Phone Number';
-      case 'address': return 'Current Address';
-      case 'addressDuration': return 'Time at Address';
-      case 'employer': return 'Employer';
-      case 'jobTitle': return 'Job Title';
-      case 'jobDuration': return 'Time at Job';
-      case 'income': return 'Annual Income';
-      case 'otherIncome': return 'Other Income';
-      default: return key;
-    }
-  };
 
   if (submitted) {
     return (
@@ -125,120 +176,122 @@ export default function PreApprovalPage() {
       </div>
 
       {showSummary ? renderSummary() : (
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6" method="POST">
+        <form onSubmit={(e) => { e.preventDefault(); setShowSummary(true); }} className="bg-white shadow-md rounded-lg p-6 space-y-6" method="POST">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
           <div>
             <label className="block font-medium mb-1">Vehicle Type or Budget</label>
             <input name="vehicle" value={formData.vehicle} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Down Payment ($)</label>
             <input name="downPayment" value={formData.downPayment} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
 
           <hr />
 
           <h2 className="font-semibold text-lg">Personal Information</h2>
+
           <div>
             <label className="block font-medium mb-1">Full Name</label>
             <input name="name" value={formData.name} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Date of Birth</label>
             <input name="dob" type="date" value={formData.dob} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Email</label>
             <input name="email" type="email" value={formData.email} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Phone Number</label>
             <input name="phone" type="tel" value={formData.phone} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Current Address</label>
             <input name="address" value={formData.address} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Time at Address (Years, Months)</label>
             <input name="addressDuration" value={formData.addressDuration} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
 
           <hr />
 
           <h2 className="font-semibold text-lg">Employment & Income</h2>
+
           <div>
             <label className="block font-medium mb-1">Employer</label>
             <input name="employer" value={formData.employer} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Job Title</label>
             <input name="jobTitle" value={formData.jobTitle} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Time at Job (Years, Months)</label>
             <input name="jobDuration" value={formData.jobDuration} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Annual Income ($)</label>
             <input name="income" value={formData.income} onChange={handleChange}
-                   required className="w-full border p-3 rounded-md" />
+              required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Other Income (Optional)</label>
             <input name="otherIncome" value={formData.otherIncome} onChange={handleChange}
-                   className="w-full border p-3 rounded-md" />
+              className="w-full border p-3 rounded-md" />
           </div>
 
           <hr />
 
           <h2 className="font-semibold text-lg">Upload Documents</h2>
+
           <div>
             <label className="block font-medium mb-1">Photo ID (Driver’s License)</label>
             <input name="idFile" type="file" onChange={handleChange}
-                   className="w-full border p-3 rounded-md bg-white" />
+              className="w-full border p-3 rounded-md bg-white" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Recent Pay Stub</label>
             <input name="payStub" type="file" onChange={handleChange}
-                   className="w-full border p-3 rounded-md bg-white" />
+              className="w-full border p-3 rounded-md bg-white" />
           </div>
 
           <div className="flex items-start gap-2 mt-4">
             <input type="checkbox" name="creditConsent" checked={formData.creditConsent} onChange={handleChange}
-                   className="mt-1" />
+              className="mt-1" />
             <label className="text-sm">I consent to a credit check for financing purposes.</label>
           </div>
 
-          <div className="mt-6">
-            <ReCAPTCHA
-              sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
-              onChange={() => setCaptcha(true)}
-            />
+          <div className="text-center text-sm text-gray-500 mt-8">
+            Need help? Email us at contact@caprockcapital.ca
           </div>
-
-          <button type="button" onClick={() => setShowSummary(true)}
-                  className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
-            Continue to Review
-          </button>
         </form>
       )}
-
-      <div className="text-center text-sm text-gray-500 mt-8">
-        Need help? Email us at contact@caprockcapital.ca
-      </div>
     </div>
   );
 }
