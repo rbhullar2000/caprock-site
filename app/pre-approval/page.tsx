@@ -23,53 +23,51 @@ export default function PreApprovalPage() {
     idFile: null,
     payStub: null,
   });
-  const [recaptchaToken, setRecaptchaToken] = useState('');
+  const [captchaVerified, setCaptchaVerified] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type, checked, files } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : type === 'file' ? files[0] : value,
+      [name]: type === 'checkbox' ? checked : type === 'file' ? files?.[0] || null : value,
     }));
   };
 
-  const handlePhoneChange = (e) => {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length > 10) value = value.slice(0, 10);
-    const formatted = value.replace(/(\d{3})(\d{3})(\d{0,4})/, (_, p1, p2, p3) => {
-      return `(${p1}) ${p2}${p3 ? '-' + p3 : ''}`;
-    });
-    setFormData((prev) => ({ ...prev, phone: formatted }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.creditConsent) {
-      alert('Please consent to the credit check to proceed.');
+    if (!captchaVerified) {
+      alert('Please verify that you are not a robot.');
       return;
     }
-    if (!recaptchaToken) {
-      alert('Please complete the reCAPTCHA.');
+    if (!formData.creditConsent) {
+      alert('Please consent to a credit check to proceed.');
       return;
     }
     setSubmitted(true);
   };
 
+  const formatPhone = (value: string) => {
+    const cleaned = value.replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    return match ? `(${match[1]}) ${match[2]}-${match[3]}` : value;
+  };
+
   const renderSummary = () => (
     <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Review Your Application</h2>
-      <ul className="space-y-2 text-sm">
+      <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
+      <ul className="space-y-2 text-sm text-left">
         {Object.entries(formData).map(([key, value]) => (
-          <li key={key}>
-            <strong>{formatLabel(key)}:</strong>{' '}
-            {typeof value === 'boolean'
-              ? value ? 'Yes' : 'No'
-              : value
-              ? typeof value === 'object' ? value.name : value
-              : 'Not provided'}
-          </li>
+          typeof value === 'string' && (
+            <li key={key}>
+              <strong>{formatFieldName(key)}:</strong> {value.trim() ? value : 'Not Provided'}
+            </li>
+          )
         ))}
+        <li><strong>Credit Check Consent:</strong> {formData.creditConsent ? 'Yes' : 'No'}</li>
+        <li><strong>Photo ID Uploaded:</strong> {formData.idFile ? 'Yes' : 'No'}</li>
+        <li><strong>Pay Stub Uploaded:</strong> {formData.payStub ? 'Yes' : 'No'}</li>
       </ul>
+      <ReCAPTCHA sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj" onChange={() => setCaptchaVerified(true)} className="mt-6" />
       <button
         onClick={() => setSubmitted(true)}
         className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
@@ -85,17 +83,21 @@ export default function PreApprovalPage() {
     </div>
   );
 
-  const formatLabel = (text) => {
-    return text
+  const formatFieldName = (fieldName: string) => {
+    return fieldName
       .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, (str) => str.toUpperCase());
+      .replace(/^./, (str) => str.toUpperCase())
+      .replace('Dob', 'Date of Birth')
+      .replace('IdFile', 'Photo ID')
+      .replace('PayStub', 'Pay Stub')
+      .trim();
   };
 
   if (submitted) {
     return (
       <div className="max-w-xl mx-auto text-center py-20">
-        <h1 className="text-3xl font-bold">Thank You!</h1>
-        <p className="mt-4">Your pre-approval application has been submitted successfully.</p>
+        <h1 className="text-2xl font-bold">Thank You!</h1>
+        <p className="mt-4">Your pre-approval application has been submitted.</p>
       </div>
     );
   }
@@ -108,7 +110,7 @@ export default function PreApprovalPage() {
       </div>
 
       {showSummary ? renderSummary() : (
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6" method="POST">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
           <div>
@@ -120,9 +122,9 @@ export default function PreApprovalPage() {
             <input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
 
-          <hr className="my-4" />
+          <hr />
 
-          <h2 className="font-semibold text-lg mb-2">Personal Information</h2>
+          <h2 className="font-semibold text-lg">Personal Information</h2>
           <div>
             <label className="block font-medium mb-1">Full Name</label>
             <input name="name" value={formData.name} onChange={handleChange} required className="w-full border p-3 rounded-md" />
@@ -136,8 +138,13 @@ export default function PreApprovalPage() {
             <input name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
           <div>
-            <label className="block font-medium mb-1">Phone Number</label>
-            <input name="phone" value={formData.phone} onChange={handlePhoneChange} required className="w-full border p-3 rounded-md" />
+            <label className="block font-medium mb-1">Phone</label>
+            <input
+              name="phone"
+              value={formData.phone}
+              onChange={(e) => handleChange({ ...e, target: { ...e.target, value: formatPhone(e.target.value) } })}
+              required className="w-full border p-3 rounded-md"
+            />
           </div>
           <div>
             <label className="block font-medium mb-1">Current Address</label>
@@ -148,9 +155,9 @@ export default function PreApprovalPage() {
             <input name="addressDuration" value={formData.addressDuration} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
 
-          <hr className="my-4" />
+          <hr />
 
-          <h2 className="font-semibold text-lg mb-2">Employment & Income</h2>
+          <h2 className="font-semibold text-lg">Employment & Income</h2>
           <div>
             <label className="block font-medium mb-1">Employer</label>
             <input name="employer" value={formData.employer} onChange={handleChange} required className="w-full border p-3 rounded-md" />
@@ -172,9 +179,9 @@ export default function PreApprovalPage() {
             <input name="otherIncome" value={formData.otherIncome} onChange={handleChange} className="w-full border p-3 rounded-md" />
           </div>
 
-          <hr className="my-4" />
+          <hr />
 
-          <h2 className="font-semibold text-lg mb-2">Upload Documents</h2>
+          <h2 className="font-semibold text-lg">Upload Documents</h2>
           <div>
             <label className="block font-medium mb-1">Photo ID (Driver’s License)</label>
             <input name="idFile" type="file" onChange={handleChange} className="w-full border p-3 rounded-md bg-white" />
@@ -189,15 +196,7 @@ export default function PreApprovalPage() {
             <label className="text-sm">I consent to a credit check for financing purposes.</label>
           </div>
 
-          <div className="my-4">
-            <ReCAPTCHA
-              sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
-              onChange={(token) => setRecaptchaToken(token || '')}
-            />
-          </div>
-
-          <button type="button" onClick={() => setShowSummary(true)}
-                  className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
+          <button type="button" onClick={() => setShowSummary(true)} className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
             Continue to Review
           </button>
         </form>
