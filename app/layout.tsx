@@ -1,30 +1,53 @@
+'use client';
 
-import './globals.css'
-import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
-        <nav className="bg-gray-900 text-white py-4 px-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image src="/logo-light.png" alt="Caprock Logo" width={40} height={40} />
-            <span className="font-bold text-lg">Caprock</span>
-          </Link>
-          <div className="space-x-6 text-sm sm:text-base">
-            <Link href="/" className="hover:underline">Home</Link>
-            <Link href="/about" className="hover:underline">About</Link>
-            <Link href="/calculator" className="hover:underline">Calculator</Link>
-            <Link href="/pre-approval" className="hover:underline">Get Pre-Approved</Link>
-            <Link href="/contact" className="hover:underline">Contact</Link>
+      <body className="bg-white text-gray-900">
+        {/* Navbar */}
+        <nav className="flex items-center justify-between flex-wrap bg-[#0C1C2C] p-4">
+          <div className="flex items-center flex-shrink-0 text-white mr-6">
+            <img src="/logo-light.png" alt="Caprock Logo" className="h-10 w-auto mr-2" />
+          </div>
+          <div className="block lg:hidden">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex items-center px-3 py-2 border rounded text-gray-200 border-gray-400 hover:text-white hover:border-white"
+            >
+              <svg className="fill-current h-3 w-3" viewBox="0 0 20 20">
+                <title>Menu</title>
+                <path d="M0 3h20v2H0zM0 9h20v2H0zM0 15h20v2H0z" />
+              </svg>
+            </button>
+          </div>
+          <div className={`w-full ${menuOpen ? 'block' : 'hidden'} flex-grow lg:flex lg:items-center lg:w-auto`}>
+            <div className="text-sm lg:flex-grow lg:flex lg:justify-end">
+              <Link href="/" className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-6">
+                Home
+              </Link>
+              <Link href="/about" className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-6">
+                About
+              </Link>
+              <Link href="/calculator" className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-6">
+                Calculator
+              </Link>
+              <Link href="/pre-approval" className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-6 whitespace-nowrap">
+                Get Pre-Approved
+              </Link>
+              <Link href="/contact" className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white">
+                Contact
+              </Link>
+            </div>
           </div>
         </nav>
-        <main className="flex-grow">{children}</main>
-        <footer className="bg-gray-100 text-center text-sm text-gray-600 py-6 border-t">
-          <div>Caprock Capital Group Inc.</div>
-          <div className="mt-1">112 - 970 Burrard Street, Office #1547, Vancouver, BC V6Z 2R4, Canada</div>
-        </footer>
+
+        {/* Page Content */}
+        <main>{children}</main>
       </body>
     </html>
   );
