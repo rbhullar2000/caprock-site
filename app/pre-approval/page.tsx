@@ -26,21 +26,34 @@ export default function PreApprovalPage() {
   const [captchaVerified, setCaptchaVerified] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type, checked, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : type === 'file' ? files?.[0] || null : value,
-    }));
+    const { name, value, type } = e.target;
+    if (type === 'checkbox') {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: (e.target as HTMLInputElement).checked,
+      }));
+    } else if (type === 'file') {
+      const fileInput = e.target as HTMLInputElement;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: fileInput.files ? fileInput.files[0] : null,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!captchaVerified) {
-      alert('Please verify that you are not a robot.');
+      alert('Please verify you are not a robot.');
       return;
     }
     if (!formData.creditConsent) {
-      alert('Please consent to a credit check to proceed.');
+      alert('Please consent to a credit check.');
       return;
     }
     setSubmitted(true);
@@ -50,6 +63,16 @@ export default function PreApprovalPage() {
     const cleaned = value.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
     return match ? `(${match[1]}) ${match[2]}-${match[3]}` : value;
+  };
+
+  const formatFieldName = (fieldName: string) => {
+    return fieldName
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, (str) => str.toUpperCase())
+      .replace('Dob', 'Date of Birth')
+      .replace('IdFile', 'Photo ID')
+      .replace('PayStub', 'Pay Stub')
+      .trim();
   };
 
   const renderSummary = () => (
@@ -67,7 +90,9 @@ export default function PreApprovalPage() {
         <li><strong>Photo ID Uploaded:</strong> {formData.idFile ? 'Yes' : 'No'}</li>
         <li><strong>Pay Stub Uploaded:</strong> {formData.payStub ? 'Yes' : 'No'}</li>
       </ul>
-      <ReCAPTCHA sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj" onChange={() => setCaptchaVerified(true)} className="mt-6" />
+      <div className="mt-6">
+        <ReCAPTCHA sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj" onChange={() => setCaptchaVerified(true)} />
+      </div>
       <button
         onClick={() => setSubmitted(true)}
         className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
@@ -82,16 +107,6 @@ export default function PreApprovalPage() {
       </button>
     </div>
   );
-
-  const formatFieldName = (fieldName: string) => {
-    return fieldName
-      .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, (str) => str.toUpperCase())
-      .replace('Dob', 'Date of Birth')
-      .replace('IdFile', 'Photo ID')
-      .replace('PayStub', 'Pay Stub')
-      .trim();
-  };
 
   if (submitted) {
     return (
