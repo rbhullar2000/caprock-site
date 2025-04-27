@@ -1,6 +1,6 @@
 'use client';
 
-export default function AboutPage() {
+export default function AboutPage() { 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold text-center mb-8">About Caprock Capital Group</h1>
