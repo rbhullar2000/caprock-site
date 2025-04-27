@@ -25,10 +25,10 @@ export default function PreApprovalPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const target = e.target;
-    const { name, value, type, checked } = target;
+    const { name, value, type } = target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: (type === 'checkbox' && target instanceof HTMLInputElement) ? target.checked : value,
     }));
   };
 
