@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -27,25 +26,11 @@ export default function PreApprovalPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const target = e.target as HTMLInputElement;
-    const { name, value, type } = target;
-
-    if (type === 'checkbox') {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: target.checked,
-      }));
-    } else if (type === 'file') {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: target.files?.[0] || null,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    const { name, value, type, checked, files } = e.target as HTMLInputElement;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : type === 'file' ? files?.[0] || null : value,
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,52 +43,8 @@ export default function PreApprovalPage() {
       alert('Please complete the reCAPTCHA.');
       return;
     }
-
-    // Add your Formspree or API logic here later
-    setSubmitted(true);
+    setShowSummary(true);
   };
-
-  const renderSummary = () => (
-    <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
-      <ul className="space-y-2 text-sm text-left">
-        {Object.entries(formData).map(([key, value]) => {
-          if (key === 'idFile' || key === 'payStub') {
-            return (
-              <li key={key}>
-                <strong>{key === 'idFile' ? 'Photo ID' : 'Pay Stub'}:</strong> {value ? 'Attached' : 'Not Provided'}
-              </li>
-            );
-          }
-          if (key === 'creditConsent') {
-            return (
-              <li key={key}>
-                <strong>Credit Check Consent:</strong> {value ? 'Yes' : 'No'}
-              </li>
-            );
-          }
-          return (
-            <li key={key}>
-              <strong>{formatLabel(key)}:</strong> {value ? value : 'Not Provided'}
-            </li>
-          );
-        })}
-      </ul>
-
-      <button
-        onClick={() => setSubmitted(true)}
-        className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
-      >
-        Confirm and Submit
-      </button>
-      <button
-        onClick={() => setShowSummary(false)}
-        className="mt-2 w-full text-gray-600 py-2 underline"
-      >
-        Edit Information
-      </button>
-    </div>
-  );
 
   const formatLabel = (key: string) => {
     switch (key) {
@@ -123,6 +64,49 @@ export default function PreApprovalPage() {
       default: return key;
     }
   };
+
+  const renderSummary = () => (
+    <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
+      <ul className="space-y-2 text-sm text-left">
+        {Object.entries(formData).map(([key, value]) => {
+          if (key === 'idFile' || key === 'payStub') {
+            return (
+              <li key={key}>
+                <strong>{key === 'idFile' ? 'Photo ID' : 'Pay Stub'}:</strong>{' '}
+                {value instanceof File ? 'Attached' : 'Not Provided'}
+              </li>
+            );
+          }
+          if (key === 'creditConsent') {
+            return (
+              <li key={key}>
+                <strong>Credit Check Consent:</strong> {value ? 'Yes' : 'No'}
+              </li>
+            );
+          }
+          return (
+            <li key={key}>
+              <strong>{formatLabel(key)}:</strong> {typeof value === 'string' ? (value || 'Not Provided') : ''}
+            </li>
+          );
+        })}
+      </ul>
+
+      <button
+        onClick={() => setSubmitted(true)}
+        className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
+      >
+        Confirm and Submit
+      </button>
+      <button
+        onClick={() => setShowSummary(false)}
+        className="mt-2 w-full text-gray-600 py-2 underline"
+      >
+        Edit Information
+      </button>
+    </div>
+  );
 
   if (submitted) {
     return (
@@ -144,11 +128,11 @@ export default function PreApprovalPage() {
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6" method="POST">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
-          {/* Vehicle and Payment */}
           <div>
             <label className="block font-medium mb-1">Vehicle Type or Budget</label>
             <input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Down Payment ($)</label>
             <input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" />
@@ -156,28 +140,33 @@ export default function PreApprovalPage() {
 
           <hr />
 
-          {/* Personal Information */}
           <h2 className="font-semibold text-lg">Personal Information</h2>
+
           <div>
             <label className="block font-medium mb-1">Full Name</label>
             <input name="name" value={formData.name} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Date of Birth</label>
             <input name="dob" type="date" value={formData.dob} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Email</label>
             <input name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Phone Number</label>
             <input name="phone" type="tel" value={formData.phone} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Current Address</label>
             <input name="address" value={formData.address} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Time at Address (Years, Months)</label>
             <input name="addressDuration" value={formData.addressDuration} onChange={handleChange} required className="w-full border p-3 rounded-md" />
@@ -185,24 +174,28 @@ export default function PreApprovalPage() {
 
           <hr />
 
-          {/* Employment & Income */}
           <h2 className="font-semibold text-lg">Employment & Income</h2>
+
           <div>
             <label className="block font-medium mb-1">Employer</label>
             <input name="employer" value={formData.employer} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Job Title</label>
             <input name="jobTitle" value={formData.jobTitle} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Time at Job (Years, Months)</label>
             <input name="jobDuration" value={formData.jobDuration} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Annual Income ($)</label>
             <input name="income" value={formData.income} onChange={handleChange} required className="w-full border p-3 rounded-md" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Other Income (Optional)</label>
             <input name="otherIncome" value={formData.otherIncome} onChange={handleChange} className="w-full border p-3 rounded-md" />
@@ -210,24 +203,23 @@ export default function PreApprovalPage() {
 
           <hr />
 
-          {/* Uploads */}
           <h2 className="font-semibold text-lg">Upload Documents</h2>
+
           <div>
             <label className="block font-medium mb-1">Photo ID (Driver’s License)</label>
             <input name="idFile" type="file" onChange={handleChange} className="w-full border p-3 rounded-md bg-white" />
           </div>
+
           <div>
             <label className="block font-medium mb-1">Recent Pay Stub</label>
             <input name="payStub" type="file" onChange={handleChange} className="w-full border p-3 rounded-md bg-white" />
           </div>
 
-          {/* Consent */}
           <div className="flex items-start gap-2 mt-4">
             <input type="checkbox" name="creditConsent" checked={formData.creditConsent} onChange={handleChange} className="mt-1" />
             <label className="text-sm">I consent to a credit check for financing purposes.</label>
           </div>
 
-          {/* Captcha */}
           <div className="mt-6">
             <ReCAPTCHA
               sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
@@ -235,9 +227,8 @@ export default function PreApprovalPage() {
             />
           </div>
 
-          {/* Continue Button */}
-          <button type="button" onClick={() => setShowSummary(true)}
-            className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
+          <button type="submit"
+                  className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
             Continue to Review
           </button>
         </form>
