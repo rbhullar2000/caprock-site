@@ -26,13 +26,27 @@ export default function PreApprovalPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, files } = e.target;
-    const checked = (e.target as HTMLInputElement).checked; // FIXED LINE
+    const target = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : type === 'file' ? (files?.[0] ?? null) : value,
-    }));
+    if (target instanceof HTMLInputElement) {
+      const { name, value, type, checked, files } = target;
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: type === 'checkbox'
+          ? checked
+          : type === 'file'
+          ? (files && files.length > 0 ? files[0] : null)
+          : value,
+      }));
+    } else if (target instanceof HTMLTextAreaElement) {
+      const { name, value } = target;
+
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
