@@ -21,29 +21,15 @@ export default function PreApprovalPage() {
     income: '',
     otherIncome: '',
     creditConsent: false,
-    idFile: null as File | null,
-    payStub: null as File | null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const target = e.target;
-    if (target instanceof HTMLInputElement) {
-      const { name, value, type, checked, files } = target;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: type === 'checkbox'
-          ? checked
-          : type === 'file'
-          ? (files && files.length > 0 ? files[0] : null)
-          : value,
-      }));
-    } else if (target instanceof HTMLTextAreaElement) {
-      const { name, value } = target;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    const { name, value, type, checked } = target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,28 +54,31 @@ export default function PreApprovalPage() {
       return;
     }
 
-    const formDataToSend = new FormData();
-    formDataToSend.append('Vehicle', formData.vehicle);
-    formDataToSend.append('Down Payment', formData.downPayment);
-    formDataToSend.append('Name', formData.name);
-    formDataToSend.append('DOB', formData.dob);
-    formDataToSend.append('Email', formData.email);
-    formDataToSend.append('Phone', formData.phone);
-    formDataToSend.append('Address', formData.address);
-    formDataToSend.append('Time at Address', formData.addressDuration);
-    formDataToSend.append('Employer', formData.employer);
-    formDataToSend.append('Job Title', formData.jobTitle);
-    formDataToSend.append('Time at Job', formData.jobDuration);
-    formDataToSend.append('Annual Income', formData.income);
-    formDataToSend.append('Other Income', formData.otherIncome);
-    formDataToSend.append('Credit Check Consent', formData.creditConsent ? 'Yes' : 'No');
-    if (formData.idFile) formDataToSend.append('Photo ID', formData.idFile);
-    if (formData.payStub) formDataToSend.append('Pay Stub', formData.payStub);
+    const cleanData = {
+      Vehicle: formData.vehicle,
+      'Down Payment': formData.downPayment,
+      Name: formData.name,
+      'Date of Birth': formData.dob,
+      Email: formData.email,
+      Phone: formData.phone,
+      Address: formData.address,
+      'Time at Address': formData.addressDuration,
+      Employer: formData.employer,
+      'Job Title': formData.jobTitle,
+      'Time at Job': formData.jobDuration,
+      'Annual Income': formData.income,
+      'Other Income': formData.otherIncome,
+      'Credit Check Consent': formData.creditConsent ? 'Yes' : 'No',
+    };
 
     try {
-      const response = await fetch('https://formcarry.com/s/uSdezWIW9-f', {
+      const response = await fetch('https://formspree.io/f/mrbqgrlk', {
         method: 'POST',
-        body: formDataToSend,
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(cleanData),
       });
       if (response.ok) {
         setSubmitted(true);
@@ -106,23 +95,11 @@ export default function PreApprovalPage() {
     <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
       <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
       <ul className="space-y-2 text-sm text-left">
-        {Object.entries(formData).map(([key, value]) => {
-          let displayValue: string;
-          if (key === 'idFile' || key === 'payStub') {
-            displayValue = value ? 'Attached' : 'Not Provided';
-          } else if (typeof value === 'boolean') {
-            displayValue = value ? 'Yes' : 'No';
-          } else if (value instanceof File) {
-            displayValue = value.name;
-          } else {
-            displayValue = value || 'Not Provided';
-          }
-          return (
-            <li key={key}>
-              <strong>{formatLabel(key)}:</strong> {displayValue}
-            </li>
-          );
-        })}
+        {Object.entries(formData).map(([key, value]) => (
+          <li key={key}>
+            <strong>{formatLabel(key)}:</strong> {typeof value === 'boolean' ? (value ? 'Yes' : 'No') : value || 'Not Provided'}
+          </li>
+        ))}
       </ul>
 
       <button
@@ -155,8 +132,6 @@ export default function PreApprovalPage() {
       jobDuration: 'Time at Job',
       income: 'Annual Income',
       otherIncome: 'Other Income',
-      idFile: 'Photo ID',
-      payStub: 'Pay Stub',
       creditConsent: 'Credit Check Consent',
     };
     return labels[key] || key;
@@ -182,11 +157,12 @@ export default function PreApprovalPage() {
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
-          {/* All fields */}
+          {/* FORM FIELDS */}
           <div><label>Vehicle Type or Budget</label><input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Down Payment ($)</label><input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
 
           <hr /><h2 className="font-semibold text-lg">Personal Information</h2>
+
           <div><label>Full Name</label><input name="name" value={formData.name} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Date of Birth</label><input name="dob" type="date" value={formData.dob} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Email</label><input name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
@@ -195,15 +171,12 @@ export default function PreApprovalPage() {
           <div><label>Time at Address (Years, Months)</label><input name="addressDuration" value={formData.addressDuration} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
 
           <hr /><h2 className="font-semibold text-lg">Employment & Income</h2>
+
           <div><label>Employer</label><input name="employer" value={formData.employer} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Job Title</label><input name="jobTitle" value={formData.jobTitle} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Time at Job (Years, Months)</label><input name="jobDuration" value={formData.jobDuration} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Annual Income ($)</label><input name="income" value={formData.income} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Other Income (Optional)</label><input name="otherIncome" value={formData.otherIncome} onChange={handleChange} className="w-full border p-3 rounded-md" /></div>
-
-          <hr /><h2 className="font-semibold text-lg">Upload Documents</h2>
-          <div><label>Photo ID (Driver’s License)</label><input name="idFile" type="file" onChange={handleChange} className="w-full border p-3 rounded-md bg-white" /></div>
-          <div><label>Recent Pay Stub</label><input name="payStub" type="file" onChange={handleChange} className="w-full border p-3 rounded-md bg-white" /></div>
 
           <div className="flex items-start gap-2 mt-4">
             <input type="checkbox" name="creditConsent" checked={formData.creditConsent} onChange={handleChange} className="mt-1" />
