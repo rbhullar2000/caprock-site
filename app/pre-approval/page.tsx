@@ -6,7 +6,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 export default function PreApprovalPage() {
   const [submitted, setSubmitted] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
-  const [captcha, setCaptcha] = useState(false);
+  const [captchaVerified, setCaptchaVerified] = useState(false);
   const [formData, setFormData] = useState({
     vehicle: '',
     downPayment: '',
@@ -27,7 +27,7 @@ export default function PreApprovalPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, type, value, checked, files } = e.target;
+    const { name, value, type, checked, files } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : type === 'file' ? files?.[0] || null : value,
@@ -35,24 +35,68 @@ export default function PreApprovalPage() {
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cleaned = e.target.value.replace(/\D/g, '');
-    setFormData((prev) => ({ ...prev, phone: cleaned }));
+    const formattedPhone = e.target.value.replace(/\D/g, '');
+    setFormData((prev) => ({ ...prev, phone: formattedPhone }));
+  };
+
+  const handleCaptchaChange = (value: string | null) => {
+    if (value) setCaptchaVerified(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!formData.creditConsent) {
       alert('Please consent to the credit check to proceed.');
       return;
     }
-    if (!captcha) {
+    if (!captchaVerified) {
       alert('Please complete the reCAPTCHA.');
       return;
     }
 
-    // Normally you would POST to Formspree or your API here
-    setSubmitted(true);
+    const formDataToSend = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value instanceof File) {
+        formDataToSend.append(key, value);
+      } else {
+        formDataToSend.append(key, value.toString());
+      }
+    });
+
+    try {
+      const response = await fetch('https://formspree.io/f/{your-form-id}', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        alert('An error occurred while submitting the form.');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An unexpected error occurred.');
+    }
+  };
+
+  const formatLabel = (key: string) => {
+    switch (key) {
+      case 'vehicle': return 'Vehicle Type or Budget';
+      case 'downPayment': return 'Down Payment';
+      case 'name': return 'Full Name';
+      case 'dob': return 'Date of Birth';
+      case 'email': return 'Email';
+      case 'phone': return 'Phone Number';
+      case 'address': return 'Current Address';
+      case 'addressDuration': return 'Time at Address';
+      case 'employer': return 'Employer';
+      case 'jobTitle': return 'Job Title';
+      case 'jobDuration': return 'Time at Job';
+      case 'income': return 'Annual Income';
+      case 'otherIncome': return 'Other Income';
+      default: return key;
+    }
   };
 
   const renderSummary = () => (
@@ -77,14 +121,21 @@ export default function PreApprovalPage() {
           }
           return (
             <li key={key}>
-              <strong>{formatLabel(key)}:</strong> {value ? value : 'Not Provided'}
+              <strong>{formatLabel(key)}:</strong> {value || 'Not Provided'}
             </li>
           );
         })}
       </ul>
 
+      <div className="mt-6">
+        <ReCAPTCHA
+          sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
+          onChange={handleCaptchaChange}
+        />
+      </div>
+
       <button
-        onClick={() => setSubmitted(true)}
+        onClick={handleSubmit}
         className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
       >
         Confirm and Submit
@@ -97,25 +148,6 @@ export default function PreApprovalPage() {
       </button>
     </div>
   );
-
-  const formatLabel = (key: string) => {
-    switch (key) {
-      case 'vehicle': return 'Vehicle Type or Budget';
-      case 'downPayment': return 'Down Payment';
-      case 'name': return 'Full Name';
-      case 'dob': return 'Date of Birth';
-      case 'email': return 'Email';
-      case 'phone': return 'Phone Number';
-      case 'address': return 'Current Address';
-      case 'addressDuration': return 'Time at Address';
-      case 'employer': return 'Employer';
-      case 'jobTitle': return 'Job Title';
-      case 'jobDuration': return 'Time at Job';
-      case 'income': return 'Annual Income';
-      case 'otherIncome': return 'Other Income';
-      default: return key;
-    }
-  };
 
   if (submitted) {
     return (
@@ -134,9 +166,10 @@ export default function PreApprovalPage() {
       </div>
 
       {showSummary ? renderSummary() : (
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6" encType="multipart/form-data">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
+          {/* Form fields */}
           <div>
             <label className="block font-medium mb-1">Vehicle Type or Budget</label>
             <input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" />
@@ -163,7 +196,7 @@ export default function PreApprovalPage() {
           </div>
           <div>
             <label className="block font-medium mb-1">Phone Number</label>
-            <input name="phone" type="tel" value={formData.phone} onChange={handlePhoneChange} required className="w-full border p-3 rounded-md" />
+            <input name="phone" value={formData.phone} onChange={handlePhoneChange} required className="w-full border p-3 rounded-md" />
           </div>
           <div>
             <label className="block font-medium mb-1">Current Address</label>
@@ -215,15 +248,7 @@ export default function PreApprovalPage() {
             <label className="text-sm">I consent to a credit check for financing purposes.</label>
           </div>
 
-          <div className="mt-6">
-            <ReCAPTCHA
-              sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
-              onChange={() => setCaptcha(true)}
-            />
-          </div>
-
-          <button type="button" onClick={() => setShowSummary(true)}
-                  className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
+          <button type="button" onClick={() => setShowSummary(true)} className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
             Continue to Review
           </button>
         </form>
