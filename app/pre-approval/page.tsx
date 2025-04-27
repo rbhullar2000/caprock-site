@@ -33,14 +33,8 @@ export default function PreApprovalPage() {
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value.replace(/\D/g, '');
-    let formatted = input;
-    if (input.length > 3 && input.length <= 6) {
-      formatted = `(${input.slice(0, 3)}) ${input.slice(3)}`;
-    } else if (input.length > 6) {
-      formatted = `(${input.slice(0, 3)}) ${input.slice(3, 6)}-${input.slice(6, 10)}`;
-    }
-    setFormData((prev) => ({ ...prev, phone: formatted }));
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, phone: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
