@@ -87,7 +87,7 @@ export default function PreApprovalPage() {
     if (formData.payStub) formDataToSend.append('Pay Stub', formData.payStub);
 
     try {
-      const response = await fetch('https://formspree.io/f/your_form_id_here', {
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID_HERE', { // 👈 replace with your Formspree ID!
         method: 'POST',
         body: formDataToSend,
         headers: {
@@ -120,7 +120,6 @@ export default function PreApprovalPage() {
           } else {
             displayValue = value || 'Not Provided';
           }
-
           return (
             <li key={key}>
               <strong>{formatLabel(key)}:</strong> {displayValue}
@@ -186,7 +185,7 @@ export default function PreApprovalPage() {
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
-          {/* Full input fields */}
+          {/* FORM FIELDS */}
           <div><label>Vehicle Type or Budget</label><input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Down Payment ($)</label><input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <hr /><h2 className="font-semibold text-lg">Personal Information</h2>
@@ -209,9 +208,13 @@ export default function PreApprovalPage() {
             <input type="checkbox" name="creditConsent" checked={formData.creditConsent} onChange={handleChange} className="mt-1" />
             <label className="text-sm">I consent to a credit check for financing purposes.</label>
           </div>
+
+          {/* CAPTCHA */}
           <div className="mt-6">
             <ReCAPTCHA sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj" onChange={() => setCaptcha(true)} />
           </div>
+
+          {/* BUTTON */}
           <button type="button" onClick={() => setShowSummary(true)} className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
             Continue to Review
           </button>
