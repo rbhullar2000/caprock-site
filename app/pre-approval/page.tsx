@@ -26,7 +26,9 @@ export default function PreApprovalPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked, files } = e.target;
+    const { name, value, type, files } = e.target;
+    const checked = (e.target as HTMLInputElement).checked; // FIXED LINE
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : type === 'file' ? (files?.[0] ?? null) : value,
@@ -34,7 +36,7 @@ export default function PreApprovalPage() {
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value.replace(/\D/g, ''); // remove non-digits
+    const input = e.target.value.replace(/\D/g, '');
     let formatted = input;
     if (input.length > 3 && input.length <= 6) {
       formatted = `(${input.slice(0, 3)}) ${input.slice(3)}`;
@@ -100,8 +102,7 @@ export default function PreApprovalPage() {
           if (key === 'idFile' || key === 'payStub') {
             return (
               <li key={key}>
-                <strong>{key === 'idFile' ? 'Photo ID' : 'Pay Stub'}:</strong>{' '}
-                {value ? 'Attached' : 'Not Provided'}
+                <strong>{key === 'idFile' ? 'Photo ID' : 'Pay Stub'}:</strong> {value ? 'Attached' : 'Not Provided'}
               </li>
             );
           }
