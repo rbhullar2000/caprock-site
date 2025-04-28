@@ -18,15 +18,15 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-8 text-white text-lg">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/calculator">Calculator</Link></li>
-          <li><Link href="/pre-approval">Get Pre-Approved</Link></li>
-          <li><Link href="/contact">Contact</Link></li>
-        </ul>
+        <div className="hidden md:flex space-x-8 text-white text-lg">
+          <Link href="/" className="hover:underline">Home</Link>
+          <Link href="/about" className="hover:underline">About</Link>
+          <Link href="/calculator" className="hover:underline">Calculator</Link>
+          <Link href="/pre-approval" className="hover:underline">Get Pre-Approved</Link>
+          <Link href="/contact" className="hover:underline">Contact</Link>
+        </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* Hamburger for Mobile */}
         <button
           onClick={toggleMenu}
           className="md:hidden text-white text-3xl focus:outline-none"
@@ -38,7 +38,7 @@ export default function Navbar() {
       {/* Mobile Dropdown Menu */}
       {isMenuOpen && (
         <div className="md:hidden mt-4 bg-[#0a0e2c] rounded-lg shadow-lg">
-          <ul className="flex flex-col space-y-4 text-white text-center py-4">
+          <ul className="flex flex-col items-center space-y-6 text-white text-lg py-6">
             <li><Link href="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
             <li><Link href="/about" onClick={() => setIsMenuOpen(false)}>About</Link></li>
             <li><Link href="/calculator" onClick={() => setIsMenuOpen(false)}>Calculator</Link></li>
