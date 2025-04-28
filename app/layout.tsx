@@ -10,7 +10,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="bg-gray-900 text-white py-4 px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center space-x-2">
             <Image src="/logo-light.png" alt="Caprock Logo" width={40} height={40} />
-            <span className="font-bold text-lg">Caprock</span>
+            <span className="font-bold text-lg"></span>
           </Link>
           <div className="space-x-6 text-sm sm:text-base">
             <Link href="/" className="hover:underline">Home</Link>
