@@ -11,6 +11,9 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const getLinkClass = (href) => 
+    pathname === href ? 'font-bold' : '';
+
   return (
     <nav className="bg-[#0a0e2c] p-4">
       <div className="flex items-center justify-between">
@@ -21,11 +24,11 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 text-white text-lg">
-          <Link href="/" className={pathname === '/' ? 'font-bold underline' : ''}>Home</Link>
-          <Link href="/about" className={pathname === '/about' ? 'font-bold underline' : ''}>About</Link>
-          <Link href="/calculator" className={pathname === '/calculator' ? 'font-bold underline' : ''}>Calculator</Link>
-          <Link href="/pre-approval" className={pathname === '/pre-approval' ? 'font-bold underline' : ''}>Get Pre-Approved</Link>
-          <Link href="/contact" className={pathname === '/contact' ? 'font-bold underline' : ''}>Contact</Link>
+          <Link href="/" className={getLinkClass('/')}>Home</Link>
+          <Link href="/about" className={getLinkClass('/about')}>About</Link>
+          <Link href="/calculator" className={getLinkClass('/calculator')}>Calculator</Link>
+          <Link href="/pre-approval" className={getLinkClass('/pre-approval')}>Get Pre-Approved</Link>
+          <Link href="/contact" className={getLinkClass('/contact')}>Contact</Link>
         </div>
 
         {/* Mobile Hamburger */}
@@ -44,11 +47,11 @@ export default function Navbar() {
         }`}
       >
         <ul className="flex flex-col items-center space-y-6 text-white text-lg py-6">
-          <li><Link href="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
-          <li><Link href="/about" onClick={() => setIsMenuOpen(false)}>About</Link></li>
-          <li><Link href="/calculator" onClick={() => setIsMenuOpen(false)}>Calculator</Link></li>
-          <li><Link href="/pre-approval" onClick={() => setIsMenuOpen(false)}>Get Pre-Approved</Link></li>
-          <li><Link href="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
+          <li><Link href="/" onClick={() => setIsMenuOpen(false)} className={getLinkClass('/')}>Home</Link></li>
+          <li><Link href="/about" onClick={() => setIsMenuOpen(false)} className={getLinkClass('/about')}>About</Link></li>
+          <li><Link href="/calculator" onClick={() => setIsMenuOpen(false)} className={getLinkClass('/calculator')}>Calculator</Link></li>
+          <li><Link href="/pre-approval" onClick={() => setIsMenuOpen(false)} className={getLinkClass('/pre-approval')}>Get Pre-Approved</Link></li>
+          <li><Link href="/contact" onClick={() => setIsMenuOpen(false)} className={getLinkClass('/contact')}>Contact</Link></li>
         </ul>
       </div>
     </nav>
