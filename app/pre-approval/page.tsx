@@ -6,7 +6,6 @@ export default function PreApprovalPage() {
   const [submitted, setSubmitted] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [captcha, setCaptcha] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState('');
   const [formData, setFormData] = useState({
     vehicle: '',
     downPayment: '',
@@ -25,10 +24,11 @@ export default function PreApprovalPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
+    const target = e.target;
+    const { name, value, type } = target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' && e.target instanceof HTMLInputElement ? e.target.checked : value,
+      [name]: (type === 'checkbox' && target instanceof HTMLInputElement) ? target.checked : value,
     }));
   };
 
@@ -37,23 +37,13 @@ export default function PreApprovalPage() {
     setFormData((prev) => ({ ...prev, phone: value }));
   };
 
-  const handleCaptchaChange = (token: string | null) => {
-    if (token) {
-      setCaptcha(true);
-      setCaptchaToken(token);
-    } else {
-      setCaptcha(false);
-      setCaptchaToken('');
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.creditConsent) {
       alert('Please consent to the credit check.');
       return;
     }
-    if (!captcha || !captchaToken) {
+    if (!captcha) {
       alert('Please complete the reCAPTCHA.');
       return;
     }
@@ -73,7 +63,6 @@ export default function PreApprovalPage() {
       'Annual Income': formData.income,
       'Other Income': formData.otherIncome,
       'Credit Check Consent': formData.creditConsent ? 'Yes' : 'No',
-      'g-recaptcha-response': captchaToken,
     };
 
     try {
@@ -95,6 +84,32 @@ export default function PreApprovalPage() {
       alert('Submission error. Please try again.');
     }
   };
+
+  const renderSummary = () => (
+    <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
+      <ul className="space-y-2 text-sm text-left">
+        {Object.entries(formData).map(([key, value]) => (
+          <li key={key}>
+            <strong>{formatLabel(key)}:</strong> {typeof value === 'boolean' ? (value ? 'Yes' : 'No') : value || 'Not Provided'}
+          </li>
+        ))}
+      </ul>
+
+      <button
+        onClick={handleSubmit}
+        className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
+      >
+        Confirm and Submit
+      </button>
+      <button
+        onClick={() => setShowSummary(false)}
+        className="mt-2 w-full text-gray-600 py-2 underline"
+      >
+        Go Back and Edit
+      </button>
+    </div>
+  );
 
   const formatLabel = (key: string) => {
     const labels: { [key: string]: string } = {
@@ -136,6 +151,7 @@ export default function PreApprovalPage() {
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
+          {/* FORM FIELDS */}
           <div><label>Vehicle Type or Budget</label><input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Down Payment ($)</label><input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
 
@@ -162,41 +178,10 @@ export default function PreApprovalPage() {
           </div>
 
           <div className="mt-6">
-            <ReCAPTCHA
-              sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
-              onChange={handleCaptchaChange}
-            />
+            <ReCAPTCHA sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj" onChange={() => setCaptcha(true)} />
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              if (
-                !formData.vehicle ||
-                !formData.downPayment ||
-                !formData.name ||
-                !formData.dob ||
-                !formData.email ||
-                !formData.phone ||
-                !formData.address ||
-                !formData.addressDuration ||
-                !formData.employer ||
-                !formData.jobTitle ||
-                !formData.jobDuration ||
-                !formData.income ||
-                !formData.creditConsent
-              ) {
-                alert('Please complete all required fields and consent to the credit check.');
-                return;
-              }
-              if (!captcha || !captchaToken) {
-                alert('Please complete the reCAPTCHA.');
-                return;
-              }
-              setShowSummary(true);
-            }}
-            className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold"
-          >
+          <button type="button" onClick={() => setShowSummary(true)} className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
             Continue to Review
           </button>
         </form>
@@ -207,32 +192,4 @@ export default function PreApprovalPage() {
       </div>
     </div>
   );
-
-  function renderSummary() {
-    return (
-      <div className="bg-white shadow-lg p-6 rounded-lg max-w-2xl mx-auto">
-        <h2 className="text-xl font-bold mb-4">Review Your Application</h2>
-        <ul className="space-y-2 text-sm text-left">
-          {Object.entries(formData).map(([key, value]) => (
-            <li key={key}>
-              <strong>{formatLabel(key)}:</strong> {typeof value === 'boolean' ? (value ? 'Yes' : 'No') : value || 'Not Provided'}
-            </li>
-          ))}
-        </ul>
-
-        <button
-          onClick={handleSubmit}
-          className="mt-6 w-full bg-blue-600 text-white py-2 rounded font-semibold"
-        >
-          Confirm and Submit
-        </button>
-        <button
-          onClick={() => setShowSummary(false)}
-          className="mt-2 w-full text-gray-600 py-2 underline"
-        >
-          Go Back and Edit
-        </button>
-      </div>
-    );
-  }
 }
