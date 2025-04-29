@@ -25,10 +25,10 @@ export default function PreApprovalPage() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === 'checkbox' && e.target instanceof HTMLInputElement ? e.target.checked : value,
     }));
   };
 
@@ -37,7 +37,6 @@ export default function PreApprovalPage() {
     setFormData((prev) => ({ ...prev, phone: value }));
   };
 
-  // ✅ Separate properly typed ReCAPTCHA handler
   const handleCaptchaChange = (token: string | null) => {
     if (token) {
       setCaptcha(true);
@@ -74,7 +73,7 @@ export default function PreApprovalPage() {
       'Annual Income': formData.income,
       'Other Income': formData.otherIncome,
       'Credit Check Consent': formData.creditConsent ? 'Yes' : 'No',
-      'g-recaptcha-response': captchaToken, // ✅ real reCAPTCHA token
+      'g-recaptcha-response': captchaToken,
     };
 
     try {
@@ -137,7 +136,6 @@ export default function PreApprovalPage() {
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
-          {/* Form Fields */}
           <div><label>Vehicle Type or Budget</label><input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Down Payment ($)</label><input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
 
@@ -158,13 +156,11 @@ export default function PreApprovalPage() {
           <div><label>Annual Income ($)</label><input name="income" value={formData.income} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Other Income (Optional)</label><input name="otherIncome" value={formData.otherIncome} onChange={handleChange} className="w-full border p-3 rounded-md" /></div>
 
-          {/* Credit Consent */}
           <div className="flex items-start gap-2 mt-4">
             <input type="checkbox" name="creditConsent" checked={formData.creditConsent} onChange={handleChange} className="mt-1" />
             <label className="text-sm">I consent to a credit check for financing purposes.</label>
           </div>
 
-          {/* reCAPTCHA */}
           <div className="mt-6">
             <ReCAPTCHA
               sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
@@ -172,7 +168,6 @@ export default function PreApprovalPage() {
             />
           </div>
 
-          {/* Continue to Review Button */}
           <button
             type="button"
             onClick={() => {
