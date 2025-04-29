@@ -6,6 +6,7 @@ export default function PreApprovalPage() {
   const [submitted, setSubmitted] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [captcha, setCaptcha] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState('');
   const [formData, setFormData] = useState({
     vehicle: '',
     downPayment: '',
@@ -43,7 +44,7 @@ export default function PreApprovalPage() {
       alert('Please consent to the credit check.');
       return;
     }
-    if (!captcha) {
+    if (!captcha || !captchaToken) {
       alert('Please complete the reCAPTCHA.');
       return;
     }
@@ -63,6 +64,7 @@ export default function PreApprovalPage() {
       'Annual Income': formData.income,
       'Other Income': formData.otherIncome,
       'Credit Check Consent': formData.creditConsent ? 'Yes' : 'No',
+      'g-recaptcha-response': captchaToken, // 🛠️ Sending real reCAPTCHA token
     };
 
     try {
@@ -177,7 +179,13 @@ export default function PreApprovalPage() {
           </div>
 
           <div className="mt-6">
-            <ReCAPTCHA sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj" onChange={() => setCaptcha(true)} />
+            <ReCAPTCHA
+              sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj"
+              onChange={(token) => {
+                setCaptcha(true);
+                setCaptchaToken(token || '');
+              }}
+            />
           </div>
 
           <button
@@ -201,7 +209,7 @@ export default function PreApprovalPage() {
                 alert('Please complete all required fields and consent to the credit check.');
                 return;
               }
-              if (!captcha) {
+              if (!captcha || !captchaToken) {
                 alert('Please complete the reCAPTCHA.');
                 return;
               }
