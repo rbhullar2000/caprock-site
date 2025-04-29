@@ -151,7 +151,6 @@ export default function PreApprovalPage() {
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6">
           <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
-          {/* FORM FIELDS */}
           <div><label>Vehicle Type or Budget</label><input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
           <div><label>Down Payment ($)</label><input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
 
@@ -181,7 +180,35 @@ export default function PreApprovalPage() {
             <ReCAPTCHA sitekey="6LfrDyUrAAAAAIbl0Fc9plgs2jKxS6cBF7IYlHYj" onChange={() => setCaptcha(true)} />
           </div>
 
-          <button type="button" onClick={() => setShowSummary(true)} className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
+          <button
+            type="button"
+            onClick={() => {
+              if (
+                !formData.vehicle ||
+                !formData.downPayment ||
+                !formData.name ||
+                !formData.dob ||
+                !formData.email ||
+                !formData.phone ||
+                !formData.address ||
+                !formData.addressDuration ||
+                !formData.employer ||
+                !formData.jobTitle ||
+                !formData.jobDuration ||
+                !formData.income ||
+                !formData.creditConsent
+              ) {
+                alert('Please complete all required fields and consent to the credit check.');
+                return;
+              }
+              if (!captcha) {
+                alert('Please complete the reCAPTCHA.');
+                return;
+              }
+              setShowSummary(true);
+            }}
+            className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold"
+          >
             Continue to Review
           </button>
         </form>
