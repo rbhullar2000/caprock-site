@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Accordion,
-  AccordionItem,is
+  AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "../../components/ui/accordion";
