@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const form = pdfDoc.getForm();
 
-  const fieldMap = {
+  const fieldMap: Record<string, string> = {
     // Applicant
     firstName: 'firstname',
     middleName: 'middlename',
