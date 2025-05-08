@@ -5,7 +5,13 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Caprock Capital Group | Auto Financing',
   description: 'Fast and trusted vehicle financing solutions with Caprock Capital Group. Get pre-approved today!',
-  keywords: ['Auto Financing', 'Car Loans', 'Vehicle Pre-Approval', 'Caprock Capital Group', 'Canada Car Financing'],
+  keywords: [
+    'Auto Financing',
+    'Car Loans',
+    'Vehicle Pre-Approval',
+    'Caprock Capital Group',
+    'Canada Car Financing',
+  ],
   authors: [{ name: 'Caprock Capital Group', url: 'https://www.caprockcapital.ca' }],
   creator: 'Caprock Capital Group',
   publisher: 'Caprock Capital Group',
@@ -40,10 +46,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="scroll-smooth">
+      <body className="min-h-screen bg-white text-gray-900 antialiased">
         <Navbar />
-        {children}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {children}
+        </main>
       </body>
     </html>
   );
