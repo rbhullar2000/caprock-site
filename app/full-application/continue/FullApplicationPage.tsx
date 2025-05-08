@@ -1,12 +1,10 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
-
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Accordion,
-  AccordionItem,
+  AccordionItem,is
   AccordionTrigger,
   AccordionContent,
 } from "../../components/ui/accordion";
