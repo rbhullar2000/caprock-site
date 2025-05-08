@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from "../components/ui/accordion";
+} } from "../../components/ui/accordion";
 
 export default function FullApplicationPage() {
   const searchParams = useSearchParams();
