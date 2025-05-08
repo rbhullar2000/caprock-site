@@ -1,7 +1,7 @@
 export default function HomePage() {
   return (
-    <div className="text-center text-3xl font-bold text-red-600 py-20">
-      THIS IS THE NEW HOMEPAGE — DEPLOYED
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 text-center">
+      <h1 className="text-4xl font-bold text-red-600">🚀 Caprock Homepage is LIVE 🚀</h1>
     </div>
   );
 }
