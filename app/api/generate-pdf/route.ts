@@ -194,11 +194,11 @@ export async function POST(req: NextRequest) {
     subject: 'New Credit Application Submission',
     text: 'A new credit application has been submitted. See attached PDF.',
     attachments: [
-      {
-        filename: 'credit-application.pdf',
-        content: Buffer.from(pdfBytesFilled),
-      },
-    ],
+  {
+    filename: 'credit-application.pdf',
+    content: Buffer.from(pdfBytesFilled),
+  },
+],
   });
 
   return NextResponse.json({ success: true });
