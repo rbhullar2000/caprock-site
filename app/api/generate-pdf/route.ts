@@ -196,7 +196,7 @@ export async function POST(req: NextRequest) {
     attachments: [
       {
         filename: 'credit-application.pdf',
-        content: pdfBytesFilled,
+        content: Buffer.from(pdfBytesFilled),
       },
     ],
   });
