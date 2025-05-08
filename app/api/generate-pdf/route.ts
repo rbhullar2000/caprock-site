@@ -7,7 +7,7 @@ import nodemailer from 'nodemailer';
 import type { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data: { [key: string]: any } = await req.json();
   const filePath = path.join(process.cwd(), 'public', 'Credit Application CapRock Capital Group.pdf');
   const pdfBytes = fs.readFileSync(filePath);
   const pdfDoc = await PDFDocument.load(pdfBytes);
