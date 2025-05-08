@@ -8,6 +8,7 @@ import type { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const data: Record<string, string> = await req.json();
+
   const filePath = path.join(process.cwd(), 'public', 'Credit Application CapRock Capital Group.pdf');
   const pdfBytes = fs.readFileSync(filePath);
   const pdfDoc = await PDFDocument.load(pdfBytes);
@@ -133,7 +134,7 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  if (data.vin) {
+  if (typeof data.vin === 'string') {
     const vin = data.vin.toUpperCase().slice(0, 17).padEnd(17, ' ');
     for (let i = 0; i < 17; i++) {
       try {
@@ -149,7 +150,7 @@ export async function POST(req: NextRequest) {
     const pdfFieldName = fieldMap[key];
     try {
       const checkbox = form.getCheckBox(pdfFieldName);
-      if (data[key]) checkbox.check();
+      if (data[key] === 'true') checkbox.check();
       else checkbox.uncheck();
     } catch (err) {
       console.warn(`Checkbox '${pdfFieldName}' missing.`);
@@ -157,16 +158,16 @@ export async function POST(req: NextRequest) {
   });
 
   try {
-    if (data.own === 'Own') form.getCheckBox('own').check();
-    if (data.rent === 'Rent') form.getCheckBox('rent').check();
-    if (data.coOwn === 'Own') form.getCheckBox('coapplicantown').check();
-    if (data.coRent === 'Rent') form.getCheckBox('coapplicantrent').check();
+    if (data.own?.toLowerCase() === 'own') form.getCheckBox('own').check();
+    if (data.rent?.toLowerCase() === 'rent') form.getCheckBox('rent').check();
+    if (data.coOwn?.toLowerCase() === 'own') form.getCheckBox('coapplicantown').check();
+    if (data.coRent?.toLowerCase() === 'rent') form.getCheckBox('coapplicantrent').check();
   } catch (err) {
     console.warn('Own/Rent checkbox error:', err);
   }
 
   try {
-    if (data.creditConsent) {
+    if (data.creditConsent === 'true') {
       const checkbox = form.getCheckBox('creditconsent');
       checkbox.check();
     }
