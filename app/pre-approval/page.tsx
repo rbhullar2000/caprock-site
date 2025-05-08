@@ -31,7 +31,9 @@ export default function PreApprovalPage() {
     creditConsent: false,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // ...
+}
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
