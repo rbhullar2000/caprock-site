@@ -1,58 +1,25 @@
 'use client';
-import { useState } from 'react';
+
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname();
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
-
-  const getLinkClass = (href: string) =>
-    `hover:underline ${pathname === href ? 'font-bold underline' : ''}`;
-
   return (
-    <nav className="bg-[#0a0e2c] text-white p-4 w-full shadow-md">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <nav className="bg-white border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
-          <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
+        <Link href="/" className="flex items-center space-x-2" aria-label="Caprock Home">
+          <img src="/logo.png" alt="Caprock Logo" className="h-10 w-auto" />
+          <span className="text-xl font-bold text-gray-900">Caprock</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-8 text-lg">
-          <Link href="/"><span className={getLinkClass('/')}>Home</span></Link>
-          <Link href="/about"><span className={getLinkClass('/about')}>About</span></Link>
-          <Link href="/calculator"><span className={getLinkClass('/calculator')}>Calculator</span></Link>
-          <Link href="/pre-approval"><span className={getLinkClass('/pre-approval')}>Get Pre-Approved</span></Link>
-          <Link href="/contact"><span className={getLinkClass('/contact')}>Contact</span></Link>
+        {/* Navigation Links */}
+        <div className="flex space-x-6 text-sm font-medium text-gray-700">
+          <Link href="/" className="hover:text-primary">Home</Link>
+          <Link href="/about" className="hover:text-primary">About</Link>
+          <Link href="/calculator" className="hover:text-primary">Calculator</Link>
+          <Link href="/pre-approval" className="hover:text-primary">Pre-Approval</Link>
+          <Link href="/contact" className="hover:text-primary">Contact</Link>
         </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={toggleMenu}
-          className="md:hidden text-white focus:outline-none text-2xl"
-          aria-label="Toggle navigation menu"
-        >
-          ☰
-        </button>
-      </div>
-
-      {/* Mobile Dropdown */}
-      <div
-        className={`transition-all duration-300 ease-in-out md:hidden ${
-          isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-        }`}
-      >
-        <ul className="flex flex-col items-center space-y-4 py-4 text-lg">
-          <li><Link href="/"><span onClick={closeMenu} className={getLinkClass('/')}>Home</span></Link></li>
-          <li><Link href="/about"><span onClick={closeMenu} className={getLinkClass('/about')}>About</span></Link></li>
-          <li><Link href="/calculator"><span onClick={closeMenu} className={getLinkClass('/calculator')}>Calculator</span></Link></li>
-          <li><Link href="/pre-approval"><span onClick={closeMenu} className={getLinkClass('/pre-approval')}>Get Pre-Approved</span></Link></li>
-          <li><Link href="/contact"><span onClick={closeMenu} className={getLinkClass('/contact')}>Contact</span></Link></li>
-        </ul>
       </div>
     </nav>
   );
