@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const form = pdfDoc.getForm();
 
-  const fieldMap = {
+  const fieldMap: { [key: string]: string } = {
     // Applicant
     firstName: 'firstname',
     middleName: 'middlename',
@@ -31,10 +31,13 @@ export async function POST(req: NextRequest) {
     addressProvince: 'province',
     addressPostalCode: 'postalcode',
     addressDuration: 'homeduration',
+    previousAddress: 'previousaddress',
+    previousCity: 'previouscity',
+    previousProvince: 'previousprovince',
+    previousPostalCode: 'previouspostalcode',
+    previousAddressDuration: 'previousaddressduration',
     landlordName: 'landlordname',
     landlordNumber: 'landlordphone',
-    own: 'own',
-    rent: 'rent',
     mortgageRentAmount: 'mortgage_rent_amount',
     mortgageBalance: 'mortgagebalance',
     mortgageHolder: 'mortgageholder',
@@ -48,11 +51,6 @@ export async function POST(req: NextRequest) {
     previousEmployer: 'previousemployer',
     previousEmployerPhone: 'previousemployerphone',
     previousEmployerDuration: 'previousemployerduration',
-    previousAddress: 'previousaddress',
-    previousCity: 'previouscity',
-    previousProvince: 'previousprovince',
-    previousPostalCode: 'previouspostalcode',
-    previousAddressDuration: 'previousaddressduration',
 
     // Co-Applicant
     coFirstName: 'coapplicantgivenname',
@@ -76,6 +74,12 @@ export async function POST(req: NextRequest) {
     coPreviousProvince: 'coapplicantpreviousprovince',
     coPreviousPostalCode: 'coapplicantpreviouspostalcode',
     coPreviousAddressDuration: 'coapplicantpreviousaddressduration',
+    coLandlordName: 'coapplicantlandlordname',
+    coLandlordNumber: 'coapplicantlandlordphone',
+    coMortgageRentAmount: 'coapplicant_mortgage_rent_amount',
+    coMortgageBalance: 'coapplicantmortgagebalance',
+    coMortgageHolder: 'coapplicantmortgageholder',
+    coMarketValue: 'coapplicantmarketvalue',
     coEmployer: 'coapplicantemployername',
     coEmployerAddress: 'coapplicantemployeraddress',
     coJobTitle: 'coapplicantoccupation',
@@ -84,20 +88,14 @@ export async function POST(req: NextRequest) {
     coNatureOfBusiness: 'coapplicantnameofbusiness',
     coIncome: 'coapplicantmonthlyincome',
     coOtherIncome: 'coapplicantsecondincome',
-    coMortgageBalance: 'coapplicantmortgagebalance',
-    coMortgageRentAmount: 'coapplicant_mortgage_rent_amount',
-    coMarketValue: 'coapplicantmarketvalue',
-    coMortgageHolder: 'coapplicantmortgageholder',
-    coLandlordName: 'coapplicantlandlordname',
-    coLandlordNumber: 'coapplicantlandlordphone',
 
-    // Vehicle Info
+    // Vehicle
     vehicle: 'vehiclesoldmodel',
     make: 'vehiclesoldmake',
     model: 'vehiclesoldmodel',
     year: 'vehiclesoldyear',
     kms: 'vehiclesoldkms',
-    vin: 'vin',
+    vin: 'vin', // Will be handled specially below
     downPayment: 'vehicledownpmt',
     price: 'vehicleprice',
     docFee: 'vehicledocfee',
@@ -112,15 +110,17 @@ export async function POST(req: NextRequest) {
     date: 'date',
   };
 
-  Object.entries(fieldMap).forEach(([key, fieldName]) => {
+  // Fill all text fields
+  Object.entries(fieldMap).forEach(([key, pdfField]) => {
     try {
-      const field = form.getTextField(fieldName);
+      const field = form.getTextField(pdfField);
       field.setText(data[key] || '');
     } catch (err) {
-      console.warn(`Field '${fieldName}' not found in PDF.`);
+      console.warn(`Text field '${pdfField}' not found.`);
     }
   });
 
+  // VIN fields (VIN1 to VIN17)
   if (data.vin) {
     const vin = data.vin.toUpperCase().slice(0, 17).padEnd(17, ' ');
     for (let i = 0; i < 17; i++) {
@@ -133,36 +133,33 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  [
+  // Checkbox fields
+  const checkboxKeys = [
     'own',
     'rent',
     'coapplicantown',
     'coapplicantrent',
     'damageover2000',
     'rebuilt',
-    'vehicleoutofprovince'
-  ].forEach((key) => {
+    'vehicleoutofprovince',
+    'creditconsent',
+  ];
+
+  checkboxKeys.forEach((key) => {
     try {
-      if (data[key] === true || data[key] === 'on' || data[key] === 'true' || data[key] === 1) {
+      const value = data[key];
+      if (value === true || value === 'true' || value === 'on' || value === 1) {
         form.getCheckBox(key).check();
       }
     } catch (err) {
-      console.warn(`Checkbox '${key}' not found.`);
+      console.warn(`Checkbox '${key}' not found or failed to check.`);
     }
   });
-
-  try {
-    if (data.creditConsent) {
-      const checkbox = form.getCheckBox('creditconsent');
-      checkbox.check();
-    }
-  } catch (err) {
-    console.warn('Credit Consent checkbox missing or error:', err);
-  }
 
   form.flatten();
   const pdfBytesFilled = await pdfDoc.save();
 
+  // Email the PDF
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT),
