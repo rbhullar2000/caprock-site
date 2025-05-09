@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  form.flatten();
+  //form.flatten();
   const pdfBytesFilled = await pdfDoc.save();
 
   const transporter = nodemailer.createTransport({
