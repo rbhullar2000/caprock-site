@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     model: 'vehiclesoldmodel',
     year: 'vehiclesoldyear',
     kms: 'vehiclesoldkms',
-    vin: 'vin', // Will be handled specially below
+    vin: 'vin', // special logic below
     downPayment: 'vehicledownpmt',
     price: 'vehicleprice',
     docFee: 'vehicledocfee',
@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  // VIN fields (VIN1 to VIN17)
+  // VIN fields (VIN1–VIN17)
   if (data.vin) {
     const vin = data.vin.toUpperCase().slice(0, 17).padEnd(17, ' ');
     for (let i = 0; i < 17; i++) {
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Checkbox fields
+  // Checkbox rendering
   const checkboxKeys = [
     'own',
     'rent',
@@ -147,19 +147,25 @@ export async function POST(req: NextRequest) {
 
   checkboxKeys.forEach((key) => {
     try {
+      const checkbox = form.getCheckBox(key);
       const value = data[key];
       if (value === true || value === 'true' || value === 'on' || value === 1) {
-        form.getCheckBox(key).check();
+        checkbox.check();
+      } else {
+        checkbox.uncheck();
       }
     } catch (err) {
       console.warn(`Checkbox '${key}' not found or failed to check.`);
     }
   });
 
+  // Update rendering so checkboxes appear
+  form.updateFieldAppearances();
   form.flatten();
+
   const pdfBytesFilled = await pdfDoc.save();
 
-  // Email the PDF
+  // Email sending (PRODUCTION ONLY)
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT),
