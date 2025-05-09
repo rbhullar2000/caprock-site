@@ -109,7 +109,6 @@ export async function POST(req: NextRequest) {
     date: 'date',
   };
 
-  // Fill text fields
   Object.entries(fieldMap).forEach(([key, fieldName]) => {
     try {
       const field = form.getTextField(fieldName);
@@ -119,7 +118,6 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  // VIN1–VIN17 fields
   if (data.vin) {
     const vin = data.vin.toUpperCase().slice(0, 17).padEnd(17, ' ');
     for (let i = 0; i < 17; i++) {
@@ -132,34 +130,25 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Checkboxes: co-applicant and vehicle (real checkboxes)
   [
+    'own',
+    'rent',
+    'coapplicantown',
+    'coapplicantrent',
     'damageover2000',
     'rebuilt',
-    'vehicleoutofprovince',
-    'coapplicantown',
-    'coapplicantrent'
-  ].forEach((fieldName) => {
+    'vehicleoutofprovince'
+  ].forEach((key) => {
     try {
-      const checkbox = form.getCheckBox(fieldName);
-      if (data[fieldName]) checkbox.check();
+      if (data[key]) form.getCheckBox(key).check();
     } catch (err) {
-      console.warn(`Checkbox '${fieldName}' not found.`);
+      console.warn(`Checkbox '${key}' not found.`);
     }
   });
-
-  // Real checkboxes for applicant only
-  try {
-    if (data.own) form.getCheckBox('own').check();
-    if (data.rent) form.getCheckBox('rent').check();
-  } catch (err) {
-    console.warn('Applicant Own/Rent checkbox error:', err);
-  }
 
   form.flatten();
   const pdfBytesFilled = await pdfDoc.save();
 
-  // Only send email in production
   if (process.env.NODE_ENV === 'production') {
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
