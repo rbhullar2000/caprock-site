@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     model: 'vehiclesoldmodel',
     year: 'vehiclesoldyear',
     kms: 'vehiclesoldkms',
-    vin: 'vin', // special logic below
+    vin: 'vin',
     downPayment: 'vehicledownpmt',
     price: 'vehicleprice',
     docFee: 'vehicledocfee',
@@ -110,17 +110,17 @@ export async function POST(req: NextRequest) {
     date: 'date',
   };
 
-  // Fill all text fields
-  Object.entries(fieldMap).forEach(([key, pdfField]) => {
+  // Fill text fields
+  Object.entries(fieldMap).forEach(([key, fieldName]) => {
     try {
-      const field = form.getTextField(pdfField);
+      const field = form.getTextField(fieldName);
       field.setText(data[key] || '');
     } catch (err) {
-      console.warn(`Text field '${pdfField}' not found.`);
+      console.warn(`Text field '${fieldName}' not found.`);
     }
   });
 
-  // VIN fields (VIN1–VIN17)
+  // VIN logic
   if (data.vin) {
     const vin = data.vin.toUpperCase().slice(0, 17).padEnd(17, ' ');
     for (let i = 0; i < 17; i++) {
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Checkbox rendering
+  // Handle checkbox rendering
   const checkboxKeys = [
     'own',
     'rent',
@@ -149,23 +149,23 @@ export async function POST(req: NextRequest) {
     try {
       const checkbox = form.getCheckBox(key);
       const value = data[key];
-      if (value === true || value === 'true' || value === 'on' || value === 1) {
-        checkbox.check();
+      if (value === true || value === 'true' || value === 'on') {
+        checkbox.check('Yes'); // Explicit value to ensure visibility
       } else {
         checkbox.uncheck();
       }
     } catch (err) {
-      console.warn(`Checkbox '${key}' not found or failed to check.`);
+      console.warn(`Checkbox '${key}' not found or failed to render.`);
     }
   });
 
-  // Update rendering so checkboxes appear
+  // Force visual updates to checkboxes
   form.updateFieldAppearances();
   form.flatten();
 
   const pdfBytesFilled = await pdfDoc.save();
 
-  // Email sending (PRODUCTION ONLY)
+  // Send email (in production)
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT),
