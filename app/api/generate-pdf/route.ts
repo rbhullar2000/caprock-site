@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const form = pdfDoc.getForm();
 
-  const fieldMap = {
+const fieldMap = {
     // Applicant
     firstName: 'firstname',
     middleName: 'middlename',
@@ -33,6 +33,8 @@ export async function POST(req: NextRequest) {
     addressDuration: 'homeduration',
     landlordName: 'landlordname',
     landlordNumber: 'landlordphone',
+    own: 'own',
+    rent: 'rent',
     mortgageRentAmount: 'mortgage_rent_amount',
     mortgageBalance: 'mortgagebalance',
     mortgageHolder: 'mortgageholder',
@@ -95,7 +97,6 @@ export async function POST(req: NextRequest) {
     model: 'vehiclesoldmodel',
     year: 'vehiclesoldyear',
     kms: 'vehiclesoldkms',
-    vin: 'vin',
     downPayment: 'vehicledownpmt',
     price: 'vehicleprice',
     docFee: 'vehicledocfee',
@@ -106,11 +107,22 @@ export async function POST(req: NextRequest) {
     tradeMake: 'trademake',
     tradeModel: 'trademodel',
 
+    // Checkboxes
+    damageOver2000: 'damageover2000',
+    rebuilt: 'rebuilt',
+    outOfProvince: 'vehicleoutofprovince',
+    ownCheckbox: 'own',
+    rentCheckbox: 'rent',
+    coOwnCheckbox: 'coapplicantown',
+    coRentCheckbox: 'coapplicantrent',
+
     // Other
     date: 'date',
+    creditConsent: 'creditconsent',
   };
 
   Object.entries(fieldMap).forEach(([key, fieldName]) => {
+    if (['vin', 'ownCheckbox', 'rentCheckbox', 'coOwnCheckbox', 'coRentCheckbox'].includes(key)) return;
     try {
       const field = form.getTextField(fieldName);
       field.setText(data[key] || '');
@@ -131,43 +143,54 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  [
-    'own',
-    'rent',
-    'coapplicantown',
-    'coapplicantrent',
-    'damageover2000',
-    'rebuilt',
-    'vehicleoutofprovince'
-  ].forEach((key) => {
+  ['damageOver2000', 'rebuilt', 'outOfProvince'].forEach(key => {
+    const pdfFieldName = fieldMap[key];
     try {
-      if (data[key] === true || data[key] === 'on' || data[key] === 'true' || data[key] === 1) {
-        form.getCheckBox(key).check();
-      }
+      const checkbox = form.getCheckBox(pdfFieldName);
+      if (data[key]) checkbox.check();
+      else checkbox.uncheck();
     } catch (err) {
-      console.warn(`Checkbox '${key}' not found.`);
+      console.warn(`Checkbox '${pdfFieldName}' missing.`);
     }
   });
+
+  try {
+    if (data.own === 'Own') form.getCheckBox('own').check();
+    if (data.rent === 'Rent') form.getCheckBox('rent').check();
+    if (data.coOwn === 'Own') form.getCheckBox('coapplicantown').check();
+    if (data.coRent === 'Rent') form.getCheckBox('coapplicantrent').check();
+  } catch (err) {
+    console.warn('Own/Rent checkbox error:', err);
+  }
+
+  try {
+    if (data.creditConsent) {
+      const checkbox = form.getCheckBox('creditconsent');
+      checkbox.check();
+    }
+  } catch (err) {
+    console.warn('Credit Consent checkbox missing or error:', err);
+  }
 
   form.flatten();
   const pdfBytesFilled = await pdfDoc.save();
 
-  if (process.env.NODE_ENV === 'production') {
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT),
-      secure: Number(process.env.EMAIL_PORT) === 465,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+  const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: Number(process.env.EMAIL_PORT),
+    secure: Number(process.env.EMAIL_PORT) === 465,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: 'rob@caprockcapital.ca',
-      subject: 'New Credit Application Submission',
-      text: 'A new credit application has been submitted. See attached PDF.',
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: 'rob@caprockcapital.ca',
+    subject: 'New Credit Application Submission',
+    text: 'A new credit application has been submitted. See attached PDF.',
+ 
       attachments: [
         {
           filename: 'credit-application.pdf',
