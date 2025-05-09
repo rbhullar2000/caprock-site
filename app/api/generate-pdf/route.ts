@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   const form = pdfDoc.getForm();
 
   const fieldMap: { [key: string]: string } = {
-    // Applicant
+    // Text fields
     firstName: 'firstname',
     middleName: 'middlename',
     lastName: 'lastname',
@@ -51,8 +51,6 @@ export async function POST(req: NextRequest) {
     previousEmployer: 'previousemployer',
     previousEmployerPhone: 'previousemployerphone',
     previousEmployerDuration: 'previousemployerduration',
-
-    // Co-Applicant
     coFirstName: 'coapplicantgivenname',
     coMiddleName: 'coapplicantmiddlename',
     coLastName: 'coapplicantlastname',
@@ -88,14 +86,11 @@ export async function POST(req: NextRequest) {
     coNatureOfBusiness: 'coapplicantnameofbusiness',
     coIncome: 'coapplicantmonthlyincome',
     coOtherIncome: 'coapplicantsecondincome',
-
-    // Vehicle
     vehicle: 'vehiclesoldmodel',
     make: 'vehiclesoldmake',
     model: 'vehiclesoldmodel',
     year: 'vehiclesoldyear',
     kms: 'vehiclesoldkms',
-    vin: 'vin',
     downPayment: 'vehicledownpmt',
     price: 'vehicleprice',
     docFee: 'vehicledocfee',
@@ -105,35 +100,31 @@ export async function POST(req: NextRequest) {
     tradeYear: 'tradeinyear',
     tradeMake: 'trademake',
     tradeModel: 'trademodel',
-
-    // Other
     date: 'date',
   };
 
   // Fill text fields
   Object.entries(fieldMap).forEach(([key, fieldName]) => {
     try {
-      const field = form.getTextField(fieldName);
-      field.setText(data[key] || '');
+      form.getTextField(fieldName).setText(data[key] || '');
     } catch (err) {
       console.warn(`Text field '${fieldName}' not found.`);
     }
   });
 
-  // VIN fields
+  // VIN letters
   if (data.vin) {
     const vin = data.vin.toUpperCase().slice(0, 17).padEnd(17, ' ');
     for (let i = 0; i < 17; i++) {
       try {
-        const field = form.getTextField(`VIN${i + 1}`);
-        field.setText(vin[i]);
+        form.getTextField(`VIN${i + 1}`).setText(vin[i]);
       } catch (err) {
         console.warn(`VIN field VIN${i + 1} not found.`);
       }
     }
   }
 
-  // Checkbox fields
+  // Checkboxes
   const checkboxKeys = [
     'own',
     'rent',
@@ -147,25 +138,17 @@ export async function POST(req: NextRequest) {
 
   checkboxKeys.forEach((key) => {
     try {
-      const checkbox = form.getCheckBox(key);
-      const value = data[key];
-      if (value === true || value === 'true' || value === 'on') {
-        checkbox.check();
-      } else {
-        checkbox.uncheck();
-      }
+      const cb = form.getCheckBox(key);
+      if (data[key] === true || data[key] === 'true' || data[key] === 'on') cb.check();
+      else cb.uncheck();
     } catch (err) {
-      console.warn(`Checkbox '${key}' not found or failed to render.`);
+      console.warn(`Checkbox '${key}' missing or not a checkbox.`);
     }
   });
 
-  // Ensure checkboxes render properly
-  form.updateFieldAppearances();
   form.flatten();
-
   const pdfBytesFilled = await pdfDoc.save();
 
-  // Email PDF
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT),
