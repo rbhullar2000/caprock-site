@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Handle checkbox-lookalike fields (styled as text fields)
+  // Checkboxes: co-applicant and vehicle (real checkboxes)
   [
     'damageover2000',
     'rebuilt',
@@ -141,10 +141,10 @@ export async function POST(req: NextRequest) {
     'coapplicantrent'
   ].forEach((fieldName) => {
     try {
-      const field = form.getTextField(fieldName);
-      field.setText(data[fieldName] ? 'X' : '');
+      const checkbox = form.getCheckBox(fieldName);
+      if (data[fieldName]) checkbox.check();
     } catch (err) {
-      console.warn(`Field '${fieldName}' not found or not a text field.`);
+      console.warn(`Checkbox '${fieldName}' not found.`);
     }
   });
 
