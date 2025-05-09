@@ -140,7 +140,9 @@ export async function POST(req: NextRequest) {
     'vehicleoutofprovince'
   ].forEach((key) => {
     try {
-      if (data[key]) form.getCheckBox(key).check();
+      if (data[key] === true || data[key] === 'on' || data[key] === 'true' || data[key] === 1) {
+        form.getCheckBox(key).check();
+      }
     } catch (err) {
       console.warn(`Checkbox '${key}' not found.`);
     }
