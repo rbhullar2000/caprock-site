@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  // VIN logic
+  // VIN fields
   if (data.vin) {
     const vin = data.vin.toUpperCase().slice(0, 17).padEnd(17, ' ');
     for (let i = 0; i < 17; i++) {
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Handle checkbox rendering
+  // Checkbox fields
   const checkboxKeys = [
     'own',
     'rent',
@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
       const checkbox = form.getCheckBox(key);
       const value = data[key];
       if (value === true || value === 'true' || value === 'on') {
-        checkbox.check('Yes'); // Explicit value to ensure visibility
+        checkbox.check();
       } else {
         checkbox.uncheck();
       }
@@ -159,13 +159,13 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  // Force visual updates to checkboxes
+  // Ensure checkboxes render properly
   form.updateFieldAppearances();
   form.flatten();
 
   const pdfBytesFilled = await pdfDoc.save();
 
-  // Send email (in production)
+  // Email PDF
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: Number(process.env.EMAIL_PORT),
