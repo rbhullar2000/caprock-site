@@ -132,8 +132,14 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Handle checkbox-lookalike fields that are actually text fields
-  ['damageover2000', 'rebuilt', 'vehicleoutofprovince'].forEach((fieldName) => {
+  // Handle checkbox-lookalike fields (styled as text fields)
+  [
+    'damageover2000',
+    'rebuilt',
+    'vehicleoutofprovince',
+    'coapplicantown',
+    'coapplicantrent'
+  ].forEach((fieldName) => {
     try {
       const field = form.getTextField(fieldName);
       field.setText(data[fieldName] ? 'X' : '');
@@ -142,14 +148,12 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  // Own/rent checkboxes
+  // Real checkboxes for applicant only
   try {
     if (data.own) form.getCheckBox('own').check();
     if (data.rent) form.getCheckBox('rent').check();
-    if (data.coapplicantown) form.getCheckBox('coapplicantown').check();
-    if (data.coapplicantrent) form.getCheckBox('coapplicantrent').check();
   } catch (err) {
-    console.warn('Own/Rent checkbox error:', err);
+    console.warn('Applicant Own/Rent checkbox error:', err);
   }
 
   form.flatten();
