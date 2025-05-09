@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const pdfDoc = await PDFDocument.load(pdfBytes);
   const form = pdfDoc.getForm();
 
-const fieldMap = {
+  const fieldMap = {
     // Applicant
     firstName: 'firstname',
     middleName: 'middlename',
@@ -97,6 +97,7 @@ const fieldMap = {
     model: 'vehiclesoldmodel',
     year: 'vehiclesoldyear',
     kms: 'vehiclesoldkms',
+    vin: 'vin',
     downPayment: 'vehicledownpmt',
     price: 'vehicleprice',
     docFee: 'vehicledocfee',
@@ -107,22 +108,11 @@ const fieldMap = {
     tradeMake: 'trademake',
     tradeModel: 'trademodel',
 
-    // Checkboxes
-    damageOver2000: 'damageover2000',
-    rebuilt: 'rebuilt',
-    outOfProvince: 'vehicleoutofprovince',
-    ownCheckbox: 'own',
-    rentCheckbox: 'rent',
-    coOwnCheckbox: 'coapplicantown',
-    coRentCheckbox: 'coapplicantrent',
-
     // Other
     date: 'date',
-    creditConsent: 'creditconsent',
   };
 
   Object.entries(fieldMap).forEach(([key, fieldName]) => {
-    if (['vin', 'ownCheckbox', 'rentCheckbox', 'coOwnCheckbox', 'coRentCheckbox'].includes(key)) return;
     try {
       const field = form.getTextField(fieldName);
       field.setText(data[key] || '');
@@ -143,25 +133,23 @@ const fieldMap = {
     }
   }
 
-  ['damageOver2000', 'rebuilt', 'outOfProvince'].forEach(key => {
-    const pdfFieldName = fieldMap[key];
+  [
+    'own',
+    'rent',
+    'coapplicantown',
+    'coapplicantrent',
+    'damageover2000',
+    'rebuilt',
+    'vehicleoutofprovince'
+  ].forEach((key) => {
     try {
-      const checkbox = form.getCheckBox(pdfFieldName);
-      if (data[key]) checkbox.check();
-      else checkbox.uncheck();
+      if (data[key] === true || data[key] === 'on' || data[key] === 'true' || data[key] === 1) {
+        form.getCheckBox(key).check();
+      }
     } catch (err) {
-      console.warn(`Checkbox '${pdfFieldName}' missing.`);
+      console.warn(`Checkbox '${key}' not found.`);
     }
   });
-
-  try {
-    if (data.own === 'Own') form.getCheckBox('own').check();
-    if (data.rent === 'Rent') form.getCheckBox('rent').check();
-    if (data.coOwn === 'Own') form.getCheckBox('coapplicantown').check();
-    if (data.coRent === 'Rent') form.getCheckBox('coapplicantrent').check();
-  } catch (err) {
-    console.warn('Own/Rent checkbox error:', err);
-  }
 
   try {
     if (data.creditConsent) {
@@ -186,17 +174,17 @@ const fieldMap = {
   });
 
   await transporter.sendMail({
-  from: process.env.EMAIL_USER,
-  to: 'rob@caprockcapital.ca',
-  subject: 'New Credit Application Submission',
-  text: 'A new credit application has been submitted. See attached PDF.',
-  attachments: [
-    {
-      filename: 'credit-application.pdf',
-      content: Buffer.from(pdfBytesFilled),
-    },
-  ],
-});
+    from: process.env.EMAIL_USER,
+    to: 'rob@caprockcapital.ca',
+    subject: 'New Credit Application Submission',
+    text: 'A new credit application has been submitted. See attached PDF.',
+    attachments: [
+      {
+        filename: 'credit-application.pdf',
+        content: Buffer.from(pdfBytesFilled),
+      },
+    ],
+  });
 
   return NextResponse.json({ success: true });
 }
