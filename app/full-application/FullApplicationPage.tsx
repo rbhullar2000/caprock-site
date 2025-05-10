@@ -34,8 +34,9 @@ export default function FullApplicationPage() {
   const ref = sectionRefs[value as keyof typeof sectionRefs];
   if (ref?.current) {
     setTimeout(() => {
-      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 450);
+      const offsetTop = ref.current.offsetTop;
+      window.scrollTo({ top: offsetTop - 120, behavior: 'smooth' }); // 120px offset for navbar
+    }, 450); // Wait for accordion animation
   }
 };
   
