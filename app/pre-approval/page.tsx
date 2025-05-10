@@ -54,38 +54,14 @@ export default function PreApprovalPage() {
       return;
     }
 
-    const cleanData = {
-      'Vehicle': formData.vehicle,
-      'Down Payment': formData.downPayment,
-      'First Name': formData.firstName,
-      'Middle Name': formData.middleName,
-      'Last Name': formData.lastName,
-      'Date of Birth': formData.dob,
-      'Email': formData.email,
-      'Phone': formData.phone,
-      'Street Address': formData.addressStreet,
-      'City': formData.addressCity,
-      'Province': formData.addressProvince,
-      'Postal Code': formData.addressPostalCode,
-      'Time at Address': formData.addressDuration,
-      'Employer': formData.employer,
-      'Job Title': formData.jobTitle,
-      'Time at Job': formData.jobDuration,
-      'Annual Income': formData.income,
-      'Other Income': formData.otherIncome,
-      'Credit Consent': formData.creditConsent ? 'Yes' : 'No',
-    };
-
     try {
-      const response = await fetch('https://formspree.io/f/mrbqgrlk', {
+      const res = await fetch('/api/send-preapproval', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(cleanData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
-      if (response.ok) {
+
+      if (res.ok) {
         setSubmitted(true);
       } else {
         alert('Submission failed. Please try again later.');
@@ -124,7 +100,6 @@ export default function PreApprovalPage() {
       <form className="bg-white shadow-md rounded-lg p-6 space-y-6" onSubmit={handleSubmit}>
         <h1 className="text-2xl font-bold text-center mb-6">Pre-Approval Application</h1>
 
-        {/* VEHICLE INFO */}
         <div>
           <label>Vehicle Type or Budget</label>
           <input name="vehicle" value={formData.vehicle} onChange={handleChange} required className="w-full border p-3 rounded-md" />
@@ -134,7 +109,6 @@ export default function PreApprovalPage() {
           <input name="downPayment" value={formData.downPayment} onChange={handleChange} required className="w-full border p-3 rounded-md" />
         </div>
 
-        {/* PERSONAL INFO */}
         <h2 className="text-lg font-semibold border-b pb-1 mt-8">Personal Information</h2>
         <div className="grid md:grid-cols-3 gap-4">
           <div><label>First Name</label><input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
@@ -147,7 +121,6 @@ export default function PreApprovalPage() {
         </div>
         <div><label>Phone</label><input name="phone" value={formData.phone} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
 
-        {/* ADDRESS INFO */}
         <h2 className="text-lg font-semibold border-b pb-1 mt-8">Current Address</h2>
         <div className="grid md:grid-cols-2 gap-4">
           <div><label>Street Address</label><input name="addressStreet" value={formData.addressStreet} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
@@ -157,7 +130,6 @@ export default function PreApprovalPage() {
         </div>
         <div><label>Time at Address (Years/Months)</label><input name="addressDuration" value={formData.addressDuration} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
 
-        {/* EMPLOYMENT */}
         <h2 className="text-lg font-semibold border-b pb-1 mt-8">Employment & Income</h2>
         <div><label>Employer</label><input name="employer" value={formData.employer} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
         <div><label>Job Title</label><input name="jobTitle" value={formData.jobTitle} onChange={handleChange} required className="w-full border p-3 rounded-md" /></div>
