@@ -70,7 +70,11 @@ export default function FullApplicationPage() {
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
       });
-      alert(res.ok ? "Application submitted successfully" : "Submission failed");
+     if (res.ok) {
+  window.location.href = "/full-application/thank-you";
+} else {
+  alert("Submission failed");
+}
     } catch (err) {
       console.error(err);
       alert("Error submitting application");
