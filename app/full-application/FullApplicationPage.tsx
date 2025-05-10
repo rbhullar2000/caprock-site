@@ -33,7 +33,11 @@ export default function FullApplicationPage() {
   const handleAccordionChange = (value: string) => {
     const ref = sectionRefs[value as keyof typeof sectionRefs];
     if (ref?.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300); // wait for accordion to expand
+    }
+  };);
     }
   };
 
@@ -103,7 +107,7 @@ export default function FullApplicationPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
           <AccordionItem value="section1">
-            <div ref={sectionRefs.section1}>
+            <div ref={sectionRefs.section$1} className="scroll-mt-24">
               <AccordionTrigger>1. Personal Information</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-3 gap-4">
