@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
 
 // Checkboxes
     own: 'own',
-    rent: 'rent'
+    rent: 'rent',
     damageOver2000: 'damageover2000',
     rebuilt: 'rebuilt',
     outOfProvince: 'vehicleoutofprovince',
@@ -139,6 +139,9 @@ export async function POST(req: NextRequest) {
   const checkboxKeys = [
     'own',
     'rent',
+
+
+    
     'coapplicantown',
     'coapplicantrent',
     'damageover2000',
