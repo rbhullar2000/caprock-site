@@ -38,8 +38,7 @@ export default function FullApplicationPage() {
     }, 300);
   }
 };
-    }
-  };
+  
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
@@ -107,7 +106,7 @@ export default function FullApplicationPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
           <AccordionItem value="section1">
-            <div ref={sectionRefs.section$1} className="scroll-mt-24">
+           <div ref={sectionRefs.section1} className="scroll-mt-24">
               <AccordionTrigger>1. Personal Information</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-3 gap-4">
