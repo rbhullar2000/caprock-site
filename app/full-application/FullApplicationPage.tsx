@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "../components/ui/accordion";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 export default function FullApplicationPage() {
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState<any>({});
