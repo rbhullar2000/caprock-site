@@ -8,7 +8,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white border-b border-gray-200">
+    <nav className="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2" aria-label="Caprock Home">
@@ -25,7 +25,7 @@ export default function Navbar() {
           <Link href="/contact" className="hover:text-blue-600">Contact</Link>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Toggle Button */}
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -37,14 +37,14 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown Panel */}
       {menuOpen && (
-        <div className="md:hidden px-6 pb-4 space-y-3 bg-white shadow-sm text-base font-medium">
-          <Link href="/" onClick={() => setMenuOpen(false)} className="block text-blue-700">Home</Link>
-          <Link href="/about" onClick={() => setMenuOpen(false)} className="block text-blue-700">About</Link>
-          <Link href="/calculator" onClick={() => setMenuOpen(false)} className="block text-blue-700">Calculator</Link>
-          <Link href="/pre-approval" onClick={() => setMenuOpen(false)} className="block text-blue-700">Pre-Approval</Link>
-          <Link href="/contact" onClick={() => setMenuOpen(false)} className="block text-blue-700">Contact</Link>
+        <div className="absolute top-20 right-4 w-56 bg-white shadow-xl rounded-lg p-4 space-y-3 border z-50 transition-all duration-300">
+          <Link href="/" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Home</Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">About</Link>
+          <Link href="/calculator" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Calculator</Link>
+          <Link href="/pre-approval" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Pre-Approval</Link>
+          <Link href="/contact" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Contact</Link>
         </div>
       )}
     </nav>
