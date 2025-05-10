@@ -35,7 +35,7 @@ export default function FullApplicationPage() {
   if (ref?.current) {
     setTimeout(() => {
       ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
+    }, 450);
   }
 };
   
