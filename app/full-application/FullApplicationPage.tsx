@@ -31,13 +31,13 @@ export default function FullApplicationPage() {
   }, [searchParams]);
 
   const handleAccordionChange = (value: string) => {
-  const ref = sectionRefs[value as keyof typeof sectionRefs];
-  if (ref?.current) {
-    setTimeout(() => {
-      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300); // wait for accordion to expand
-  }
-};
+    const ref = sectionRefs[value as keyof typeof sectionRefs];
+    if (ref?.current) {
+      setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300); // wait for accordion to expand
+    }
+  };);
     }
   };
 
