@@ -126,24 +126,25 @@ export async function POST(req: NextRequest) {
 
   // ✅ Checkboxes — correctly mapped
   const checkboxMap: { [key: string]: string } = {
-    ownCheckbox: 'own',
-    rentCheckbox: 'rent',
-    coOwnCheckbox: 'coapplicantown',
-    coRentCheckbox: 'coapplicantrent',
-    damageOver2000: 'damageover2000',
-    rebuilt: 'rebuilt',
-    outOfProvince: 'vehicleoutofprovince',
-    creditconsent: 'creditconsent',
-  };
+  ownCheckbox: 'Own',
+  rentCheckbox: 'rent',
+  coOwnCheckbox: 'coapplicantown',
+  coRentCheckbox: 'coapplicantrent',
+  damageOver2000: 'damageover2000',
+  rebuilt: 'rebuilt',
+  outOfProvince: 'vehicleoutofprovince',
+  creditconsent: 'creditconsent',
+};
 
-  Object.entries(checkboxMap).forEach(([dataKey, fieldName]) => {
+Object.entries(checkboxMap).forEach(([dataKey, fieldName]) => {
   try {
     const cb = form.getCheckBox(fieldName);
     const val = data[dataKey];
 
-    console.log(`Checkbox field ${fieldName} value from data[${dataKey}]:`, val);
+    // Debug: remove after confirming
+    console.log(`Checkbox [${fieldName}] ← data[${dataKey}] =`, val);
 
-    if (val === true || val === "true" || val === "on") {
+    if (val === true || val === 'true' || val === 'on') {
       cb.check();
     } else {
       cb.uncheck();
