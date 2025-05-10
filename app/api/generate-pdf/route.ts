@@ -101,6 +101,17 @@ export async function POST(req: NextRequest) {
     tradeMake: 'trademake',
     tradeModel: 'trademodel',
     date: 'date',
+
+// Checkboxes
+    own: 'own',
+    rent: 'rent'
+    damageOver2000: 'damageover2000',
+    rebuilt: 'rebuilt',
+    outOfProvince: 'vehicleoutofprovince',
+    ownCheckbox: 'own',
+    rentCheckbox: 'rent',
+    coOwnCheckbox: 'coapplicantown',
+    coRentCheckbox: 'coapplicantrent',
   };
 
   // Fill text fields
