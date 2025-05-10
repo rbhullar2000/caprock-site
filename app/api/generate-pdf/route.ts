@@ -101,17 +101,6 @@ export async function POST(req: NextRequest) {
     tradeMake: 'trademake',
     tradeModel: 'trademodel',
     date: 'date',
-
-// Checkboxes
-    own: 'own',
-    rent: 'rent',
-    damageOver2000: 'damageover2000',
-    rebuilt: 'rebuilt',
-    outOfProvince: 'vehicleoutofprovince',
-    ownCheckbox: 'own',
-    rentCheckbox: 'rent',
-    coOwnCheckbox: 'coapplicantown',
-    coRentCheckbox: 'coapplicantrent',
   };
 
   // Fill text fields
@@ -135,32 +124,31 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Checkboxes
-  const checkboxKeys = [
-    'own',
-    'rent',
+  // ✅ Checkboxes — correctly mapped
+  const checkboxMap: { [key: string]: string } = {
+    ownCheckbox: 'own',
+    rentCheckbox: 'rent',
+    coOwnCheckbox: 'coapplicantown',
+    coRentCheckbox: 'coapplicantrent',
+    damageOver2000: 'damageover2000',
+    rebuilt: 'rebuilt',
+    outOfProvince: 'vehicleoutofprovince',
+    creditconsent: 'creditconsent',
+  };
 
-
-    
-    'coapplicantown',
-    'coapplicantrent',
-    'damageover2000',
-    'rebuilt',
-    'vehicleoutofprovince',
-    'creditconsent',
-  ];
-
-  checkboxKeys.forEach((key) => {
+  Object.entries(checkboxMap).forEach(([dataKey, fieldName]) => {
     try {
-      const cb = form.getCheckBox(key);
-      if (data[key] === true || data[key] === 'true' || data[key] === 'on') cb.check();
-      else cb.uncheck();
+      const cb = form.getCheckBox(fieldName);
+      if (data[dataKey] === true || data[dataKey] === 'true' || data[dataKey] === 'on') {
+        cb.check();
+      } else {
+        cb.uncheck();
+      }
     } catch (err) {
-      console.warn(`Checkbox '${key}' missing or not a checkbox.`);
+      console.warn(`Checkbox '${fieldName}' missing or not a checkbox.`);
     }
   });
 
-  //form.flatten();
   const pdfBytesFilled = await pdfDoc.save();
 
   const transporter = nodemailer.createTransport({
