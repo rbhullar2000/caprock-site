@@ -3,12 +3,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from '@/components/ui/accordion';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,7 +16,7 @@ export default function Navbar() {
           <span className="text-xl font-bold text-gray-900">Caprock</span>
         </Link>
 
-        {/* Desktop Menu */}
+        {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 text-sm font-medium text-gray-700">
           <Link href="/" className="hover:text-blue-600">Home</Link>
           <Link href="/about" className="hover:text-blue-600">About</Link>
@@ -38,26 +32,19 @@ export default function Navbar() {
             className="text-gray-700"
             aria-label="Toggle Menu"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {menuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Accordion */}
+      {/* Mobile Dropdown Menu */}
       {menuOpen && (
-        <div className="md:hidden px-4 pb-4">
-          <Accordion type="single" collapsible>
-            <AccordionItem value="menu">
-              <AccordionTrigger className="text-base">Menu</AccordionTrigger>
-              <AccordionContent className="space-y-2">
-                <Link href="/" onClick={() => setMenuOpen(false)} className="block text-blue-700">Home</Link>
-                <Link href="/about" onClick={() => setMenuOpen(false)} className="block text-blue-700">About</Link>
-                <Link href="/calculator" onClick={() => setMenuOpen(false)} className="block text-blue-700">Calculator</Link>
-                <Link href="/pre-approval" onClick={() => setMenuOpen(false)} className="block text-blue-700">Pre-Approval</Link>
-                <Link href="/contact" onClick={() => setMenuOpen(false)} className="block text-blue-700">Contact</Link>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        <div className="md:hidden px-6 pb-4 space-y-3 bg-white shadow-sm text-base font-medium">
+          <Link href="/" onClick={() => setMenuOpen(false)} className="block text-blue-700">Home</Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)} className="block text-blue-700">About</Link>
+          <Link href="/calculator" onClick={() => setMenuOpen(false)} className="block text-blue-700">Calculator</Link>
+          <Link href="/pre-approval" onClick={() => setMenuOpen(false)} className="block text-blue-700">Pre-Approval</Link>
+          <Link href="/contact" onClick={() => setMenuOpen(false)} className="block text-blue-700">Contact</Link>
         </div>
       )}
     </nav>
