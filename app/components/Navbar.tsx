@@ -39,12 +39,34 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Panel */}
       {menuOpen && (
-        <div className="absolute top-20 right-4 w-56 bg-white shadow-xl rounded-lg p-4 space-y-3 border z-50 transition-all duration-300">
-          <Link href="/" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Home</Link>
-          <Link href="/about" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">About</Link>
-          <Link href="/calculator" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Calculator</Link>
-          <Link href="/pre-approval" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Pre-Approval</Link>
-          <Link href="/contact" onClick={() => setMenuOpen(false)} className="block text-blue-700 hover:underline">Contact</Link>
+        <div className="absolute top-20 right-4 w-60 rounded-2xl border border-gray-200 shadow-xl bg-white py-4 px-5 z-50 transition-all duration-300">
+          <ul className="space-y-3 text-sm text-gray-800 font-medium">
+            <li>
+              <Link href="/" onClick={() => setMenuOpen(false)} className="block hover:text-blue-600 transition">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" onClick={() => setMenuOpen(false)} className="block hover:text-blue-600 transition">
+                About
+              </Link>
+            </li>
+            <li>
+              <Link href="/calculator" onClick={() => setMenuOpen(false)} className="block hover:text-blue-600 transition">
+                Calculator
+              </Link>
+            </li>
+            <li>
+              <Link href="/pre-approval" onClick={() => setMenuOpen(false)} className="block hover:text-blue-600 transition">
+                Pre-Approval
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" onClick={() => setMenuOpen(false)} className="block hover:text-blue-600 transition">
+                Contact
+              </Link>
+            </li>
+          </ul>
         </div>
       )}
     </nav>
