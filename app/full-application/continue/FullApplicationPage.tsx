@@ -23,12 +23,28 @@ export default function FullApplicationPage() {
   }, [searchParams]);
 
   const handleChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
+  const { name, value, type, checked } = e.target;
+
+  const exclusivePairs: { [key: string]: string } = {
+    ownCheckbox: "rentCheckbox",
+    rentCheckbox: "ownCheckbox",
+    coOwnCheckbox: "coRentCheckbox",
+    coRentCheckbox: "coOwnCheckbox",
+  };
+
+  if (type === "checkbox" && exclusivePairs[name]) {
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: checked,
+      [exclusivePairs[name]]: false,
+    }));
+  } else {
     setFormData((prev: any) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-  };
+  }
+};
 
   const renderInput = (name: string, label: string, type: string = "text") => (
     <div className="mb-4">
@@ -109,14 +125,24 @@ export default function FullApplicationPage() {
           <AccordionItem value="section3">
             <AccordionTrigger>3. Housing</AccordionTrigger>
             <AccordionContent>
-              <div className="flex gap-6 mb-4">
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="own" value="Own" checked={formData.own === "Own"} onChange={handleChange} /> Own
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="rent" value="Rent" checked={formData.rent === "Rent"} onChange={handleChange} /> Rent
-                </label>
-              </div>
+             <div className="flex gap-6 mb-4">
+  <label className="flex items-center gap-2">
+    <input
+      type="checkbox"
+      name="ownCheckbox"
+      checked={formData.ownCheckbox || false}
+      onChange={handleChange}
+    /> Own
+  </label>
+  <label className="flex items-center gap-2">
+    <input
+      type="checkbox"
+      name="rentCheckbox"
+      checked={formData.rentCheckbox || false}
+      onChange={handleChange}
+    /> Rent
+  </label>
+</div>
               <div className="grid md:grid-cols-2 gap-4">
                 {renderInput("mortgageBalance", "Mortgage Balance")}
                 {renderInput("mortgageHolder", "Mortgage Holder")}
@@ -203,10 +229,24 @@ export default function FullApplicationPage() {
                     {renderInput("coPreviousAddressDuration", "Previous Duration")}
                   </div>
 
-                  <div className="flex gap-4">
-                    <label><input type="radio" name="coOwn" value="Own" checked={formData.coOwn === "Own"} onChange={handleChange} /> Own</label>
-                    <label><input type="radio" name="coRent" value="Rent" checked={formData.coRent === "Rent"} onChange={handleChange} /> Rent</label>
-                  </div>
+                  <div className="flex gap-6 mb-4">
+  <label className="flex items-center gap-2">
+    <input
+      type="checkbox"
+      name="coOwnCheckbox"
+      checked={formData.coOwnCheckbox || false}
+      onChange={handleChange}
+    /> Own
+  </label>
+  <label className="flex items-center gap-2">
+    <input
+      type="checkbox"
+      name="coRentCheckbox"
+      checked={formData.coRentCheckbox || false}
+      onChange={handleChange}
+    /> Rent
+  </label>
+</div>
 
                   <h3 className="font-semibold">Housing</h3>
                   <div className="grid md:grid-cols-2 gap-4">
