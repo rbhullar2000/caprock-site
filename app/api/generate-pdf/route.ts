@@ -137,17 +137,21 @@ export async function POST(req: NextRequest) {
   };
 
   Object.entries(checkboxMap).forEach(([dataKey, fieldName]) => {
-    try {
-      const cb = form.getCheckBox(fieldName);
-      if (data[dataKey] === true || data[dataKey] === 'true' || data[dataKey] === 'on') {
-        cb.check();
-      } else {
-        cb.uncheck();
-      }
-    } catch (err) {
-      console.warn(`Checkbox '${fieldName}' missing or not a checkbox.`);
+  try {
+    const cb = form.getCheckBox(fieldName);
+    const val = data[dataKey];
+
+    console.log(`Checkbox field ${fieldName} value from data[${dataKey}]:`, val);
+
+    if (val === true || val === "true" || val === "on") {
+      cb.check();
+    } else {
+      cb.uncheck();
     }
-  });
+  } catch (err) {
+    console.warn(`Checkbox '${fieldName}' missing or not a checkbox.`);
+  }
+});
 
   const pdfBytesFilled = await pdfDoc.save();
 
