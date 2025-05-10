@@ -110,7 +110,7 @@ export default function PreApprovalPage() {
         <h1 className="text-2xl font-bold">Thank You!</h1>
         <p className="mt-4 mb-6">Your pre-approval application has been submitted.</p>
         <button
-          onClick={() => router.push(`/full-application/continue?${buildQuery()}`)}
+          onClick={() => router.push(`/full-application?${buildQuery()}`)}
           className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
         >
           Proceed to Full Application
