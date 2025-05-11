@@ -58,9 +58,11 @@ export default function FullApplicationPage() {
 
     if (res.ok) {
       setSubmittedSuccessfully(true);
-      setTimeout(() => {
-        window.location.href = "/full-application/thank-you";
-      }, 50);
+requestAnimationFrame(() => {
+  setTimeout(() => {
+    window.location.href = "/full-application/thank-you";
+  }, 0);
+});
     } else {
       alert("Submission failed");
     }
