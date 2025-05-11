@@ -1,11 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+
 
 export default function FullApplicationPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [formData, setFormData] = useState<any>({});
   const [includeCoApplicant, setIncludeCoApplicant] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,14 +34,7 @@ export default function FullApplicationPage() {
     setFormData((prev: any) => ({ ...prev, ...data }));
   }, [searchParams]);
 
-  useEffect(() => {
-  if (submittedSuccessfully) {
-    // Wait until next paint (form is unmounted), then redirect
-    requestAnimationFrame(() => {
-      window.location.href = "/full-application/thank-you";
-    });
-  }
-}, [submittedSuccessfully]);
+
 
   
   const handleAccordionChange = (value: string) => {
@@ -59,7 +54,6 @@ export default function FullApplicationPage() {
   const handleSubmit = async (e: any) => {
   e.preventDefault();
   setIsSubmitting(true);
-
   try {
     const res = await fetch("/api/generate-pdf", {
       method: "POST",
@@ -69,6 +63,10 @@ export default function FullApplicationPage() {
 
     if (res.ok) {
       setSubmittedSuccessfully(true);
+      // Redirect only after form is hidden
+      setTimeout(() => {
+        router.push("/full-application/thank-you");
+      }, 10); // keep this small — just enough for a rerender
     } else {
       alert("Submission failed");
     }
@@ -128,10 +126,8 @@ export default function FullApplicationPage() {
         Full Credit Application
       </h1>
 
-  <form
-  onSubmit={handleSubmit}
-  className={`space-y-6 ${submittedSuccessfully ? 'hidden' : ''}`}
->
+  {!submittedSuccessfully && (
+  <form onSubmit={handleSubmit} className="space-y-6">
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
           <AccordionItem value="section1">
            <div ref={sectionRefs.section1} className="scroll-mt-36">
@@ -395,7 +391,7 @@ export default function FullApplicationPage() {
 </button>
         </div>
       </form>
-      
+)}
     </div>
   );
 }
