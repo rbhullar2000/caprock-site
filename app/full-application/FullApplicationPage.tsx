@@ -119,8 +119,10 @@ export default function FullApplicationPage() {
         Full Credit Application
       </h1>
 
-   {!submittedSuccessfully && (
-  <form onSubmit={handleSubmit} className="space-y-6">
+  <form
+  onSubmit={handleSubmit}
+  className={`space-y-6 ${submittedSuccessfully ? 'hidden' : ''}`}
+>
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
           <AccordionItem value="section1">
            <div ref={sectionRefs.section1} className="scroll-mt-36">
