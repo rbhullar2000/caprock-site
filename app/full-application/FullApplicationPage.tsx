@@ -46,7 +46,7 @@ export default function FullApplicationPage() {
 };
   
 
-  cconst handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: any) => {
   e.preventDefault();
   setIsSubmitting(true);
   try {
