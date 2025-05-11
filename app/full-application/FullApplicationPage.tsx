@@ -126,7 +126,7 @@ export default function FullApplicationPage() {
         Full Credit Application
       </h1>
 
-  {!submittedSuccessfully && (
+  {!submittedSuccessfully && ( 
   <form onSubmit={handleSubmit} className="space-y-6">
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
           <AccordionItem value="section1">
@@ -391,7 +391,7 @@ export default function FullApplicationPage() {
 </button>
         </div>
       </form>
-)}
+    )}
     </div>
   );
 }
