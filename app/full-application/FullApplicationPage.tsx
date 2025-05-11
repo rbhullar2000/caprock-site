@@ -8,6 +8,7 @@ export default function FullApplicationPage() {
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState<any>({});
   const [includeCoApplicant, setIncludeCoApplicant] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const sectionRefs = {
     section1: useRef<HTMLDivElement>(null),
@@ -83,23 +84,26 @@ export default function FullApplicationPage() {
   );
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/generate-pdf", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" },
-      });
-      if (res.ok) {
-        window.location.href = "/full-application/thank-you";
-      } else {
-        alert("Submission failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error submitting application");
+  e.preventDefault();
+  setIsSubmitting(true);
+  try {
+    const res = await fetch("/api/generate-pdf", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (res.ok) {
+      window.location.href = "/full-application/thank-you";
+    } else {
+      alert("Submission failed");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Error submitting application");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -358,12 +362,17 @@ export default function FullApplicationPage() {
             A physical or digital signature will be collected prior to funding.
           </p>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-none font-semibold hover:bg-blue-700 transition"
-          >
-            Submit Full Application
-          </button>
+         <button
+  type="submit"
+  disabled={isSubmitting}
+  className={`w-full py-3 rounded-none font-semibold transition ${
+    isSubmitting
+      ? "bg-gray-400 cursor-not-allowed"
+      : "bg-blue-600 text-white hover:bg-blue-700"
+  }`}
+>
+  {isSubmitting ? "Submitting..." : "Submit Full Application"}
+</button>
         </div>
       </form>
     </div>
