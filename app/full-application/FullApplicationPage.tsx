@@ -9,6 +9,7 @@ export default function FullApplicationPage() {
   const [formData, setFormData] = useState<any>({});
   const [includeCoApplicant, setIncludeCoApplicant] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedSuccessfully, setSubmittedSuccessfully] = useState(false);
 
   const sectionRefs = {
     section1: useRef<HTMLDivElement>(null),
@@ -45,27 +46,32 @@ export default function FullApplicationPage() {
 };
   
 
-  const handleChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
-    const exclusivePairs: { [key: string]: string } = {
-      ownCheckbox: "rentCheckbox",
-      rentCheckbox: "ownCheckbox",
-      coOwnCheckbox: "coRentCheckbox",
-      coRentCheckbox: "coOwnCheckbox",
-    };
-    if (type === "checkbox" && exclusivePairs[name]) {
-      setFormData((prev: any) => ({
-        ...prev,
-        [name]: checked,
-        [exclusivePairs[name]]: false,
-      }));
-    } else {
-      setFormData((prev: any) => ({
-        ...prev,
-        [name]: type === "checkbox" ? checked : value,
-      }));
+  const handleSubmit = async (e: any) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  try {
+    const res = await fetch("/api/generate-pdf", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (res.ok) {
+  setSubmittedSuccessfully(true); // hide form immediately
+  // Delay the redirect by 50ms to allow React to re-render before navigation
+  setTimeout(() => {
+    window.location.href = "/full-application/thank-you";
+  }, 50);
+  return;
+} else {
+      alert("Submission failed");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Error submitting application");
+  } finally {
+    setIsSubmitting(false); // only resets if not redirected
+  }
+};
 
   const renderInput = (name: string, label: string, type: string = "text") => (
     <div className="mb-4">
@@ -114,7 +120,8 @@ export default function FullApplicationPage() {
         Full Credit Application
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+   {!submittedSuccessfully && (
+  <form onSubmit={handleSubmit} className="space-y-6">
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
           <AccordionItem value="section1">
            <div ref={sectionRefs.section1} className="scroll-mt-36">
@@ -378,6 +385,7 @@ export default function FullApplicationPage() {
 </button>
         </div>
       </form>
+      )}
     </div>
   );
 }
