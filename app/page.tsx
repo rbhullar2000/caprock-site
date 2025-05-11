@@ -2,7 +2,7 @@ export default function Page() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 space-y-10">
       <div className="flex justify-center">
-        <img src="/logo-dark.png" alt="Caprock Logo" className="h-96" />
+        <img src="/logo.png" alt="Caprock Logo" className="h-96" />
       </div>
       <section className="text-center text-gray-800 text-md leading-relaxed space-y-4">
         <p>
