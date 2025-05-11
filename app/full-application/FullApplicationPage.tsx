@@ -89,15 +89,6 @@ export default function FullApplicationPage() {
     </div>
   );
 
-  const handleSubmit = async (e: any) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-  try {
-    const res = await fetch("/api/generate-pdf", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: { "Content-Type": "application/json" },
-    });
     if (res.ok) {
       // Do not reset isSubmitting here — we are navigating away anyway
       window.location.href = "/full-application/thank-you";
