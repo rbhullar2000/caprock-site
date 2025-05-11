@@ -58,11 +58,9 @@ export default function FullApplicationPage() {
 
     if (res.ok) {
       setSubmittedSuccessfully(true);
-
-      // Allow React to visually hide the form before redirect
-      await new Promise((resolve) => setTimeout(resolve, 200));
-
-      window.location.href = "/full-application/thank-you";
+      setTimeout(() => {
+        window.location.href = "/full-application/thank-you";
+      }, 50);
     } else {
       alert("Submission failed");
     }
