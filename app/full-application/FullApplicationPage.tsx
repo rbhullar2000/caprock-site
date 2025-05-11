@@ -49,6 +49,7 @@ export default function FullApplicationPage() {
   const handleSubmit = async (e: any) => {
   e.preventDefault();
   setIsSubmitting(true);
+
   try {
     const res = await fetch("/api/generate-pdf", {
       method: "POST",
@@ -58,11 +59,12 @@ export default function FullApplicationPage() {
 
     if (res.ok) {
       setSubmittedSuccessfully(true);
-requestAnimationFrame(() => {
-  setTimeout(() => {
-    window.location.href = "/full-application/thank-you";
-  }, 0);
-});
+      
+      // Wait for DOM update
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      // Then redirect
+      window.location.href = "/full-application/thank-you";
     } else {
       alert("Submission failed");
     }
