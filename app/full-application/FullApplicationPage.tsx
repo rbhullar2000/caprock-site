@@ -73,6 +73,30 @@ export default function FullApplicationPage() {
   }
 };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value, type, checked } = e.target;
+
+  const exclusivePairs: { [key: string]: string } = {
+    ownCheckbox: "rentCheckbox",
+    rentCheckbox: "ownCheckbox",
+    coOwnCheckbox: "coRentCheckbox",
+    coRentCheckbox: "coOwnCheckbox",
+  };
+
+  if (type === "checkbox" && exclusivePairs[name]) {
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: checked,
+      [exclusivePairs[name]]: false,
+    }));
+  } else {
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  }
+};
+
   const renderInput = (name: string, label: string, type: string = "text") => (
     <div className="mb-4">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
