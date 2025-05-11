@@ -93,7 +93,9 @@ export default function FullApplicationPage() {
       headers: { "Content-Type": "application/json" },
     });
     if (res.ok) {
+      // Do not reset isSubmitting here — we are navigating away anyway
       window.location.href = "/full-application/thank-you";
+      return; // exit early
     } else {
       alert("Submission failed");
     }
@@ -101,6 +103,7 @@ export default function FullApplicationPage() {
     console.error(err);
     alert("Error submitting application");
   } finally {
+    // Only reset isSubmitting if we *didn't* redirect
     setIsSubmitting(false);
   }
 };
