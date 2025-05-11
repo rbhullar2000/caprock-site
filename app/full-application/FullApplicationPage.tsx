@@ -55,14 +55,26 @@ export default function FullApplicationPage() {
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" },
     });
+
     if (res.ok) {
       setSubmittedSuccessfully(true);
 
-      // Wait one animation frame to ensure React re-renders
-      requestAnimationFrame(() => {
-        // Then redirect
-        window.location.href = "/full-application/thank-you";
-      });
+      // 🔁 Wait a short time to let React apply the hidden class visually
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      // ✅ Then redirect
+      window.location.href = "/full-application/thank-you";
+      return;
+    } else {
+      alert("Submission failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Error submitting application");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
       return;
     } else {
