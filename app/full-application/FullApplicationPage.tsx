@@ -386,7 +386,7 @@ export default function FullApplicationPage() {
 </button>
         </div>
       </form>
-      )}
+      
     </div>
   );
 }
