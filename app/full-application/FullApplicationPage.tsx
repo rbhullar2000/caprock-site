@@ -32,6 +32,16 @@ export default function FullApplicationPage() {
     setFormData((prev: any) => ({ ...prev, ...data }));
   }, [searchParams]);
 
+  useEffect(() => {
+  if (submittedSuccessfully) {
+    // Wait until next paint (form is unmounted), then redirect
+    requestAnimationFrame(() => {
+      window.location.href = "/full-application/thank-you";
+    });
+  }
+}, [submittedSuccessfully]);
+
+  
   const handleAccordionChange = (value: string) => {
   const ref = sectionRefs[value as keyof typeof sectionRefs];
   if (ref?.current) {
@@ -59,12 +69,6 @@ export default function FullApplicationPage() {
 
     if (res.ok) {
       setSubmittedSuccessfully(true);
-      
-      // Wait for DOM update
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
-      // Then redirect
-      window.location.href = "/full-application/thank-you";
     } else {
       alert("Submission failed");
     }
