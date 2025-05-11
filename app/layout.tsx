@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     creator: '@YourTwitterHandle',
   },
   metadataBase: new URL('https://www.caprockcapital.ca'),
+  other: {
+    'link:preload': '<link rel="preload" as="image" href="/logo.png" />',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
