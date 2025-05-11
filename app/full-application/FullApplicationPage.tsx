@@ -70,9 +70,8 @@ export default function FullApplicationPage() {
     });
 
     if (res.ok) {
-      setSubmittedSuccessfully(true);
-      // Redirect only after form is hidden
-      
+      // Instant redirect that prevents flicker
+      window.location.replace("/full-application/thank-you");
     } else {
       alert("Submission failed");
     }
