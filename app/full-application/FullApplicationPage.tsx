@@ -72,17 +72,7 @@ export default function FullApplicationPage() {
   }
 };
 
-      return;
-    } else {
-      alert("Submission failed");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Error submitting application");
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+      
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { name, value, type, checked } = e.target;
