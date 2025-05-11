@@ -34,6 +34,14 @@ export default function FullApplicationPage() {
     setFormData((prev: any) => ({ ...prev, ...data }));
   }, [searchParams]);
 
+  useEffect(() => {
+  if (submittedSuccessfully) {
+    // Wait for DOM update (form unmount) before navigating
+    requestAnimationFrame(() => {
+      router.push("/full-application/thank-you");
+    });
+  }
+}, [submittedSuccessfully]);
 
 
   
@@ -64,9 +72,7 @@ export default function FullApplicationPage() {
     if (res.ok) {
       setSubmittedSuccessfully(true);
       // Redirect only after form is hidden
-      setTimeout(() => {
-        router.push("/full-application/thank-you");
-      }, 10); // keep this small — just enough for a rerender
+      
     } else {
       alert("Submission failed");
     }
