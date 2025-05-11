@@ -1,9 +1,19 @@
 'use client';
 
+import Image from 'next/image';
+
 export default function AboutPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-center mb-8">About Caprock Capital Group</h1>
+    <div className="max-w-3xl mx-auto px-4 py-12 text-center">
+      <Image
+        src="/logo.png"
+        alt="Caprock Capital Group Logo"
+        width={120}
+        height={120}
+        className="mx-auto mb-6"
+      />
+
+      <h1 className="text-3xl font-bold mb-6">About Caprock Capital Group</h1>
 
       <p className="text-gray-700 leading-relaxed">
         At Caprock Capital Group, we’re dedicated to providing Canadians with dependable auto financing options built on a foundation of trust, transparency, and real-world results.
