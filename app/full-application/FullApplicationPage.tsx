@@ -46,7 +46,7 @@ export default function FullApplicationPage() {
 };
   
 
-  const handleSubmit = async (e: any) => {
+  cconst handleSubmit = async (e: any) => {
   e.preventDefault();
   setIsSubmitting(true);
   try {
@@ -59,12 +59,10 @@ export default function FullApplicationPage() {
     if (res.ok) {
       setSubmittedSuccessfully(true);
 
-      // 🔁 Wait a short time to let React apply the hidden class visually
+      // Allow React to visually hide the form before redirect
       await new Promise((resolve) => setTimeout(resolve, 200));
 
-      // ✅ Then redirect
       window.location.href = "/full-application/thank-you";
-      return;
     } else {
       alert("Submission failed");
     }
