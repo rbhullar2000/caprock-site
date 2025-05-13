@@ -1,8 +1,15 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function AboutPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null; // Prevent SSR mismatch or render issues
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-16 text-center">
       <Image
@@ -10,6 +17,7 @@ export default function AboutPage() {
         alt="Caprock Capital Group Logo"
         width={120}
         height={120}
+        priority
         className="mx-auto mb-6"
       />
 
