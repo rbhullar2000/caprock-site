@@ -288,13 +288,17 @@ export default function FullApplicationPage() {
                       {renderInput("coAddressProvince", "Province")}
                       {renderInput("coAddressPostalCode", "Postal Code")}
                       {renderInput("coAddressDuration", "Time at Address")}
+                    </div>
+
+                    <h3 className="font-semibold">Previous Address (if current address less than 2 years)</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
                       {renderInput("coPreviousAddress", "Previous Address")}
                       {renderInput("coPreviousCity", "Previous City")}
                       {renderInput("coPreviousProvince", "Previous Province")}
                       {renderInput("coPreviousPostalCode", "Previous Postal Code")}
                       {renderInput("coPreviousAddressDuration", "Previous Duration")}
                     </div>
-
+                    
                     <div className="flex gap-6 mb-4">
                       <label className="flex items-center gap-2">
                         <input type="checkbox" name="coOwnCheckbox" checked={formData.coOwnCheckbox || false} onChange={handleChange} /> Own
