@@ -4,9 +4,9 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="max-w-5xl mx-auto px-6 py-6 space-y-8"> {/* reduced py and spacing */}
-      <div className="flex justify-center mt-4 mb-4"> {/* tightened vertical margin */}
-        <img src="/logo.png" alt="Caprock Logo" className="h-72" /> {/* was h-96 */}
+    <div className="max-w-5xl mx-auto px-6 pt-4 pb-8 space-y-10">
+      <div className="flex justify-center mt-4 mb-2">
+        <img src="/logo.png" alt="Caprock Logo" className="h-96" />
       </div>
 
       <section className="text-center text-gray-800 text-md leading-relaxed space-y-4">
@@ -26,7 +26,9 @@ export default function Page() {
           financing. Our advisors are always available to guide you through your options and ensure you make informed,
           empowered decisions. You're not just another application — you're our priority.
         </p>
-        <p className="font-semibold mt-4">Let us help you move forward — stronger, smarter, and on your terms.</p>
+        <p className="font-semibold mt-4">
+          Let us help you move forward — stronger, smarter, and on your terms.
+        </p>
       </section>
 
       <div className="text-center pt-4">
