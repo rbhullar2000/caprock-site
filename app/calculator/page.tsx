@@ -21,6 +21,16 @@ export default function CalculatorPage() {
   }));
 
   return (
+    
+     <div className="max-w-3xl mx-auto px-4 py-16 text-center">
+      <Image
+        src="/logo.png"
+        alt="Caprock Capital Group Logo"
+        width={120}
+        height={120}
+        className="mx-auto mb-6"
+      />
+    
     <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold text-center mb-8">Auto Loan Payment Calculator</h1>
 
