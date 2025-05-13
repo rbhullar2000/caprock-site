@@ -8,7 +8,7 @@ export default function Page() {
       style={{ backgroundImage: "url('/background.png')" }}
     >
       {/* Overlay to darken background slightly for text visibility */}
-      <div className="absolute inset-0 bg-black/40 z-0" />
+      <div className="absolute inset-0 bg-black/20 z-0" />
 
       {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 max-w-5xl mx-auto space-y-8">
