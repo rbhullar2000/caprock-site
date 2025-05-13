@@ -165,6 +165,16 @@ export default function FullApplicationPage() {
                   {renderInput("addressProvince", "Province")}
                   {renderInput("addressPostalCode", "Postal Code")}
                   {renderInput("addressDuration", "Time at Address")}
+                </div>
+              </AccordionContent>
+            </div>
+          </AccordionItem>
+
+          <AccordionItem value="section3">
+            <div ref={sectionRefs.section3}>
+              <AccordionTrigger>2. Previous Address (if current address less than 2 years)</AccordionTrigger>
+              <AccordionContent>
+                <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("previousAddress", "Previous Street")}
                   {renderInput("previousCity", "Previous City")}
                   {renderInput("previousProvince", "Previous Province")}
@@ -175,8 +185,11 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section3">
-            <div ref={sectionRefs.section3}>
+
+          
+
+          <AccordionItem value="section4">
+            <div ref={sectionRefs.section4}>
               <AccordionTrigger>3. Housing</AccordionTrigger>
               <AccordionContent>
                 <div className="flex gap-6 mb-4">
@@ -199,8 +212,8 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section4">
-            <div ref={sectionRefs.section4}>
+          <AccordionItem value="section5">
+            <div ref={sectionRefs.section5}>
               <AccordionTrigger>4. Employment</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -215,8 +228,8 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section5">
-            <div ref={sectionRefs.section5}>
+          <AccordionItem value="section6">
+            <div ref={sectionRefs.section6}>
               <AccordionTrigger>5. Income</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -227,9 +240,9 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section6">
-            <div ref={sectionRefs.section6}>
-              <AccordionTrigger>6. Previous Employment</AccordionTrigger>
+          <AccordionItem value="section7">
+            <div ref={sectionRefs.section7}>
+              <AccordionTrigger>6. Previous Employment (if current job less than 2 years)</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("previousEmployer", "Previous Employer")}
@@ -241,8 +254,8 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section7">
-            <div ref={sectionRefs.section7}>
+          <AccordionItem value="section8">
+            <div ref={sectionRefs.section8}>
               <AccordionTrigger>7. Co-Applicant</AccordionTrigger>
               <AccordionContent>
                 <div className="mb-4">
@@ -321,8 +334,8 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section8">
-            <div ref={sectionRefs.section8}>
+          <AccordionItem value="section9">
+            <div ref={sectionRefs.section9}>
               <AccordionTrigger>8. Vehicle</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -341,8 +354,8 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section9">
-            <div ref={sectionRefs.section9}>
+          <AccordionItem value="section10">
+            <div ref={sectionRefs.section10}>
               <AccordionTrigger>9. Trade-In</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-3 gap-4">
@@ -354,8 +367,8 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section10">
-            <div ref={sectionRefs.section10}>
+          <AccordionItem value="section11">
+            <div ref={sectionRefs.section11}>
               <AccordionTrigger>10. Summary</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
