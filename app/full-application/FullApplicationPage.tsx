@@ -173,7 +173,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section3">
             <div ref={sectionRefs.section3}>
-              <AccordionTrigger>2. Previous Address (if current address less than 2 years)</AccordionTrigger>
+              <AccordionTrigger>3. Previous Address (if current address less than 2 years)</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("previousAddress", "Previous Street")}
@@ -191,7 +191,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section4">
             <div ref={sectionRefs.section4}>
-              <AccordionTrigger>3. Housing</AccordionTrigger>
+              <AccordionTrigger>4. Housing</AccordionTrigger>
               <AccordionContent>
                 <div className="flex gap-6 mb-4">
                   <label className="flex items-center gap-2">
@@ -215,7 +215,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section5">
             <div ref={sectionRefs.section5}>
-              <AccordionTrigger>4. Employment</AccordionTrigger>
+              <AccordionTrigger>5. Employment</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("employer", "Employer")}
@@ -231,7 +231,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section6">
             <div ref={sectionRefs.section6}>
-              <AccordionTrigger>5. Income</AccordionTrigger>
+              <AccordionTrigger>6. Income</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("income", "Annual Income")}
@@ -243,7 +243,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section7">
             <div ref={sectionRefs.section7}>
-              <AccordionTrigger>6. Previous Employment (if current job less than 2 years)</AccordionTrigger>
+              <AccordionTrigger>7. Previous Employment (if current job less than 2 years)</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("previousEmployer", "Previous Employer")}
@@ -257,7 +257,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section8">
             <div ref={sectionRefs.section8}>
-              <AccordionTrigger>7. Co-Applicant</AccordionTrigger>
+              <AccordionTrigger>8. Co-Applicant</AccordionTrigger>
               <AccordionContent>
                 <div className="mb-4">
                   <label className="flex items-center gap-2">
@@ -337,7 +337,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section9">
             <div ref={sectionRefs.section9}>
-              <AccordionTrigger>8. Vehicle</AccordionTrigger>
+              <AccordionTrigger>9. Vehicle</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("year", "Year")}
@@ -357,7 +357,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section10">
             <div ref={sectionRefs.section10}>
-              <AccordionTrigger>9. Trade-In</AccordionTrigger>
+              <AccordionTrigger>10. Trade-In</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-3 gap-4">
                   {renderInput("tradeYear", "Trade Year")}
@@ -370,7 +370,7 @@ export default function FullApplicationPage() {
 
           <AccordionItem value="section11">
             <div ref={sectionRefs.section11}>
-              <AccordionTrigger>10. Summary</AccordionTrigger>
+              <AccordionTrigger>11. Summary</AccordionTrigger>
               <AccordionContent>
                 <div className="grid md:grid-cols-2 gap-4">
                   {renderInput("price", "Price")}
