@@ -1,9 +1,14 @@
+'use client';
+
+import { MessageCircleIcon } from 'lucide-react';
+
 export default function Page() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 space-y-10">
       <div className="flex justify-center">
         <img src="/logo.png" alt="Caprock Logo" className="h-96" />
       </div>
+
       <section className="text-center text-gray-800 text-md leading-relaxed space-y-4">
         <p>
           At Caprock Capital Group, we specialize in personalized automotive financing designed to meet your needs —
@@ -23,6 +28,7 @@ export default function Page() {
         </p>
         <p className="font-semibold mt-4">Let us help you move forward — stronger, smarter, and on your terms.</p>
       </section>
+
       <div className="text-center pt-6">
         <a
           href="/pre-approval"
@@ -31,6 +37,7 @@ export default function Page() {
           Get Pre-Approved
         </a>
       </div>
+
       <div className="mt-12 border-t pt-6 text-center text-sm text-gray-500 flex flex-wrap justify-center gap-10">
         <div className="flex items-center gap-2">
           <span className="text-blue-600">🔒</span> Secure & Encrypted
@@ -42,7 +49,8 @@ export default function Page() {
           <span className="text-blue-600">✔️</span> No Credit Score Impact
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-blue-600">📞</span> Real People. Real Help.
+          <MessageCircleIcon className="w-4 h-4 text-blue-600" />
+          Real People. Real Help.
         </div>
       </div>
     </div>
