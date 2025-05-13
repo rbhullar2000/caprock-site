@@ -1,73 +1,101 @@
-// app/privacy-policy/page.tsx
 'use client';
 
 import React from 'react';
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="max-w-3xl mx-auto p-6 text-gray-800">
-      <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
+    <main className="max-w-4xl mx-auto px-6 py-12 text-gray-800 leading-relaxed">
+      <h1 className="text-4xl font-bold mb-8 border-b pb-4">Privacy Policy</h1>
 
-      <p className="mb-4">
+      <p className="mb-6 text-lg">
         Caprock Capital Group Inc. (“Caprock”, “we”, “us”, or “our”) is committed to protecting the privacy and security
         of your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your data
-        in accordance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and applicable
-        provincial laws.
+        in accordance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and applicable provincial laws.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">1. Information We Collect</h2>
-      <ul className="list-disc list-inside mb-4">
-        <li>Full name, address, email, and phone number</li>
-        <li>Date of birth, SIN, driver’s licence number</li>
-        <li>Employment and income details</li>
-        <li>Credit and banking information</li>
-        <li>Consent forms and application data</li>
-      </ul>
+      <Section
+        title="1. Information We Collect"
+        items={[
+          'Full name, address, email, and phone number',
+          'Date of birth, SIN, driver’s licence number',
+          'Employment and income details',
+          'Credit and banking information',
+          'Consent forms and application data',
+        ]}
+      />
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">2. How We Use Your Information</h2>
-      <ul className="list-disc list-inside mb-4">
-        <li>To evaluate and process your auto loan application</li>
-        <li>Submit your application to lender partners</li>
-        <li>Communicate regarding your application status</li>
-        <li>Comply with legal and regulatory obligations</li>
-      </ul>
+      <Section
+        title="2. How We Use Your Information"
+        items={[
+          'To evaluate and process your auto loan application',
+          'Submit your application to lender partners',
+          'Communicate regarding your application status',
+          'Comply with legal and regulatory obligations',
+        ]}
+      />
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">3. Consent</h2>
-      <p className="mb-4">
-        By submitting an application to Caprock Capital Group, you consent to the collection, use, and disclosure of your
-        information as outlined. You may withdraw consent at any time, subject to legal and contractual restrictions.
-      </p>
+      <Section title="3. Consent">
+        <p>
+          By submitting an application to Caprock Capital Group, you consent to the collection, use, and disclosure of
+          your information as outlined. You may withdraw consent at any time, subject to legal and contractual restrictions.
+        </p>
+      </Section>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">4. Disclosure of Information</h2>
-      <ul className="list-disc list-inside mb-4">
-        <li>Lenders and financial institutions for financing purposes</li>
-        <li>Service providers assisting with secure data handling</li>
-        <li>Regulatory authorities if required by law</li>
-      </ul>
+      <Section
+        title="4. Disclosure of Information"
+        items={[
+          'Lenders and financial institutions for financing purposes',
+          'Service providers assisting with secure data handling',
+          'Regulatory authorities if required by law',
+        ]}
+      />
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">5. Data Storage and Protection</h2>
-      <p className="mb-4">
-        All client data is stored securely with access limited to authorized personnel. Records are retained for at least
-        two years, then securely destroyed when no longer required.
-      </p>
+      <Section title="5. Data Storage and Protection">
+        <p>
+          All client data is stored securely with access limited to authorized personnel. Records are retained for a
+          minimum of two years, then securely destroyed when no longer required.
+        </p>
+      </Section>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">6. Your Rights</h2>
-      <p className="mb-4">
-        You have the right to access your personal information, request corrections, and withdraw consent. To exercise
-        these rights, please contact rob@caprockcapital.ca.
-      </p>
+      <Section title="6. Your Rights">
+        <p>
+          You have the right to access your personal information, request corrections, and withdraw consent. To exercise
+          these rights, please contact us at <a href="mailto:rob@caprockcapital.ca" className="text-blue-600 underline">rob@caprockcapital.ca</a>.
+        </p>
+      </Section>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">7. Changes to This Policy</h2>
-      <p className="mb-4">
-        We may update this policy from time to time. The latest version will always be available on our website.
-        Continued use of our services signifies your acceptance of the revised terms.
-      </p>
+      <Section title="7. Changes to This Policy">
+        <p>
+          We may update this policy from time to time. The latest version will always be available on our website.
+          Continued use of our services indicates acceptance of the revised terms.
+        </p>
+      </Section>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">8. Contact Us</h2>
-      <p>
-        Caprock Capital Group Inc.<br />
-        contact@caprockcapital.ca<br />
-      </p>
+      <Section title="8. Contact Us">
+        <p>
+          Rob Bhullar<br />
+          Managing Partner<br />
+          Caprock Capital Group Inc.<br />
+          <a href="mailto:rob@caprockcapital.ca" className="text-blue-600 underline">rob@caprockcapital.ca</a><br />
+          778-889-7964
+        </p>
+      </Section>
     </main>
+  );
+}
+
+function Section({ title, items, children }: { title: string, items?: string[], children?: React.ReactNode }) {
+  return (
+    <section className="mb-8">
+      <h2 className="text-2xl font-semibold mb-3">{title}</h2>
+      {items && (
+        <ul className="list-disc list-inside space-y-1">
+          {items.map((item, idx) => (
+            <li key={idx}>{item}</li>
+          ))}
+        </ul>
+      )}
+      {children && <div className="mt-2 text-base">{children}</div>}
+    </section>
   );
 }
