@@ -165,7 +165,7 @@ export default function FullApplicationPage() {
                   {renderInput("addressProvince", "Province")}
                   {renderInput("addressPostalCode", "Postal Code")}
                   {renderInput("addressDuration", "Time at Address")}
-                  {renderInput("previousAddress", "Previous Address (if current address less than 2 years)")}
+                  {renderInput("previousAddress", "Previous Street")}
                   {renderInput("previousCity", "Previous City")}
                   {renderInput("previousProvince", "Previous Province")}
                   {renderInput("previousPostalCode", "Previous Postal Code")}
