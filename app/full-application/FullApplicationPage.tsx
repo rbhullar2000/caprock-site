@@ -173,9 +173,9 @@ export default function FullApplicationPage() {
 
          <AccordionItem value="section3">
   <div ref={sectionRefs.section3}>
-    <AccordionTrigger className="flex justify-between items-center gap-2">
-      <span className="whitespace-nowrap">3. Previous Address</span>
-      <span className="text-sm text-gray-500 whitespace-nowrap">(if current address is less than 2 years)</span>
+    <AccordionTrigger className="flex flex-wrap justify-between items-center text-left">
+      <span className="text-base font-medium">3. Previous Address</span>
+      <span className="text-sm text-gray-500 ml-2">(if current address is less than 2 years)</span>
     </AccordionTrigger>
     <AccordionContent>
       <div className="grid md:grid-cols-2 gap-4">
@@ -244,11 +244,11 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-         <AccordionItem value="section7">
+        <AccordionItem value="section7">
   <div ref={sectionRefs.section7}>
-    <AccordionTrigger className="flex justify-between items-center gap-2">
-      <span className="whitespace-nowrap">7. Previous Employment</span>
-      <span className="text-sm text-gray-500 whitespace-nowrap">(if current job is less than 2 years)</span>
+    <AccordionTrigger className="flex flex-wrap justify-between items-center text-left">
+      <span className="text-base font-medium">7. Previous Employment</span>
+      <span className="text-sm text-gray-500 ml-2">(if current job is less than 2 years)</span>
     </AccordionTrigger>
     <AccordionContent>
       <div className="grid md:grid-cols-2 gap-4">
