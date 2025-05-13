@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
-
+import Image from 'next/image';
 
 export default function FullApplicationPage() {
   const searchParams = useSearchParams();
@@ -128,6 +128,15 @@ export default function FullApplicationPage() {
 
   return (
     <div className="max-w-5xl mx-auto p-6">
+       <div className="text-center mb-6">
+      <Image
+        src="/logo.png"
+        alt="Caprock Capital Group Logo"
+        width={120}
+        height={120}
+        className="mx-auto"
+      />
+    </div>
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
         Full Credit Application
       </h1>
