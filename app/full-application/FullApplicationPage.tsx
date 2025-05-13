@@ -174,9 +174,9 @@ export default function FullApplicationPage() {
          <AccordionItem value="section3">
   <div ref={sectionRefs.section3}>
     <AccordionTrigger>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full text-left">
-        <span>3. Previous Address</span>
-        <span className="text-sm text-gray-500 md:ml-4">
+      <div className="flex flex-col w-full text-left">
+        <span className="text-base font-medium">3. Previous Address</span>
+        <span className="text-sm text-gray-500">
           (if current address is less than 2 years)
         </span>
       </div>
@@ -251,9 +251,9 @@ export default function FullApplicationPage() {
         <AccordionItem value="section7">
   <div ref={sectionRefs.section7}>
     <AccordionTrigger>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full text-left">
-        <span>7. Previous Employment</span>
-        <span className="text-sm text-gray-500 md:ml-4">
+      <div className="flex flex-col w-full text-left">
+        <span className="text-base font-medium">7. Previous Employment</span>
+        <span className="text-sm text-gray-500">
           (if current job is less than 2 years)
         </span>
       </div>
