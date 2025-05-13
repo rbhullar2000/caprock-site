@@ -50,7 +50,7 @@ export default function Page() {
           <span className="text-blue-600">🇨🇦</span> Canadian-Based Company
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-blue-600">✔️</span> No Credit Score Impact
+          <span className="text-blue-600">✔️</span> No Credit Score Impact for Pre-Approvals
         </div>
         <div className="flex items-center gap-2">
           <MessageCircleIcon className="w-4 h-4 text-blue-600" />
