@@ -274,7 +274,7 @@ export default function FullApplicationPage() {
                       {renderInput("coAddressProvince", "Province")}
                       {renderInput("coAddressPostalCode", "Postal Code")}
                       {renderInput("coAddressDuration", "Time at Address")}
-                      {renderInput("coPreviousAddress", "Previous Address")}
+                      {renderInput("coPreviousAddress", "Previous Address (if current address less than 2 years)")}
                       {renderInput("coPreviousCity", "Previous City")}
                       {renderInput("coPreviousProvince", "Previous Province")}
                       {renderInput("coPreviousPostalCode", "Previous Postal Code")}
