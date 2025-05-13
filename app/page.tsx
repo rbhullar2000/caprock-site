@@ -4,26 +4,23 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="relative">
-      {/* Full-page background image */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/background.png')" }}
-      />
+    <div className="relative w-full min-h-screen bg-cover bg-center text-white"
+      style={{ backgroundImage: "url('/background.png')" }}
+    >
+      {/* Overlay to darken background slightly for text visibility */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
 
-      {/* Overlay for darkening if needed */}
-      <div className="absolute inset-0 bg-black opacity-30 z-0" />
+      {/* Content wrapper */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 max-w-5xl mx-auto space-y-8">
 
-      {/* Content section */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 space-y-8 min-h-screen flex flex-col justify-center pt-12 pb-16 text-white">
         {/* Logo */}
-        <div className="flex justify-center mb-4">
-          <img src="/logo.png" alt="Caprock Logo" className="h-64" />
+        <div className="flex justify-center -mt-10 mb-2">
+          <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-64" />
         </div>
 
-        {/* Hero Section */}
-        <section className="text-center text-base leading-relaxed space-y-5">
-          <h2 className="text-2xl font-semibold">
+        {/* Headline & Description */}
+        <section className="text-center text-base leading-relaxed space-y-5 max-w-3xl">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white">
             Financing Built on Trust. Powered by Experience.
           </h2>
 
@@ -44,8 +41,8 @@ export default function Page() {
           </p>
         </section>
 
-        {/* CTA Button */}
-        <div className="text-center pt-4">
+        {/* CTA */}
+        <div className="pt-4">
           <a
             href="/pre-approval"
             className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
@@ -55,18 +52,18 @@ export default function Page() {
         </div>
 
         {/* Trust Bar */}
-        <div className="mt-10 border-t border-white/30 pt-6 text-center text-sm flex flex-wrap justify-center gap-x-8 gap-y-4 px-4">
+        <div className="mt-10 pt-6 text-sm text-gray-200 flex flex-wrap justify-center gap-x-8 gap-y-4">
           <div className="flex items-center gap-2">
-            <span className="text-yellow-400">🔒</span> Secure & Encrypted
+            <span>🔒</span> Secure & Encrypted
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-red-400">🇨🇦</span> Canadian-Based Company
+            <span>🇨🇦</span> Canadian-Based Company
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-400">✔️</span> No Credit Score Impact (Pre-Approvals)
+            <span>✔️</span> No Credit Score Impact (Pre-Approvals)
           </div>
           <div className="flex items-center gap-2">
-            <MessageCircleIcon className="w-4 h-4 text-blue-400" />
+            <MessageCircleIcon className="w-4 h-4" />
             Real People. Real Help.
           </div>
           <div className="flex items-center gap-2">
