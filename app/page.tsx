@@ -9,7 +9,7 @@ export default function Page() {
       style={{ paddingTop: '0rem', paddingBottom: '1.5rem' }} // override Tailwind/global
     >
       <div className="flex justify-center" style={{ paddingTop: '1rem', paddingBottom: '0.5rem' }}>
-        <img src="/logo.png" alt="Caprock Logo" className="h-96" style={{ backgroundColor: 'red' }} />
+        <img src="/logo.png" alt="Caprock Logo" className="h-96" />
       </div>
 
       <section className="text-center text-gray-800 text-md leading-relaxed space-y-4">
