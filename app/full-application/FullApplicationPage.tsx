@@ -172,19 +172,21 @@ export default function FullApplicationPage() {
           </AccordionItem>
 
           <AccordionItem value="section3">
-            <div ref={sectionRefs.section3}>
-              <AccordionTrigger>3. Previous Address (if current address less than 2 years)</AccordionTrigger>
-              <AccordionContent>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {renderInput("previousAddress", "Previous Street")}
-                  {renderInput("previousCity", "Previous City")}
-                  {renderInput("previousProvince", "Previous Province")}
-                  {renderInput("previousPostalCode", "Previous Postal Code")}
-                  {renderInput("previousAddressDuration", "Previous Duration")}
-                </div>
-              </AccordionContent>
-            </div>
-          </AccordionItem>
+  <div ref={sectionRefs.section3}>
+    <AccordionTrigger>
+      3. Previous Address <span className="text-sm text-gray-500">(if current address is less than 2 years)</span>
+    </AccordionTrigger>
+    <AccordionContent>
+      <div className="grid md:grid-cols-2 gap-4">
+        {renderInput("previousAddress", "Previous Street Address")}
+        {renderInput("previousCity", "Previous City")}
+        {renderInput("previousProvince", "Previous Province")}
+        {renderInput("previousPostalCode", "Previous Postal Code")}
+        {renderInput("previousAddressDuration", "Length of Time at Previous Address")}
+      </div>
+    </AccordionContent>
+  </div>
+</AccordionItem>
 
 
           
@@ -242,18 +244,20 @@ export default function FullApplicationPage() {
           </AccordionItem>
 
           <AccordionItem value="section7">
-            <div ref={sectionRefs.section7}>
-              <AccordionTrigger>7. Previous Employment (if current job less than 2 years)</AccordionTrigger>
-              <AccordionContent>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {renderInput("previousEmployer", "Previous Employer")}
-                  {renderInput("previousEmployerPhone", "Previous Employer Phone")}
-                  {renderInput("previousEmployerDuration", "Duration")}
-                  {renderInput("previousOccupation", "Occupation")}
-                </div>
-              </AccordionContent>
-            </div>
-          </AccordionItem>
+  <div ref={sectionRefs.section7}>
+    <AccordionTrigger>
+      7. Previous Employment <span className="text-sm text-gray-500">(if current job is less than 2 years)</span>
+    </AccordionTrigger>
+    <AccordionContent>
+      <div className="grid md:grid-cols-2 gap-4">
+        {renderInput("previousEmployer", "Previous Employer Name")}
+        {renderInput("previousEmployerPhone", "Previous Employer Phone Number")}
+        {renderInput("previousEmployerDuration", "Length of Time at Previous Job")}
+        {renderInput("previousOccupation", "Previous Job Title / Occupation")}
+      </div>
+    </AccordionContent>
+  </div>
+</AccordionItem>
 
           <AccordionItem value="section8">
             <div ref={sectionRefs.section8}>
