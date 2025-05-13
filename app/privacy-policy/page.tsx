@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
       <Section title="6. Your Rights">
         <p>
           You have the right to access your personal information, request corrections, and withdraw consent. To exercise
-          these rights, please contact us at <a href="mailto:rob@caprockcapital.ca" className="text-blue-600 underline">rob@caprockcapital.ca</a>.
+          these rights, please contact us at <a href="mailto:rob@caprockcapital.ca" className="text-blue-600 underline">contact@caprockcapital.ca</a>.
         </p>
       </Section>
 
@@ -73,11 +73,8 @@ export default function PrivacyPolicyPage() {
 
       <Section title="8. Contact Us">
         <p>
-          Rob Bhullar<br />
-          Managing Partner<br />
           Caprock Capital Group Inc.<br />
-          <a href="mailto:rob@caprockcapital.ca" className="text-blue-600 underline">rob@caprockcapital.ca</a><br />
-          778-889-7964
+          <a href="mailto:contact@caprockcapital.ca" className="text-blue-600 underline">contact@caprockcapital.ca</a><br />
         </p>
       </Section>
     </main>
