@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function CalculatorPage() {
