@@ -12,7 +12,7 @@ export default function ContactPage() {
         height={120}
         className="mx-auto"
       />
-
+<div className="h-4" />
       <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
 
       <div className="bg-white shadow-lg rounded-lg p-8 text-left space-y-8">
