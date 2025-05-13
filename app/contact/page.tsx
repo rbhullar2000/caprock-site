@@ -8,9 +8,9 @@ export default function ContactPage() {
       <Image
         src="/logo.png"
         alt="Caprock Capital Group Logo"
-        width={100}
-        height={100}
-        className="mx-auto mb-6"
+        width={120}
+        height={120}
+        className="mx-auto"
       />
 
       <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
