@@ -4,12 +4,11 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div
-      className="max-w-5xl mx-auto px-6 space-y-10"
-      style={{ paddingTop: '0rem', paddingBottom: '1.5rem' }} // adjusted padding
-    >
-      <div className="flex justify-center" style={{ paddingTop: '1rem', paddingBottom: '0.5rem' }}>
-        <img src="/logo.png" alt="Caprock Logo" className="h-40" /> {/* changed from h-96 or h-50 to h-40 */}
+    <div className="max-w-5xl mx-auto px-6 space-y-8" style={{ paddingTop: '0rem', paddingBottom: '1rem' }}>
+      
+      {/* Logo section - no padding or margin */}
+      <div className="flex justify-center">
+        <img src="/logo.png" alt="Caprock Logo" className="h-64" /> {/* large logo but no extra spacing */}
       </div>
 
       <section className="text-center text-gray-800 text-md leading-relaxed space-y-4">
@@ -43,7 +42,7 @@ export default function Page() {
         </a>
       </div>
 
-      <div className="mt-10 border-t pt-4 text-center text-sm text-gray-500 flex flex-wrap justify-center gap-10">
+      <div className="mt-8 border-t pt-4 text-center text-sm text-gray-500 flex flex-wrap justify-center gap-10">
         <div className="flex items-center gap-2">
           <span className="text-blue-600">🔒</span> Secure & Encrypted
         </div>
