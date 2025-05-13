@@ -38,21 +38,25 @@ export default function Page() {
         </a>
       </div>
 
-      <div className="mt-12 border-t pt-6 text-center text-sm text-gray-500 flex flex-wrap justify-center gap-10">
-        <div className="flex items-center gap-2">
-          <span className="text-blue-600">🔒</span> Secure & Encrypted
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-blue-600">🇨🇦</span> Canadian-Based Company
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-blue-600">✔️</span> No Credit Score Impact
-        </div>
-        <div className="flex items-center gap-2">
-          <MessageCircleIcon className="w-4 h-4 text-blue-600" />
-          Real People. Real Help.
-        </div>
-      </div>
+     <div className="mt-12 border-t pt-6 text-center text-sm text-gray-500 flex flex-wrap justify-center gap-10">
+  <div className="flex items-center gap-2">
+    <span className="text-blue-600">🔒</span> Secure & Encrypted
+  </div>
+  <div className="flex items-center gap-2">
+    <span className="text-blue-600">🇨🇦</span> Canadian-Based Company
+  </div>
+  <div className="flex items-center gap-2">
+    <span className="text-blue-600">✔️</span> No Credit Score Impact
+  </div>
+  <div className="flex items-center gap-2">
+    <MessageCircleIcon className="w-4 h-4 text-blue-600" />
+    Real People. Real Help.
+  </div>
+  <div className="flex items-center gap-2">
+    <img src="/cloudflare-logo.png" alt="Cloudflare logo" className="h-4" />
+    Protected by Cloudflare
+  </div>
+</div>
     </div>
   );
 }
