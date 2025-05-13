@@ -13,7 +13,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2" aria-label="Caprock Home">
         {/* <img src="/CCG logo.png" alt="Caprock Logo" className="h-10 w-auto" /> */}
-          <span className="text-xl font-bold text-gray-900">Caprock</span>
+          <span className="text-xl font-bold text-gray-900">Caprock Capital</span>
         </Link>
 
         {/* Desktop Links */}
