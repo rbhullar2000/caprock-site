@@ -15,7 +15,7 @@ export default function Page() {
 
         {/* Logo */}
         <div className="flex justify-center -mt-10 mb-2">
-          <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-64" />
+          <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-48" />
         </div>
 
         {/* Headline & Description */}
