@@ -6,10 +6,10 @@ export default function Page() {
   return (
     <div
       className="max-w-5xl mx-auto px-6 space-y-10"
-      style={{ paddingTop: '0rem', paddingBottom: '1.5rem' }} // override Tailwind/global
+      style={{ paddingTop: '0rem', paddingBottom: '1.5rem' }} // adjusted padding
     >
       <div className="flex justify-center" style={{ paddingTop: '1rem', paddingBottom: '0.5rem' }}>
-        <img src="/logo.png" alt="Caprock Logo" className="h-50" />
+        <img src="/logo.png" alt="Caprock Logo" className="h-40" /> {/* changed from h-96 or h-50 to h-40 */}
       </div>
 
       <section className="text-center text-gray-800 text-md leading-relaxed space-y-4">
