@@ -151,6 +151,13 @@ export default function PreApprovalPage() {
           />
         </div>
 
+          <div className="flex items-center gap-3 border border-gray-200 p-4 rounded bg-white shadow-sm">
+            <img src="/cloudflare-logo.png" alt="Cloudflare SSL" className="h-6 w-auto" />
+            <p className="text-sm text-gray-700">
+              Protected with SSL encryption and industry-grade security via Cloudflare.
+            </p>
+          </div>
+
         <button type="submit" className="mt-6 w-full bg-blue-600 text-white py-3 rounded font-semibold">
           Submit Pre-Approval
         </button>
