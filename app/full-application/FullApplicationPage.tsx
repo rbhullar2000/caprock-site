@@ -171,18 +171,19 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section3">
+         <AccordionItem value="section3">
   <div ref={sectionRefs.section3}>
-    <AccordionTrigger>
-      3. Previous Address <span className="text-sm text-gray-500">(if current address is less than 2 years)</span>
+    <AccordionTrigger className="flex justify-between items-center gap-2">
+      <span className="whitespace-nowrap">3. Previous Address</span>
+      <span className="text-sm text-gray-500 whitespace-nowrap">(if current address is less than 2 years)</span>
     </AccordionTrigger>
     <AccordionContent>
       <div className="grid md:grid-cols-2 gap-4">
-        {renderInput("previousAddress", "Previous Street Address")}
+        {renderInput("previousAddress", "Previous Street")}
         {renderInput("previousCity", "Previous City")}
         {renderInput("previousProvince", "Previous Province")}
         {renderInput("previousPostalCode", "Previous Postal Code")}
-        {renderInput("previousAddressDuration", "Length of Time at Previous Address")}
+        {renderInput("previousAddressDuration", "Previous Duration")}
       </div>
     </AccordionContent>
   </div>
@@ -243,22 +244,22 @@ export default function FullApplicationPage() {
             </div>
           </AccordionItem>
 
-          <AccordionItem value="section7">
+         <AccordionItem value="section7">
   <div ref={sectionRefs.section7}>
-    <AccordionTrigger>
-      7. Previous Employment <span className="text-sm text-gray-500">(if current job is less than 2 years)</span>
+    <AccordionTrigger className="flex justify-between items-center gap-2">
+      <span className="whitespace-nowrap">7. Previous Employment</span>
+      <span className="text-sm text-gray-500 whitespace-nowrap">(if current job is less than 2 years)</span>
     </AccordionTrigger>
     <AccordionContent>
       <div className="grid md:grid-cols-2 gap-4">
-        {renderInput("previousEmployer", "Previous Employer Name")}
-        {renderInput("previousEmployerPhone", "Previous Employer Phone Number")}
-        {renderInput("previousEmployerDuration", "Length of Time at Previous Job")}
-        {renderInput("previousOccupation", "Previous Job Title / Occupation")}
+        {renderInput("previousEmployer", "Previous Employer")}
+        {renderInput("previousEmployerPhone", "Previous Employer Phone")}
+        {renderInput("previousEmployerDuration", "Duration")}
+        {renderInput("previousOccupation", "Occupation")}
       </div>
     </AccordionContent>
   </div>
 </AccordionItem>
-
           <AccordionItem value="section8">
             <div ref={sectionRefs.section8}>
               <AccordionTrigger>8. Co-Applicant</AccordionTrigger>
