@@ -12,8 +12,8 @@ export default function Page() {
         backgroundSize: 'cover',
       }}
     >
-      {/* Overlay */}
-      <div className="bg-black bg-opacity-60 min-h-screen px-6 py-10">
+      {/* Lighter overlay with gradient for readability */}
+      <div className="min-h-screen bg-gradient-to-b from-black/20 to-black/40 px-6 py-10">
         <div className="max-w-5xl mx-auto space-y-8">
           {/* Logo */}
           <div className="flex justify-center">
