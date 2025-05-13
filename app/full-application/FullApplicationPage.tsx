@@ -173,9 +173,13 @@ export default function FullApplicationPage() {
 
          <AccordionItem value="section3">
   <div ref={sectionRefs.section3}>
-    <AccordionTrigger className="flex flex-wrap justify-between items-center text-left">
-      <span className="text-base font-medium">3. Previous Address</span>
-      <span className="text-sm text-gray-500 ml-2">(if current address is less than 2 years)</span>
+    <AccordionTrigger>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full text-left">
+        <span>3. Previous Address</span>
+        <span className="text-sm text-gray-500 md:ml-4">
+          (if current address is less than 2 years)
+        </span>
+      </div>
     </AccordionTrigger>
     <AccordionContent>
       <div className="grid md:grid-cols-2 gap-4">
@@ -246,9 +250,13 @@ export default function FullApplicationPage() {
 
         <AccordionItem value="section7">
   <div ref={sectionRefs.section7}>
-    <AccordionTrigger className="flex flex-wrap justify-between items-center text-left">
-      <span className="text-base font-medium">7. Previous Employment</span>
-      <span className="text-sm text-gray-500 ml-2">(if current job is less than 2 years)</span>
+    <AccordionTrigger>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full text-left">
+        <span>7. Previous Employment</span>
+        <span className="text-sm text-gray-500 md:ml-4">
+          (if current job is less than 2 years)
+        </span>
+      </div>
     </AccordionTrigger>
     <AccordionContent>
       <div className="grid md:grid-cols-2 gap-4">
@@ -260,6 +268,7 @@ export default function FullApplicationPage() {
     </AccordionContent>
   </div>
 </AccordionItem>
+          
           <AccordionItem value="section8">
             <div ref={sectionRefs.section8}>
               <AccordionTrigger>8. Co-Applicant</AccordionTrigger>
