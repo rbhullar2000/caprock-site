@@ -165,7 +165,7 @@ export default function FullApplicationPage() {
                   {renderInput("addressProvince", "Province")}
                   {renderInput("addressPostalCode", "Postal Code")}
                   {renderInput("addressDuration", "Time at Address")}
-                  {renderInput("previousAddress", "Previous Street")}
+                  {renderInput("previousAddress", "Previous Address (if current address less than 2 years)")}
                   {renderInput("previousCity", "Previous City")}
                   {renderInput("previousProvince", "Previous Province")}
                   {renderInput("previousPostalCode", "Previous Postal Code")}
@@ -274,7 +274,7 @@ export default function FullApplicationPage() {
                       {renderInput("coAddressProvince", "Province")}
                       {renderInput("coAddressPostalCode", "Postal Code")}
                       {renderInput("coAddressDuration", "Time at Address")}
-                      {renderInput("coPreviousAddress", "Previous Address (if current address less than 2 years)")}
+                      {renderInput("coPreviousAddress", "Previous Address")}
                       {renderInput("coPreviousCity", "Previous City")}
                       {renderInput("coPreviousProvince", "Previous Province")}
                       {renderInput("coPreviousPostalCode", "Previous Postal Code")}
