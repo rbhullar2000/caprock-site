@@ -4,12 +4,15 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="max-w-5xl mx-auto px-6 pt-2 pb-6 space-y-10"> {/* reduced top padding */}
-      <div className="flex justify-center mt-2 mb-2"> {/* tightened vertical margin on logo */}
+    <div
+      className="max-w-5xl mx-auto px-6 space-y-10"
+      style={{ paddingTop: '0rem', paddingBottom: '1.5rem' }}
+    >
+      <div className="flex justify-center" style={{ paddingTop: '1rem', paddingBottom: '0.5rem' }}>
         <img src="/logo.png" alt="Caprock Logo" className="h-96" />
       </div>
 
-      <section className="text-center text-gray-800 text-md leading-relaxed space-y-4"> {/* paragraph spacing preserved */}
+      <section className="text-center text-gray-800 text-md leading-relaxed space-y-4">
         <p>
           At Caprock Capital Group, we specialize in personalized automotive financing designed to meet your needs —
           whether you're a first-time buyer, upgrading your vehicle, or navigating credit challenges. We offer
