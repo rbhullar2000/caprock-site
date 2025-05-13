@@ -4,48 +4,71 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div
-      className="relative w-full min-h-screen bg-cover bg-center text-white"
+    <div className="relative w-full min-h-screen bg-cover bg-center text-white"
       style={{ backgroundImage: "url('/background.png')" }}
     >
-      {/* Dark overlay for contrast */}
-      <div className="absolute inset-0 bg-black/50 z-0" />
+      {/* Overlay to darken background slightly for text visibility */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
 
-      {/* Foreground content */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 space-y-8 text-center">
-        
-        <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-56 -mt-6" />
+      {/* Content wrapper */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 max-w-5xl mx-auto space-y-8">
 
-        <h1 className="text-2xl sm:text-3xl font-bold">
-          Financing Built on Trust. Powered by Experience.
-        </h1>
+        {/* Logo */}
+        <div className="flex justify-center -mt-10 mb-2">
+          <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-64" />
+        </div>
 
-        <div className="max-w-2xl space-y-4 text-base sm:text-lg">
+        {/* Headline & Description */}
+        <section className="text-center text-base leading-relaxed space-y-5 max-w-3xl">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white">
+            Financing Built on Trust. Powered by Experience.
+          </h2>
+
           <p>
-            At Caprock Capital Group, we specialize in delivering personalized automotive financing tailored to your unique needs—whether you're a first-time buyer, upgrading your vehicle, or rebuilding credit.
+            At Caprock Capital Group, we specialize in delivering personalized automotive financing tailored to your unique needs—whether you're a first-time buyer, upgrading your vehicle, or rebuilding credit. Our mission is to provide a transparent, flexible, and supportive path to vehicle ownership.
           </p>
+
           <p>
-            We work with top lenders and trusted dealerships to simplify the process from pre-approval to funding. Apply online, explore options, and move forward confidently — with zero pressure.
+            With a network of Canada’s leading lenders and trusted dealership partners, we simplify the entire loan process. From pre-approval to funding, our secure platform allows you to apply with ease, compare your options, and move forward with confidence—without the pressure.
           </p>
+
+          <p>
+            Our advisors are here to support you at every step. We bring years of experience, local insight, and a commitment to ensuring every client makes informed, empowered financial decisions.
+          </p>
+
           <p className="font-semibold">
             Let us help you move forward — with confidence, clarity, and control.
           </p>
+        </section>
+
+        {/* CTA */}
+        <div className="pt-4">
+          <a
+            href="/pre-approval"
+            className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
+          >
+            Get Pre-Approved
+          </a>
         </div>
 
-        <a
-          href="/pre-approval"
-          className="mt-4 inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
-        >
-          Get Pre-Approved
-        </a>
-
-        <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-gray-200">
-          <div className="flex items-center gap-2">🔒 Secure & Encrypted</div>
-          <div className="flex items-center gap-2">🇨🇦 Canadian-Based Company</div>
-          <div className="flex items-center gap-2">✔️ No Credit Score Impact</div>
+        {/* Trust Bar */}
+        <div className="mt-10 pt-6 text-sm text-gray-200 flex flex-wrap justify-center gap-x-8 gap-y-4">
+          <div className="flex items-center gap-2">
+            <span>🔒</span> Secure & Encrypted
+          </div>
+          <div className="flex items-center gap-2">
+            <span>🇨🇦</span> Canadian-Based Company
+          </div>
+          <div className="flex items-center gap-2">
+            <span>✔️</span> No Credit Score Impact (Pre-Approvals)
+          </div>
           <div className="flex items-center gap-2">
             <MessageCircleIcon className="w-4 h-4" />
             Real People. Real Help.
+          </div>
+          <div className="flex items-center gap-2">
+            <img src="/cloudflare-logo.png" alt="Cloudflare logo" className="h-4" />
+            Protected by Cloudflare
           </div>
         </div>
       </div>
