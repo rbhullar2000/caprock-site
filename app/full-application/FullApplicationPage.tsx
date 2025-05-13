@@ -14,17 +14,18 @@ export default function FullApplicationPage() {
   const [submittedSuccessfully, setSubmittedSuccessfully] = useState(false);
 
   const sectionRefs = {
-    section1: useRef<HTMLDivElement>(null),
-    section2: useRef<HTMLDivElement>(null),
-    section3: useRef<HTMLDivElement>(null),
-    section4: useRef<HTMLDivElement>(null),
-    section5: useRef<HTMLDivElement>(null),
-    section6: useRef<HTMLDivElement>(null),
-    section7: useRef<HTMLDivElement>(null),
-    section8: useRef<HTMLDivElement>(null),
-    section9: useRef<HTMLDivElement>(null),
-    section10: useRef<HTMLDivElement>(null),
-  };
+  section1: useRef<HTMLDivElement>(null),
+  section2: useRef<HTMLDivElement>(null),
+  section3: useRef<HTMLDivElement>(null),
+  section4: useRef<HTMLDivElement>(null),
+  section5: useRef<HTMLDivElement>(null),
+  section6: useRef<HTMLDivElement>(null),
+  section7: useRef<HTMLDivElement>(null),
+  section8: useRef<HTMLDivElement>(null),
+  section9: useRef<HTMLDivElement>(null),
+  section10: useRef<HTMLDivElement>(null),
+  section11: useRef<HTMLDivElement>(null), 
+};
 
   useEffect(() => {
     const data: any = {};
