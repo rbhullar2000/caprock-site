@@ -4,18 +4,18 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="max-w-5xl mx-auto px-6 space-y-10 pt-6 pb-10">
+    <div className="max-w-5xl mx-auto px-6 space-y-8" style={{ paddingTop: '0rem', paddingBottom: '1rem' }}>
       
       {/* Logo */}
       <div className="flex justify-center">
-        <img src="/logo.png" alt="Caprock Capital Group Logo" className="h-64" />
+        <img src="/logo.png" alt="Caprock Logo" className="h-64" />
       </div>
 
-      {/* Intro */}
+      {/* Hero Section */}
       <section className="text-center text-gray-800 text-base leading-relaxed space-y-5">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-semibold text-gray-900">
           Financing Built on Trust. Powered by Experience.
-        </h1>
+        </h2>
 
         <p>
           At Caprock Capital Group, we specialize in delivering personalized automotive financing tailored to your unique needs—whether you're a first-time buyer, upgrading your vehicle, or rebuilding credit. Our mission is to provide a transparent, flexible, and supportive path to vehicle ownership.
@@ -29,13 +29,13 @@ export default function Page() {
           Our advisors are here to support you at every step. We bring years of experience, local insight, and a commitment to ensuring every client makes informed, empowered financial decisions.
         </p>
 
-        <p className="font-semibold mt-4">
+        <p className="font-semibold">
           Let us help you move forward — with confidence, clarity, and control.
         </p>
       </section>
 
-      {/* CTA */}
-      <div className="text-center">
+      {/* CTA Button */}
+      <div className="text-center pt-4">
         <a
           href="/pre-approval"
           className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
@@ -44,8 +44,8 @@ export default function Page() {
         </a>
       </div>
 
-      {/* Trust Icons */}
-      <div className="mt-10 border-t pt-6 text-center text-sm text-gray-500 flex flex-wrap justify-center gap-8">
+      {/* Trust Bar */}
+      <div className="mt-10 border-t pt-6 text-center text-sm text-gray-500 flex flex-wrap justify-center gap-x-8 gap-y-4 px-4">
         <div className="flex items-center gap-2">
           <span className="text-blue-600">🔒</span> Secure & Encrypted
         </div>
