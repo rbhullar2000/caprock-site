@@ -17,7 +17,7 @@ export default function AboutPage() {
       />
 
       {/* ✅ Optional: overlay to darken background */}
-      <div className="fixed inset-0 bg-black/30 -z-10" />
+      {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
 
       {/* ✅ Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-20 w-full space-y-10">
@@ -48,7 +48,7 @@ export default function AboutPage() {
           <p className="font-semibold">
             Let us help you move forward — smarter, stronger, and on your terms.
           </p>
-        </div>
+          {/* </div> */}
       </div>
     </div>
   );
