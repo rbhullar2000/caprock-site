@@ -6,13 +6,16 @@ import Image from 'next/image';
 export default function Page() {
   return (
    <div className="relative w-full min-h-screen text-white overflow-hidden">
+  <div className="absolute inset-0 -z-10">
   <Image
     src="/background.png"
     alt="Caprock Background"
     fill
     priority
-    className="object-cover object-center fixed inset-0 -z-10"
+    sizes="100vw"
+    className="object-cover object-center w-full h-full"
   />
+</div>
 
   <div className="fixed inset-0 bg-black/20 -z-10" />
 
