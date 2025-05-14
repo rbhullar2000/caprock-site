@@ -76,6 +76,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </div> // ✅ This closing div was missing
+    </div> 
   );
 }
