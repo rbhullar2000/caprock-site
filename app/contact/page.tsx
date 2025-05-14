@@ -8,7 +8,8 @@ export default function ContactPage() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
-  <div className="relative z-10 max-w-2xl mx-auto px-4 py-20 text-center space-y-8">
+  return (
+    <div className="relative w-full min-h-screen text-white overflow-hidden">
       {/* ✅ Full background image */}
       <div
         className="fixed inset-0 bg-cover bg-center -z-10"
@@ -19,16 +20,16 @@ export default function ContactPage() {
       {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
 
       {/* ✅ Content wrapper */}
-      <br />
-      <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
+      <div className="relative z-10 max-w-2xl mx-auto px-4 py-20 text-center space-y-8">
         <Image
           src="/logo.png"
           alt="Caprock Capital Group Logo"
           width={120}
           height={120}
-          className="mx-auto"
+          className="mx-auto mb-6"
+          priority
         />
-        <div></div>
+
         <h1 className="text-4xl font-bold">Contact Us</h1>
 
         <div className="bg-black/30 rounded-lg p-8 text-left space-y-8">
