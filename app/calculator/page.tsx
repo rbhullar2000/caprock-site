@@ -30,21 +30,23 @@ export default function CalculatorPage() {
   }));
 
   return (
-    {/* <div className="bg-gray-100 min-h-screen py-12 px-4"> */}
-    <div className="max-w-4xl mx-auto text-center">
-      <Image
-        src="/logo.png"
-        alt="Caprock Capital Group Logo"
-        width={120}
-        height={120}
-        className="mx-auto mb-6"
+    <div className="relative w-full min-h-screen text-white overflow-hidden">
+      {/* Background Image */}
+      <div
+        className="fixed inset-0 bg-cover bg-center -z-10"
+        style={{ backgroundImage: "url('/background.png')" }}
       />
 
-        <h1 className="text-3xl font-bold text-center mb-8">
-          Auto Loan Payment Calculator
-        </h1>
+      {/* Logo aligned top-right */}
+      <div className="flex justify-end w-full pr-6 pt-6">
+        <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+      </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 space-y-6 text-left">
+      {/* Content wrapper */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
+        <h1 className="text-3xl sm:text-4xl font-semibold text-center">Auto Loan Payment Calculator</h1>
+
+        <div className="bg-black/30 rounded-lg p-8 max-w-4xl w-full space-y-6 text-left">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div>
               <label className="block font-medium mb-1">Loan Amount ($)</label>
@@ -52,7 +54,7 @@ export default function CalculatorPage() {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(+e.target.value)}
-                className="w-full border p-3 rounded-md"
+                className="w-full border p-3 rounded-md text-black"
               />
             </div>
             <div>
@@ -61,7 +63,7 @@ export default function CalculatorPage() {
                 type="number"
                 value={term}
                 onChange={(e) => setTerm(+e.target.value)}
-                className="w-full border p-3 rounded-md"
+                className="w-full border p-3 rounded-md text-black"
               />
             </div>
             <div>
@@ -70,18 +72,18 @@ export default function CalculatorPage() {
                 type="number"
                 value={rate}
                 onChange={(e) => setRate(+e.target.value)}
-                className="w-full border p-3 rounded-md"
+                className="w-full border p-3 rounded-md text-black"
               />
             </div>
           </div>
 
-          <div className="bg-blue-50 p-4 rounded-md space-y-2 text-base">
+          <div className="bg-blue-50 text-black p-4 rounded-md space-y-2 text-base">
             <p><strong>Estimated Monthly Payment:</strong> ${monthlyPayment.toFixed(2)}</p>
             <p><strong>Total Repaid:</strong> ${totalPayment.toFixed(2)}</p>
             <p><strong>Total Interest Paid:</strong> ${totalInterest.toFixed(2)}</p>
           </div>
 
-          <div className="h-72">
+          <div className="h-72 bg-white rounded-md p-4">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" />
