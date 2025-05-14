@@ -9,12 +9,14 @@ export default function AboutPage() {
   if (!mounted) return null;
 
   return (
-    <div
-      className="relative w-full min-h-screen bg-cover bg-center text-white"
-      style={{ backgroundImage: "url('/background.png')" }}
-    >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60 z-0" />
+    <div className="relative w-full min-h-screen text-white">
+      {/* Background image with 50% opacity */}
+      <div className="absolute inset-0">
+        <div
+          className="w-full h-full bg-center bg-cover opacity-50"
+          style={{ backgroundImage: "url('/background.png')" }}
+        />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto px-4 py-16 text-center space-y-8">
@@ -29,7 +31,7 @@ export default function AboutPage() {
 
         <h1 className="text-4xl font-bold mb-6">About Caprock Capital Group</h1>
 
-        <div className="bg-black/50 backdrop-blur-md rounded-lg p-8 text-left space-y-6">
+        <div className="bg-black/20 rounded-lg p-8 text-left space-y-6">
           <p className="text-lg leading-relaxed">
             At Caprock Capital Group, we specialize in helping Canadians move forward with confidence by offering personalized auto financing solutions tailored to real lives and real goals. With deep roots in financial integrity and a passion for client-first service, we’ve built a reputation for being transparent, reliable, and refreshingly easy to work with.
           </p>
