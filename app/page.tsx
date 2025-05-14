@@ -12,7 +12,7 @@ export default function Page() {
       />
 
       {/* Optional: Overlay */}
-      <div className="fixed inset-0 bg-black/20 -z-10" />
+      {/* <div className="fixed inset-0 bg-black/20 -z-10" /> */}
 
       {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
