@@ -13,7 +13,7 @@ export default function AboutPage() {
       {/* Background image with 50% opacity */}
       <div className="absolute inset-0">
         <div
-          className="w-full h-full bg-center bg-cover opacity-50"
+          className="w-full h-full bg-center bg-cover opacity-25"
           style={{ backgroundImage: "url('/background.png')" }}
         />
       </div>
