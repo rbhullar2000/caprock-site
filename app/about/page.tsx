@@ -10,21 +10,22 @@ export default function AboutPage() {
 
   return (
     <div className="relative w-full min-h-screen text-white overflow-hidden">
-      {/* ✅ Full background image using inline style */}
+      {/* Background Image */}
       <div
         className="fixed inset-0 bg-cover bg-center -z-10"
         style={{ backgroundImage: "url('/background.png')" }}
       />
 
-      {/* ✅ Optional: overlay to darken background */}
+      {/* Optional: Overlay */}
       {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
 
-      {/* ✅ Content wrapper */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-10">
-        <div className="flex justify-end w-full pr-4 pt-8 mb-4">
-  <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
-</div>
+      {/* Logo aligned top-right consistently */}
+      <div className="flex justify-end w-full pr-6 pt-6">
+        <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+      </div>
 
+      {/* Content wrapper */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-10">
         <h1 className="text-4xl font-bold text-center">About Caprock Capital Group</h1>
 
         <div className="bg-black/30 rounded-lg p-8 max-w-3xl w-full text-left space-y-6 text-lg leading-relaxed">
@@ -43,7 +44,7 @@ export default function AboutPage() {
           <p className="font-semibold">
             Let us help you move forward — smarter, stronger, and on your terms.
           </p>
-          </div> 
+        </div>
       </div>
     </div>
   );
