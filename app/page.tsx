@@ -14,15 +14,14 @@ export default function Page() {
       {/* Optional: Overlay */}
       {/* <div className="fixed inset-0 bg-black/20 -z-10" /> */}
 
+      {/* Logo aligned top-right consistently */}
+      <div className="flex justify-end w-full pr-6 pt-6">
+        <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+      </div>
+
       {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
-        {/* Logo */}
-        {/* Logo aligned right */}
-<div className="flex justify-end w-full pr-4 -mt-10 mb-2">
-  <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
-</div>
-
-        {/* Headline & Description wrapped in translucent box */}
+        {/* Headline & Description in translucent box */}
         <section className="bg-black/30 rounded-lg p-8 text-center text-base leading-relaxed space-y-5 w-full max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-semibold text-white">
             Financing Built on Trust. Powered by Experience.
