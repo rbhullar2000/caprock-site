@@ -11,10 +11,11 @@ export default function Page() {
     alt="Caprock Background"
     fill
     priority
-    className="object-cover z-0"
+    className="object-cover object-center -z-10"
   />
-      {/* Overlay to darken background slightly for text visibility */}
-      <div className="absolute inset-0 bg-black/5 z-0" />
+
+  {/* Overlay to darken the background slightly for readability */}
+  <div className="absolute inset-0 bg-black/20 z-0" />
 
       {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 max-w-5xl mx-auto space-y-8">
