@@ -20,6 +20,7 @@ export default function ContactPage() {
       {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
 
       {/* ✅ Content wrapper */}
+      <br />
       <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
         <Image
           src="/logo.png"
