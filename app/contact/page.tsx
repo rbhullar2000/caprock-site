@@ -20,7 +20,7 @@ export default function ContactPage() {
       {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
 
       {/* ✅ Content wrapper */}
-      <div className="relative z-10 max-w-2xl mx-auto px-4 py-20 text-center space-y-8">
+      <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
         <Image
           src="/logo.png"
           alt="Caprock Capital Group Logo"
