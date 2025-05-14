@@ -129,15 +129,16 @@ export default function FullApplicationPage() {
   return (
   <div className="bg-gray-200 min-h-screen py-12 px-4">
     <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <Image
-        src="/logo.png"
-        alt="Caprock Capital Group Logo"
-        width={120}
-        height={120}
-        className="mx-auto"
-      />
-    </div>
- </div>     
+      <div className="text-center mb-6">
+        <Image
+          src="/logo.png"
+          alt="Caprock Capital Group Logo"
+          width={120}
+          height={120}
+          className="mx-auto"
+        />
+      </div>
+
       <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
         Full Credit Application
       </h1>
