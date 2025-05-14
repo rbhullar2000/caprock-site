@@ -21,14 +21,9 @@ export default function ContactPage() {
 
       {/* ✅ Content wrapper */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
-        <Image
-          src="/logo.png"
-          alt="Caprock Capital Group Logo"
-          width={120}
-          height={120}
-          className="mx-auto mb-6"
-          priority
-        />
+        <div className="flex justify-end w-full pr-4 -mt-10 mb-2">
+  <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+</div>
 
         <h1 className="text-4xl font-bold">Contact Us</h1>
 
