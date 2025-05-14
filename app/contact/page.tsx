@@ -28,7 +28,7 @@ export default function ContactPage() {
           height={120}
           className="mx-auto"
         />
-
+        <div></div>
         <h1 className="text-4xl font-bold">Contact Us</h1>
 
         <div className="bg-black/30 rounded-lg p-8 text-left space-y-8">
