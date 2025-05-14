@@ -9,15 +9,17 @@ export default function ContactPage() {
   if (!mounted) return null;
 
   return (
-    <div className="relative w-full min-h-screen text-white">
-      <div className="absolute inset-0">
-        <div
-          className="w-full h-full bg-center bg-cover opacity-100"
-          style={{ backgroundImage: "url('/background.png')" }}
-        />
-      </div>
+    <div className="relative w-full min-h-screen text-white overflow-hidden">
+      {/* ✅ Full background image */}
+      <div
+        className="fixed inset-0 bg-cover bg-center -z-10"
+        style={{ backgroundImage: "url('/background.png')" }}
+      />
 
-      {/* Content */}
+      {/* ✅ Optional: overlay for readability */}
+      {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
+
+      {/* ✅ Content wrapper */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
         <Image
           src="/logo.png"
