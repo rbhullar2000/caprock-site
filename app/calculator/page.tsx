@@ -30,7 +30,7 @@ export default function CalculatorPage() {
   }));
 
   return (
-  <div className="bg-[#fef3c7] min-h-screen py-16 px-4">
+  <div className="bg-[#f59e0b] min-h-screen py-16 px-4">
     <div className="max-w-4xl mx-auto text-center">
       <Image
         src="/logo.png"
