@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import {
   LineChart,
@@ -31,12 +31,13 @@ export default function CalculatorPage() {
 
   return (
     <div className="relative w-full min-h-screen text-white overflow-hidden">
+      {/* Background Image */}
       <div
         className="fixed inset-0 bg-cover bg-center -z-10"
         style={{ backgroundImage: "url('/background.png')" }}
       />
 
-      {/* Logo aligned top-right */}
+      {/* Logo aligned top-right consistently */}
       <div className="flex justify-end w-full pr-6 pt-6">
         <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
       </div>
@@ -44,9 +45,9 @@ export default function CalculatorPage() {
       {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-10">
         <section className="bg-black/30 rounded-lg p-8 text-center text-base leading-relaxed space-y-6 w-full max-w-3xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-white">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-white">
             Auto Loan Payment Calculator
-          </h2>
+          </h1>
 
           <div className="bg-white text-black shadow-md rounded-lg p-6 space-y-6 text-left">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -103,6 +104,16 @@ export default function CalculatorPage() {
             </div>
           </div>
         </section>
+
+        {/* CTA */}
+        <div className="pt-4">
+          <a
+            href="/pre-approval"
+            className="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition"
+          >
+            Get Pre-Approved
+          </a>
+        </div>
       </div>
     </div>
   );
