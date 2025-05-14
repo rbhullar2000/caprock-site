@@ -1,14 +1,17 @@
 'use client';
 
 import { MessageCircleIcon } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Page() {
   return (
    <div className="relative w-full min-h-screen text-white">
-  <img
+  <Image
     src="/background.png"
-    alt="Background"
-    className="absolute inset-0 w-full h-full object-cover z-0"
+    alt="Caprock Background"
+    fill
+    priority
+    className="object-cover z-0"
   />
       {/* Overlay to darken background slightly for text visibility */}
       <div className="absolute inset-0 bg-black/5 z-0" />
