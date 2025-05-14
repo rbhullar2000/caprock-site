@@ -99,6 +99,7 @@ export default function PreApprovalPage() {
   }
 
     return (
+    
     <div className="bg-gray-100 min-h-screen py-12 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-6">
