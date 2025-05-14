@@ -5,12 +5,12 @@ import Image from 'next/image';
 
 export default function Page() {
   return (
-  <div className="relative w-full min-h-screen text-white overflow-hidden">
-    {/* Full background image using inline style */}
-    <div
-      className="fixed inset-0 bg-cover bg-center -z-10"
-      style={{ backgroundImage: "url('/background.png')" }}
-    />
+    <div className="relative w-full min-h-screen text-white overflow-hidden">
+      {/* ✅ This comment is now correctly inside JSX */}
+      <div
+        className="fixed inset-0 bg-cover bg-center -z-10"
+        style={{ backgroundImage: "url('/background.png')" }}
+      />
 
     {/* Optional: dark overlay for text readability */}
     <div className="fixed inset-0 bg-black/20 -z-10" />
