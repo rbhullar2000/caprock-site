@@ -4,9 +4,12 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="relative w-full min-h-screen bg-cover bg-center text-white"
-      style={{ backgroundImage: "url('/background.png')" }}
-    >
+   <div className="relative w-full min-h-screen text-white">
+  <img
+    src="/background.png"
+    alt="Background"
+    className="absolute inset-0 w-full h-full object-cover z-0"
+  />
       {/* Overlay to darken background slightly for text visibility */}
       <div className="absolute inset-0 bg-black/5 z-0" />
 
