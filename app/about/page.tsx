@@ -21,14 +21,9 @@ export default function AboutPage() {
 
       {/* ✅ Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-10">
-        <Image
-          src="/logo.png"
-          alt="Caprock Capital Group Logo"
-          width={120}
-          height={120}
-          priority
-          className="mx-auto mb-4"
-        />
+        <div className="flex justify-end w-full pr-4 -mt-10 mb-2">
+  <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+</div>
 
         <h1 className="text-4xl font-bold text-center">About Caprock Capital Group</h1>
 
