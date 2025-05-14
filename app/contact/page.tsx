@@ -1,39 +1,55 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function ContactPage() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   return (
-    <div className="max-w-2xl mx-auto px-4 py-16 text-center">
-      <Image
-        src="/logo.png"
-        alt="Caprock Capital Group Logo"
-        width={120}
-        height={120}
-        className="mx-auto"
-      />
-<div className="h-4" />
-      <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
+    <div className="relative w-full min-h-screen text-white">
+      {/* Background Image at 75% opacity */}
+      <div className="absolute inset-0">
+        <div
+          className="w-full h-full bg-center bg-cover opacity-75"
+          style={{ backgroundImage: "url('/background.png')" }}
+        />
+      </div>
 
-      <div className="bg-white shadow-lg rounded-lg p-8 text-left space-y-8">
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-gray-800">Office Address</h2>
-          <p className="text-gray-700">Caprock Capital Group Inc.</p>
-          <p className="text-gray-700">112 – 970 Burrard Street, Office #1547</p>
-          <p className="text-gray-700">Vancouver, BC V6Z 2R4, Canada</p>
-        </div>
+      {/* Content */}
+      <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
+        <Image
+          src="/logo.png"
+          alt="Caprock Capital Group Logo"
+          width={120}
+          height={120}
+          className="mx-auto"
+        />
 
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-gray-800">Email</h2>
-          <p className="text-blue-600 hover:underline">
-            <a href="mailto:contact@caprockcapital.ca">contact@caprockcapital.ca</a>
-          </p>
-        </div>
+        <h1 className="text-4xl font-bold">Contact Us</h1>
 
-        <div>
-          <h2 className="text-xl font-semibold mb-2 text-gray-800">Business Hours</h2>
-          <p className="text-gray-700">Monday – Friday: 9:00 AM – 5:00 PM</p>
-          <p className="text-gray-700">Saturday & Sunday: Closed</p>
+        <div className="bg-black/30 rounded-lg p-8 text-left space-y-8">
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Office Address</h2>
+            <p>Caprock Capital Group Inc.</p>
+            <p>112 – 970 Burrard Street, Office #1547</p>
+            <p>Vancouver, BC V6Z 2R4, Canada</p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Email</h2>
+            <p className="text-blue-300 hover:underline">
+              <a href="mailto:contact@caprockcapital.ca">contact@caprockcapital.ca</a>
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-semibold mb-2">Business Hours</h2>
+            <p>Monday – Friday: 9:00 AM – 5:00 PM</p>
+            <p>Saturday & Sunday: Closed</p>
+          </div>
         </div>
       </div>
     </div>
