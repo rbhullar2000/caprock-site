@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function Page() {
   return (
    <div className="relative w-full min-h-screen text-white overflow-hidden">
- <Image
+  <Image
     src="/background.png"
     alt="Caprock Background"
     fill
@@ -14,11 +14,10 @@ export default function Page() {
     className="object-cover object-center fixed inset-0 -z-10"
   />
 
-  {/* Overlay to darken the background slightly for readability */}
-<div className="fixed inset-0 bg-black/20 -z-10" />
+  <div className="fixed inset-0 bg-black/20 -z-10" />
 
       {/* Content wrapper */}
-       <div className="relative z-10 flex flex-col items-center justify-center px-4 sm:px-6 py-16 max-w-5xl mx-auto space-y-8">
+       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full max-w-none space-y-8">
 
         {/* Logo */}
         <div className="flex justify-center -mt-10 mb-2">
