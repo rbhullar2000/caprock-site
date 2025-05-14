@@ -74,8 +74,8 @@ export default function Page() {
         <div className="flex items-center gap-2">
           <img src="/cloudflare-logo.png" alt="Cloudflare logo" className="h-4" />
           Protected by Cloudflare
-        </div>
+               </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
