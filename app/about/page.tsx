@@ -48,7 +48,7 @@ export default function AboutPage() {
           <p className="font-semibold">
             Let us help you move forward — smarter, stronger, and on your terms.
           </p>
-          {/* </div> */}
+          </div> 
       </div>
     </div>
   );
