@@ -4,25 +4,22 @@ import { MessageCircleIcon } from 'lucide-react';
 
 export default function Page() {
   return (
-    <div className="relative w-full min-h-screen text-white overflow-hidden">
-      {/* ✅ Background Image */}
-      <div
-        className="fixed inset-0 bg-cover bg-center -z-10"
-        style={{ backgroundImage: "url('/background.png')" }}
-      />
-
-      {/* Optional: Overlay */}
-      <div className="fixed inset-0 bg-black/20 -z-10" />
+    <div className="relative w-full min-h-screen bg-cover bg-center text-white"
+      style={{ backgroundImage: "url('/background.png')" }}
+    >
+      {/* Overlay to darken background slightly for text visibility */}
+      <div className="absolute inset-0 bg-black/5 z-0" />
 
       {/* Content wrapper */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 max-w-5xl mx-auto space-y-8">
+
         {/* Logo */}
         <div className="flex justify-center -mt-10 mb-2">
           <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-48" />
         </div>
 
         {/* Headline & Description */}
-        <section className="text-center text-base leading-relaxed space-y-5 w-full px-4 sm:px-8">
+        <section className="text-center text-base leading-relaxed space-y-5 max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-semibold text-white">
             Financing Built on Trust. Powered by Experience.
           </h2>
