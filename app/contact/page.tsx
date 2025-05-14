@@ -8,8 +8,7 @@ export default function ContactPage() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
-  return (
-    <div className="relative w-full min-h-screen text-white overflow-hidden">
+  <div className="relative z-10 max-w-2xl mx-auto px-4 py-20 text-center space-y-8">
       {/* ✅ Full background image */}
       <div
         className="fixed inset-0 bg-cover bg-center -z-10"
