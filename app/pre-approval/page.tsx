@@ -98,17 +98,17 @@ export default function PreApprovalPage() {
     );
   }
 
-return (
-  <div className="bg-gray-100 min-h-screen py-12 px-4">
-    <div className="max-w-4xl mx-auto text-center">
-      <Image
-        src="/logo.png"
-        alt="Caprock Capital Group Logo"
-        width={120}
-        height={120}
-        className="mx-auto mb-6"
-      />
 
+return (
+    <div className="bg-gray-100 min-h-screen py-12 px-4">
+      <div className="max-w-4xl mx-auto text-center">
+        <Image
+          src="/logo.png"
+          alt="Caprock Capital Group Logo"
+          width={120}
+          height={120}
+          className="mx-auto mb-6"
+        />
 
   
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6" onSubmit={handleSubmit}>
