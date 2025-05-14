@@ -5,7 +5,7 @@ import { MessageCircleIcon } from 'lucide-react';
 export default function Page() {
   return (
     <div className="relative w-full min-h-screen text-white overflow-hidden">
-      {/* ✅ Background Image */}
+      {/* Background Image */}
       <div
         className="fixed inset-0 bg-cover bg-center -z-10"
         style={{ backgroundImage: "url('/background.png')" }}
@@ -21,8 +21,8 @@ export default function Page() {
           <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-48" />
         </div>
 
-        {/* Headline & Description */}
-        <section className="text-center text-base leading-relaxed space-y-5 w-full px-4 sm:px-8">
+        {/* Headline & Description wrapped in translucent box */}
+        <section className="bg-black/30 rounded-lg p-8 text-center text-base leading-relaxed space-y-5 w-full max-w-3xl">
           <h2 className="text-2xl sm:text-3xl font-semibold text-white">
             Financing Built on Trust. Powered by Experience.
           </h2>
