@@ -25,7 +25,7 @@ export default function Page() {
         </div>
 
         {/* Headline & Description */}
-        <section className="text-center text-base leading-relaxed space-y-5 max-w-3xl">
+        <section className="text-center text-base leading-relaxed space-y-5 w-full px-4 sm:px-8 max-w-screen-xl">
           <h2 className="text-2xl sm:text-3xl font-semibold text-white">
             Financing Built on Trust. Powered by Experience.
           </h2>
