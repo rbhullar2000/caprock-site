@@ -21,7 +21,7 @@ export default function AboutPage() {
 
       {/* ✅ Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-10">
-        <div className="flex justify-end w-full pr-4 -mt-10 mb-2">
+        <div className="flex justify-end w-full pr-4 pt-8 mb-4">
   <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
 </div>
 
