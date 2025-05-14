@@ -126,40 +126,23 @@ export default function FullApplicationPage() {
     </div>
   );
 
- return (
-  <div className="bg-gray-200 min-h-screen py-12 px-4">
-    <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      {submittedSuccessfully ? (
-        <div className="text-center py-20">
-          <h1 className="text-2xl font-bold">Thank You!</h1>
-          <p className="mt-4 mb-6">Your full application has been submitted.</p>
-          <button
-            onClick={() => router.push('/')}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-          >
-            Back to Home
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="text-center mb-6">
-            <Image
-              src="/logo.png"
-              alt="Caprock Capital Group Logo"
-              width={120}
-              height={120}
-              className="mx-auto"
-            />
-          </div>
+  return (
+    <div className="max-w-5xl mx-auto p-6">
+       <div className="text-center mb-6">
+      <Image
+        src="/logo.png"
+        alt="Caprock Capital Group Logo"
+        width={120}
+        height={120}
+        className="mx-auto"
+      />
+    </div>
+      <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
+        Full Credit Application
+      </h1>
 
-          <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
-            Full Credit Application
-          </h1>
-
-          
-       
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+  {!submittedSuccessfully && ( 
+  <form onSubmit={handleSubmit} className="space-y-6">
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
           <AccordionItem value="section1">
            <div ref={sectionRefs.section1} className="scroll-mt-36">
@@ -453,9 +436,8 @@ export default function FullApplicationPage() {
   {isSubmitting ? "Submitting..." : "Submit Full Application"}
 </button>
         </div>
-        </form>
-      )}
-    </div> {/* white box */}
-  </div>  {/* gray background */}
+      </form>
+    )}
+    </div>
   );
 }
