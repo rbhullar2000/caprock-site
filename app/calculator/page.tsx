@@ -30,7 +30,12 @@ export default function CalculatorPage() {
   }));
 
   return (
-    <div className="bg-gray-100 min-h-screen py-16 px-4">
+   // <div className="bg-gray-100 min-h-screen py-16 px-4">
+     <div
+  className="relative w-full min-h-screen bg-cover bg-center text-white"
+  style={{ backgroundImage: "url('/background.png')" }}
+>
+      
       <div className="max-w-4xl mx-auto text-center">
         <Image
           src="/logo.png"
