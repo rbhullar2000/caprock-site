@@ -156,14 +156,8 @@ export default function FullApplicationPage() {
             Full Credit Application
           </h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* INSERT all of your Accordion sections and the submit button here */}
-          </form>
-        </>
-      )}
-    </div>
-  </div>
-);
+          
+       
 
           <form onSubmit={handleSubmit} className="space-y-6">
         <Accordion type="single" collapsible defaultValue="section1" onValueChange={handleAccordionChange}>
