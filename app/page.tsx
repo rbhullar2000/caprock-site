@@ -1,7 +1,6 @@
 'use client';
 
 import { MessageCircleIcon } from 'lucide-react';
-import Image from 'next/image';
 
 export default function Page() {
   return (
@@ -76,6 +75,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </div> 
+    </div>
   );
 }
