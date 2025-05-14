@@ -452,7 +452,7 @@ export default function FullApplicationPage() {
         </div>
         </form>
       )}
-    </>
     </div> {/* white box */}
   </div>  {/* gray background */}
-);
+  );
+}
