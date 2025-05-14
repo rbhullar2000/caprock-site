@@ -20,7 +20,7 @@ export default function AboutPage() {
       {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
 
       {/* ✅ Content wrapper */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-20 w-full space-y-10">
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-10">
         <Image
           src="/logo.png"
           alt="Caprock Capital Group Logo"
