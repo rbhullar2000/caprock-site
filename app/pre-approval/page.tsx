@@ -107,7 +107,7 @@ export default function PreApprovalPage() {
             width={120}
             height={120}
             className="mx-auto"
-       //   />
+          />
         </div>
 
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6" onSubmit={handleSubmit}>
