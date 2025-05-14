@@ -17,9 +17,10 @@ export default function Page() {
       {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
         {/* Logo */}
-        <div className="flex justify-center -mt-10 mb-2">
-          <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-48" />
-        </div>
+        {/* Logo aligned right */}
+<div className="flex justify-end w-full pr-4 -mt-10 mb-2">
+  <img src="/logo.png" alt="Caprock Logo" className="h-48 sm:h-48" />
+</div>
 
         {/* Headline & Description wrapped in translucent box */}
         <section className="bg-black/30 rounded-lg p-8 text-center text-base leading-relaxed space-y-5 w-full max-w-3xl">
