@@ -20,9 +20,9 @@ export default function ContactPage() {
       {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
 
       {/* ✅ Logo placed outside content wrapper for full alignment */}
-      <div className="flex justify-end w-full pr-4 -mt-10 mb-2">
-        <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
-      </div>
+      <div className="flex justify-end w-full pr-4 pt-8 mb-4">
+  <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+</div>
 
       {/* ✅ Content wrapper */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
