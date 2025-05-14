@@ -99,7 +99,7 @@ export default function PreApprovalPage() {
   }
 
     return (
-      <div className="bg-gray-100 min-h-screen py-12 px-4">
+     // <div className="bg-gray-100 min-h-screen py-12 px-4">
         <div className="text-center mb-6">
           <Image
             src="/logo.png"
@@ -107,7 +107,7 @@ export default function PreApprovalPage() {
             width={120}
             height={120}
             className="mx-auto"
-          />
+       //   />
         </div>
 
         <form className="bg-white shadow-md rounded-lg p-6 space-y-6" onSubmit={handleSubmit}>
