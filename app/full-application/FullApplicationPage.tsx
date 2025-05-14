@@ -450,8 +450,9 @@ export default function FullApplicationPage() {
   {isSubmitting ? "Submitting..." : "Submit Full Application"}
 </button>
         </div>
-      </form>
-    )}
-    </div>
-  );
-}
+        </form>
+      )}
+    </>
+    </div> {/* white box */}
+  </div>  {/* gray background */}
+);
