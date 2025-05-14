@@ -12,7 +12,7 @@ export default function ContactPage() {
     <div className="relative w-full min-h-screen text-white">
       <div className="absolute inset-0">
         <div
-          className="w-full h-full bg-center bg-cover opacity-85"
+          className="w-full h-full bg-center bg-cover opacity-100"
           style={{ backgroundImage: "url('/background.png')" }}
         />
       </div>
