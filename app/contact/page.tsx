@@ -10,21 +10,22 @@ export default function ContactPage() {
 
   return (
     <div className="relative w-full min-h-screen text-white overflow-hidden">
-      {/* ✅ Full background image */}
+      {/* ✅ Background image */}
       <div
         className="fixed inset-0 bg-cover bg-center -z-10"
         style={{ backgroundImage: "url('/background.png')" }}
       />
 
-      {/* ✅ Optional: overlay for readability */}
+      {/* ✅ Optional: overlay */}
       {/* <div className="fixed inset-0 bg-black/30 -z-10" /> */}
+
+      {/* ✅ Logo placed outside content wrapper for full alignment */}
+      <div className="flex justify-end w-full pr-4 -mt-10 mb-2">
+        <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+      </div>
 
       {/* ✅ Content wrapper */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 py-16 text-center space-y-8">
-        <div className="flex justify-end w-full pr-4 -mt-10 mb-2">
-  <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
-</div>
-
         <h1 className="text-4xl font-bold">Contact Us</h1>
 
         <div className="bg-black/30 rounded-lg p-8 text-left space-y-8">
