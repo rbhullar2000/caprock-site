@@ -439,12 +439,9 @@ export default function FullApplicationPage() {
 >
   {isSubmitting ? "Submitting..." : "Submit Full Application"}
 </button>
-        </div>
+                        </div>
       </form>
-                    </div> {/* end form wrapper */}
-
-      </form> {/* ✅ Correct closing of form tag */}
-    )}
+      )}
   </div> {/* end content wrapper */}
 </div> {/* end page wrapper */}
 );
