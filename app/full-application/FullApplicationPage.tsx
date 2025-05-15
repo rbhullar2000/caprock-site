@@ -428,20 +428,20 @@ export default function FullApplicationPage() {
             A physical or digital signature will be collected prior to funding.
           </p>
 
-         <button
-  type="submit"
-  disabled={isSubmitting}
-  className={`w-full py-3 rounded-none font-semibold transition ${
-    isSubmitting
-      ? "bg-gray-400 cursor-not-allowed"
-      : "bg-blue-600 text-white hover:bg-blue-700"
-  }`}
->
-  {isSubmitting ? "Submitting..." : "Submit Full Application"}
-</button>
-                               </div>
-      </form>
-    )} {/* 👈 make sure this closes the conditional */}
+                   <button
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-3 rounded-none font-semibold transition ${
+              isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-700"
+            }`}
+          >
+            {isSubmitting ? "Submitting..." : "Submit Full Application"}
+          </button>
+        </div> {/* end trust/security section */}
+      </form> {/* end form */}
+    )} {/* end conditional render */}
   </div> {/* end content wrapper */}
 </div> {/* end page wrapper */}
 );
