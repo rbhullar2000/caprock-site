@@ -441,7 +441,8 @@ export default function FullApplicationPage() {
           </button>
         </div> {/* end trust/security section */}
       </form> {/* end form */}
-    )} {/* end conditional render */}
+      )}
+      {/* end conditional render */}
   </div> {/* end content wrapper */}
 </div> {/* end page wrapper */}
 );
