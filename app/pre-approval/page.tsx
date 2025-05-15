@@ -113,7 +113,7 @@ export default function PreApprovalPage() {
       {/* Content wrapper */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
         <section className="bg-black/30 rounded-lg p-8 text-center text-base leading-relaxed space-y-5 w-full max-w-3xl">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-blue-500">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white">
             Pre-Approval Application
           </h2>
 
