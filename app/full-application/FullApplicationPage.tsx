@@ -126,24 +126,41 @@ export default function FullApplicationPage() {
   </div>
 ); 
 
-  return (
-  <div className="relative w-full min-h-screen text-white overflow-hidden">
-    {/* Background image */}
-    <div
-      className="fixed inset-0 bg-cover bg-center -z-10"
-      style={{ backgroundImage: "url('/background.png')" }}
-    />
-
-    {/* Logo aligned top-right like other pages */}
-    <div className="flex justify-end w-full pr-6 pt-6">
-      <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+    const renderInput = (name: string, label: string, type: string = "text") => (
+    <div className="mb-4">
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+        {label}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        value={formData[name] || ""}
+        onChange={handleChange}
+        className="mt-1 block w-full rounded-none border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+      />
     </div>
+  ); // ✅ this is now correctly closed
 
-    {/* Content wrapper */}
-    <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
-      <h1 className="text-3xl font-bold mb-6 text-center text-white">
-        Full Credit Application
-      </h1>
+  // ✅ Now your main component return begins
+  return (
+    <div className="relative w-full min-h-screen text-white overflow-hidden">
+      {/* Background image */}
+      <div
+        className="fixed inset-0 bg-cover bg-center -z-10"
+        style={{ backgroundImage: "url('/background.png')" }}
+      />
+
+      {/* Logo aligned top-right like other pages */}
+      <div className="flex justify-end w-full pr-6 pt-6">
+        <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
+      </div>
+
+      {/* Content wrapper */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
+        <h1 className="text-3xl font-bold mb-6 text-center text-white">
+          Full Credit Application
+        </h1>
 
   {!submittedSuccessfully && ( 
   <form onSubmit={handleSubmit} className="space-y-6">
