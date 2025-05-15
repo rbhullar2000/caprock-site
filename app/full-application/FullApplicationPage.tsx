@@ -441,8 +441,9 @@ export default function FullApplicationPage() {
 </button>
         </div>
       </form>
-            </div> {/* end form wrapper */}
-      </form>
+                    </div> {/* end form wrapper */}
+
+      </form> {/* ✅ Correct closing of form tag */}
     )}
   </div> {/* end content wrapper */}
 </div> {/* end page wrapper */}
