@@ -124,7 +124,7 @@ export default function FullApplicationPage() {
         className="mt-1 block w-full rounded-none border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
       />
     </div>
-  ); 
+      }
 
   return (
   <div className="relative w-full min-h-screen text-white overflow-hidden">
