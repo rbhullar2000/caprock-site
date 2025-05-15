@@ -83,19 +83,37 @@ export default function PreApprovalPage() {
   };
 
   if (submitted) {
-    return (
-      <div className="max-w-xl mx-auto text-center py-20">
-        <h1 className="text-2xl font-bold">Thank You!</h1>
-        <p className="mt-4 mb-6">Your pre-approval application has been submitted.</p>
-        <button
-          onClick={() => router.push(`/full-application?${buildQuery()}`)}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-        >
-          Proceed to Full Application
-        </button>
+  return (
+    <div className="relative w-full min-h-screen text-white overflow-hidden">
+      {/* Background Image */}
+      <div
+        className="fixed inset-0 bg-cover bg-center -z-10"
+        style={{ backgroundImage: "url('/background.png')" }}
+      />
+
+      {/* Logo aligned top-right consistently */}
+      <div className="flex justify-end w-full pr-6 pt-6">
+        <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
       </div>
-    );
-  }
+
+      {/* Content Wrapper */}
+      <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
+        <section className="bg-black/30 rounded-lg p-8 text-center space-y-5 w-full max-w-3xl">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white">
+            Thank You!
+          </h2>
+          <p>Your pre-approval application has been submitted successfully.</p>
+          <button
+            onClick={() => router.push(`/full-application?${buildQuery()}`)}
+            className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 font-semibold transition"
+          >
+            Proceed to Full Application
+          </button>
+        </section>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="relative w-full min-h-screen text-white overflow-hidden">
