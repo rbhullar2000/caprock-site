@@ -439,9 +439,9 @@ export default function FullApplicationPage() {
 >
   {isSubmitting ? "Submitting..." : "Submit Full Application"}
 </button>
-                        </div>
+                               </div>
       </form>
-      )}
+    )} {/* 👈 make sure this closes the conditional */}
   </div> {/* end content wrapper */}
 </div> {/* end page wrapper */}
 );
