@@ -443,8 +443,8 @@ export default function FullApplicationPage() {
       </form>
     )}
     </div>
-        </div> {/* end content wrapper */}
-  </div>   {/* end page wrapper */}
-);
+                </div> {/* end content wrapper */}
+      </div>   {/* end page wrapper */}
+    </div>
   );
 }
