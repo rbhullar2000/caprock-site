@@ -441,10 +441,10 @@ export default function FullApplicationPage() {
 </button>
         </div>
       </form>
+            </div> {/* end form wrapper */}
+      </form>
     )}
-    </div>
-                </div> {/* end content wrapper */}
-      </div>   {/* end page wrapper */}
-    </div>
-  );
+  </div> {/* end content wrapper */}
+</div> {/* end page wrapper */}
+);
 }
