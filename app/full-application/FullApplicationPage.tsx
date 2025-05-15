@@ -127,17 +127,21 @@ export default function FullApplicationPage() {
   );
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-       <div className="text-center mb-6">
-      <Image
-        src="/logo.png"
-        alt="Caprock Capital Group Logo"
-        width={120}
-        height={120}
-        className="mx-auto"
-      />
+  <div className="relative w-full min-h-screen text-white overflow-hidden">
+    {/* Background image */}
+    <div
+      className="fixed inset-0 bg-cover bg-center -z-10"
+      style={{ backgroundImage: "url('/background.png')" }}
+    />
+
+    {/* Logo aligned top-right like other pages */}
+    <div className="flex justify-end w-full pr-6 pt-6">
+      <img src="/logo.png" alt="Caprock Logo" className="h-24 sm:h-24" />
     </div>
-      <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
+
+    {/* Content wrapper */}
+    <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 w-full space-y-8">
+      <h1 className="text-3xl font-bold mb-6 text-center text-white">
         Full Credit Application
       </h1>
 
@@ -439,5 +443,8 @@ export default function FullApplicationPage() {
       </form>
     )}
     </div>
+        </div> {/* end content wrapper */}
+  </div>   {/* end page wrapper */}
+);
   );
 }
